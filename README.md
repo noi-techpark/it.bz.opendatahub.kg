@@ -33,7 +33,7 @@
      ```
      docker-compose up --build
      ```
-  4. [Install  Jena](https://jena.apache.org/documentation/tools/) and configure it:
+  4. [Install Jena](https://jena.apache.org/documentation/tools/) and configure it:
      - `export JENA_HOME=the directory you downloaded Jena to`
      - `export PATH=$PATH:"$JENA_HOME"/bin`
   5. Create documents (authenticated as the owner):
