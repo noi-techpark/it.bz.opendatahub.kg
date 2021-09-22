@@ -1,0 +1,146 @@
+version: "2.3"
+services:
+  nginx:
+    image: atomgraph/nginx:d329ba2207773d849c41894408fc073dbe27e3b8
+    mem_limit: 128m
+    command: /bin/bash -c "envsubst '$$HTTPS_PORT $$UPSTREAM_SERVER $$UPSTREAM_HTTP_PORT $$SERVER_NAME $$SERVER_HTTPS_PORT $$SERVER_HTTP_PORT $$SERVER_CERT_FILE $$SERVER_KEY_FILE $$MAX_BODY_SIZE' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    ports:
+      - ${HTTP_PORT}:8080 # allow Tomcat to do HTTP to HTTPS redirect
+      - ${HTTPS_PORT}:8443 # HTTPS
+    environment:
+      - HTTPS_PORT=${HTTPS_PORT}
+      - UPSTREAM_SERVER=linkeddatahub
+      - UPSTREAM_HTTP_PORT=7070
+      - SERVER_NAME=${HOST}
+      - SERVER_HTTPS_PORT=8443 # because of nginx-unprivileged
+      - SERVER_HTTP_PORT=8080 # because of nginx-unprivileged
+      - SERVER_CERT_FILE=/etc/nginx/ssl/server.crt
+      - SERVER_KEY_FILE=/etc/nginx/ssl/server.key
+      - MAX_BODY_SIZE=2097152
+    volumes:
+      - ./linkeddatahub/platform/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+      - ./ssl/server:/etc/nginx/ssl:ro
+    networks:
+      default:
+        aliases:
+          - ${HOST}
+  processor:
+    image: atomgraph/processor:eca779ec4a834289382a2173c63646cc30a0dc9a
+    environment:
+      - JPDA_ADDRESS=*:8000 # debugger port
+      - ENDPOINT="https://sparql.opendatahub.bz.it/sparql"
+      - GRAPH_STORE="https://sparql.opendatahub.bz.it/sparql"
+      - ONTOLOGY="https://noi.example.org/ns/templates#"
+    volumes:
+      - ./processor/noi.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/org/example/noi.ttl
+      - ./processor/location-mapping.n3:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/custom-mapping.n3
+  processor-nginx:
+    image: nginx
+    depends_on:
+      - processor
+    ports:
+      - 8888:80
+    environment:
+      - PROXY_PASS=http://processor:8080 # internal Processor URL (hostname equals docker-compose service name)
+      - PROXY_SET_HOST=${HOST} # the hostname set on the request URI before it's passed to Processor
+    volumes:
+      - ./processor/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+    command: /bin/bash -c "envsubst '$$PROXY_PASS $$PROXY_SET_HOST' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+  linkeddatahub:
+    image: noi/opendatahub:latest
+    build: .
+    ports:
+      - 8001:8000 # debugger
+    environment:
+    #  - JPDA_ADDRESS=*:8000 # debugger host - performance hit when enabled
+      - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
+      - TZ="Europe/Copenhagen"
+      #- CATALINA_OPTS="-Duser.timezone=Europe/Copenhagen"
+      - PROXY_HOST=nginx
+      - PROXY_HTTP_PORT=8080
+      - PROXY_HTTPS_PORT=8443
+      - PROTOCOL=${PROTOCOL}
+      - HOST=${HOST}
+      - ABS_PATH=${ABS_PATH}
+      - HTTP_SCHEME=https
+      - HTTP_PORT=7070
+      - HTTP_PROXY_NAME=${HOST}
+      - HTTP_PROXY_PORT=${HTTPS_PORT}
+      - HTTP_REDIRECT_PORT=${HTTPS_PORT}
+      - HTTPS_PROXY_PORT=${HTTPS_PORT}
+      - HTTPS=false
+      - CLIENT_KEYSTORE_PASSWORD=${SECRETARY_CERT_PASSWORD}
+      - CLIENT_TRUSTSTORE_PASSWORD=LinkedDataHub
+      - SELF_SIGNED_CERT=true # only on localhost
+      - SIGN_UP_CERT_VALIDITY=180
+      - IMPORT_KEEPALIVE=300000
+      - MAX_CONTENT_LENGTH=2097152
+      - MAIL_SMTP_HOST=email-server
+      - MAIL_SMTP_PORT=25
+      - MAIL_USER=linkeddatahub@localhost
+      - OWNER_MBOX=${OWNER_MBOX}
+      # - GOOGLE_CLIENT_ID=
+      # - GOOGLE_CLIENT_SECRET=
+    volumes:
+      - ./ssl/server:/var/linkeddatahub/ssl/server:ro
+      - ./ssl/owner/public.pem:/var/linkeddatahub/ssl/owner/public.pem:ro
+      - ./ssl/secretary:/var/linkeddatahub/ssl/secretary:ro
+      - ./uploads:/var/www/linkeddatahub/uploads
+      - ./config/dev.log4j.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties:ro
+      - ./config/system-varnish.trig:/var/linkeddatahub/datasets/system.trig:ro
+      - ./linkeddatahub/platform/datasets/admin.trig:/var/linkeddatahub/datasets/admin.trig:ro
+      - ./linkeddatahub/platform/datasets/end-user.trig:/var/linkeddatahub/datasets/end-user.trig:ro
+      - ./files/layout.xsl:/usr/local/tomcat/webapps/ROOT/static/org/example/noi/xsl/layout.xsl
+      - ./files/WKTMap.js:/usr/local/tomcat/webapps/ROOT/static/org/example/noi/js/WKTMap.js
+  fuseki-admin:
+    image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
+    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    ports:
+      - 3030:3030
+    volumes:
+      - ./linkeddatahub/config/fuseki/admin.ttl:/var/fuseki/config.ttl:ro
+      - ./data/admin:/fuseki/databases
+    command: [ "--config", "/var/fuseki/config.ttl" ]
+  fuseki-end-user:
+    image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
+    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    ports:
+      - 3031:3030
+    volumes:
+      - ./linkeddatahub/config/fuseki/end-user.ttl:/var/fuseki/config.ttl:ro
+      - ./data/end-user:/fuseki/databases
+    command: [ "--config", "/var/fuseki/config.ttl" ]
+  varnish-admin:
+    image: atomgraph/varnish:446f28a3cfedc276b2c27a971455659be98d7351
+    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    depends_on:
+      - linkeddatahub
+    tmpfs: /var/lib/varnish:exec
+    environment:
+      - BACKEND_HOST=fuseki-admin
+      - BACKEND_PORT=3030
+      - CLIENT_HOST=linkeddatahub
+      - VARNISH_TTL=86400
+      - VARNISH_SIZE=1G
+    entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /usr/local/bin/docker-varnish-entrypoint"
+    volumes:
+      - ./linkeddatahub/platform/varnish.vcl.template:/etc/varnish/default.vcl.template:ro
+  varnish-end-user:
+    image: atomgraph/varnish:446f28a3cfedc276b2c27a971455659be98d7351
+    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    depends_on:
+      - linkeddatahub
+    tmpfs: /var/lib/varnish:exec
+    environment:
+      - BACKEND_HOST=fuseki-end-user
+      - BACKEND_PORT=3030
+      - CLIENT_HOST=linkeddatahub
+      - VARNISH_TTL=86400
+      - VARNISH_SIZE=1G
+    entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /usr/local/bin/docker-varnish-entrypoint"
+    volumes:
+      - ./linkeddatahub/platform/varnish.vcl.template:/etc/varnish/default.vcl.template:ro
+  email-server:
+    image: namshi/smtp
+    environment:
+      - DISABLE_IPV6=true

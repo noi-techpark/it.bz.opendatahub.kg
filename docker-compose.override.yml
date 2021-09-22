@@ -1,0 +1,10 @@
+version: "2.3"
+services:
+  processor:
+    ports:
+      - 8010:8000 # debugger
+  linkeddatahub:
+    ports:
+      - 8001:8000 # debugger
+    environment:
+      - JPDA_ADDRESS=*:8000 # debugger host - performance hit when enabled

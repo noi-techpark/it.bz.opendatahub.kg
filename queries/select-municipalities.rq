@@ -1,0 +1,17 @@
+PREFIX  schema: <http://schema.org/>
+PREFIX  odh:  <http://noi.example.org/ontology/odh#>
+
+SELECT  ?municipality
+WHERE
+  { ?municipality
+              a  odh:Municipality
+    OPTIONAL
+      { SELECT  ?municipality ?name
+        WHERE
+          { ?municipality
+                      schema:name  ?name
+            FILTER langMatches(lang(?name), "en")
+          }
+      }
+  }
+ORDER BY ?name

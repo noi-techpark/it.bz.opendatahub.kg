@@ -1,0 +1,4 @@
+[submodule "linkeddatahub"]
+	path = linkeddatahub
+	url = https://github.com/AtomGraph/LinkedDataHub
+	branch = noi-opendatahub
