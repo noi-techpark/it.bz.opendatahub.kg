@@ -35,10 +35,10 @@ doc=$(./create-generic-service.sh \
  "${request_base}service")
 
 ntriples=$(./get-document.sh \
-  -f "$AGENT_CERT_FILE" \
-  -p "$AGENT_CERT_PWD" \
-  --accept 'application/n-triples' \
-  "$doc")
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--accept 'application/n-triples' \
+"$doc")
 
 service=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${doc//\//\\/}> \./\1/p")
 
