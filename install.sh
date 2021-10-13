@@ -29,7 +29,3 @@ printf "\n### Creating authorization to make the app public\n\n"
 printf "\n### Creating documents\n\n"
 
 ./create-documents.sh "$base" "$cert_pem_file" "$cert_password" "$request_base"
-
-printf "\n### Creating services\n\n"
-
-./create-services.sh "$base" "$cert_pem_file" "$cert_password" "$request_base"

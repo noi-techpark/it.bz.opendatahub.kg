@@ -23,17 +23,48 @@ pwd=$(realpath -s "$PWD")
 
 pushd . && cd "$SCRIPT_ROOT"
 
-select_lodging_businesses=$(./create-select.sh \
+# SERVICE
+
+doc=$(./create-generic-service.sh \
+-b "$base" \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--title "Open Data Hub Knowledge Graph Portal" \
+--endpoint https://sparql.opendatahub.bz.it/sparql \
+--slug "open-data-hub" \
+ "${request_base}service")
+
+ntriples=$(./get-document.sh \
+  -f "$AGENT_CERT_FILE" \
+  -p "$AGENT_CERT_PWD" \
+  --accept 'application/n-triples' \
+  "$doc")
+
+service=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${doc//\//\\/}> \./\1/p")
+
+# QUERIES
+
+# lodging businesses
+
+query_doc=$(./create-select.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --title "Select lodging businesses" \
 --slug select-lodging-businesses \
 --query-file "$pwd/queries/select-lodging-businesses.rq" \
---service "${base}services/open-data-hub/#this" \
+--service "$service" \
 "${request_base}service")
 
-lodging_businesses_doc=$(./create-item.sh \
+ntriples=$(./get-document.sh \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--accept 'application/n-triples' \
+"$query_doc")
+
+query=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${query_doc//\//\\/}> \./\1/p")
+
+doc=$(./create-item.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
@@ -42,24 +73,27 @@ lodging_businesses_doc=$(./create-item.sh \
 --container "$base" \
 "${request_base}service")
 
-select_lodging_businesses_content=$(./create-content.sh \
+content=$(./create-content.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
---uri "${lodging_businesses_doc}#content" \
---first "${select_lodging_businesses}#this" \
-"$lodging_businesses_doc")
+--uri "${doc}#content" \
+--first "$query" \
+"$doc")
 
-echo -e "<${lodging_businesses_doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${lodging_businesses_doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --content-type 'text/turtle' \
-"$lodging_businesses_doc"
+"$doc"
 
+exit
 
-select_events=$(./create-select.sh \
+# events
+
+query_doc=$(./create-select.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
@@ -69,7 +103,15 @@ select_events=$(./create-select.sh \
 --service "${base}services/open-data-hub/#this" \
 "${request_base}service")
 
-events_doc=$(./create-item.sh \
+ntriples=$(./get-document.sh \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--accept 'application/n-triples' \
+"$query_doc")
+
+query=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${query_doc//\//\\/}> \./\1/p")
+
+doc=$(./create-item.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
@@ -82,18 +124,19 @@ select_events_content=$(./create-content.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
---uri "${events_doc}#content" \
+--uri "${doc}#content" \
 --first "${select_events}#this" \
-"$events_doc")
+"$doc")
 
-echo -e "<${events_doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${events_doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --content-type 'text/turtle' \
-"$events_doc"
+"$doc"
 
+# food establishments
 
 select_food_establishments=$(./create-select.sh \
 -b "$base" \
