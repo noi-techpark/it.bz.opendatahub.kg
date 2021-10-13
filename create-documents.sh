@@ -233,7 +233,7 @@ query_doc=$(./create-select.sh \
 --title "Select ski resorts" \
 --slug select-ski-resorts \
 --query-file "$pwd/queries/select-ski-resorts.rq" \
---service "${base}services/open-data-hub/#this" \
+--service "$service" \
 "${request_base}service")
 
 ntriples=$(./get-document.sh \
