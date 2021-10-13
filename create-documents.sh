@@ -42,9 +42,9 @@ ntriples=$(./get-document.sh \
 
 service=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${doc//\//\\/}> \./\1/p")
 
-# QUERIES
+### QUERIES
 
-# lodging businesses
+### lodging businesses
 
 query_doc=$(./create-select.sh \
 -b "$base" \
@@ -89,9 +89,7 @@ echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${d
 --content-type 'text/turtle' \
 "$doc"
 
-exit
-
-# events
+### events
 
 query_doc=$(./create-select.sh \
 -b "$base" \
@@ -100,7 +98,7 @@ query_doc=$(./create-select.sh \
 --title "Select events" \
 --slug select-events \
 --query-file "$pwd/queries/select-events.rq" \
---service "${base}services/open-data-hub/#this" \
+--service "$service" \
 "${request_base}service")
 
 ntriples=$(./get-document.sh \
@@ -120,12 +118,12 @@ doc=$(./create-item.sh \
 --container "$base" \
 "${request_base}service")
 
-select_events_content=$(./create-content.sh \
+content=$(./create-content.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --uri "${doc}#content" \
---first "${select_events}#this" \
+--first "$query" \
 "$doc")
 
 echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
@@ -136,19 +134,27 @@ echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${d
 --content-type 'text/turtle' \
 "$doc"
 
-# food establishments
+### food establishments
 
-select_food_establishments=$(./create-select.sh \
+query_doc=$(./create-select.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --title "Select food establishments" \
 --slug select-food-establishments \
 --query-file "$pwd/queries/select-food-establishments.rq" \
---service "${base}services/open-data-hub/#this" \
+--service "$service" \
 "${request_base}service")
 
-food_establishments_doc=$(./create-item.sh \
+ntriples=$(./get-document.sh \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--accept 'application/n-triples' \
+"$query_doc")
+
+query=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${query_doc//\//\\/}> \./\1/p")
+
+doc=$(./create-item.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
@@ -157,34 +163,43 @@ food_establishments_doc=$(./create-item.sh \
 --container "$base" \
 "${request_base}service")
 
-select_food_establishments_content=$(./create-content.sh \
+content=$(./create-content.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
---uri "${food_establishments_doc}#content" \
---first "${select_food_establishments}#this" \
-"$food_establishments_doc")
+--uri "${doc}#content" \
+--first "$query" \
+"$doc")
 
-echo -e "<${food_establishments_doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${food_establishments_doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --content-type 'text/turtle' \
-"$food_establishments_doc"
+"$doc"
 
+### municipalities
 
-select_municipalities=$(./create-select.sh \
+query_doc=$(./create-select.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --title "Select municipalities" \
 --slug select-municipalities \
 --query-file "$pwd/queries/select-municipalities.rq" \
---service "${base}services/open-data-hub/#this" \
+--service "$service" \
 "${request_base}service")
 
-municipalities_doc=$(./create-item.sh \
+ntriples=$(./get-document.sh \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--accept 'application/n-triples' \
+"$query_doc")
+
+query=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${query_doc//\//\\/}> \./\1/p")
+
+doc=$(./create-item.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
@@ -193,24 +208,25 @@ municipalities_doc=$(./create-item.sh \
 --container "$base" \
 "${request_base}service")
 
-select_municipalities_content=$(./create-content.sh \
+content=$(./create-content.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
---uri "${municipalities_doc}#content" \
---first "${select_municipalities}#this" \
-"$municipalities_doc")
+--uri "${doc}#content" \
+--first "$query" \
+"$doc")
 
-echo -e "<${municipalities_doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${municipalities_doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --content-type 'text/turtle' \
-"$municipalities_doc"
+"$doc"
 
+### ski resorts
 
-select_ski_resorts=$(./create-select.sh \
+query_doc=$(./create-select.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
@@ -220,7 +236,15 @@ select_ski_resorts=$(./create-select.sh \
 --service "${base}services/open-data-hub/#this" \
 "${request_base}service")
 
-ski_resorts_doc=$(./create-item.sh \
+ntriples=$(./get-document.sh \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--accept 'application/n-triples' \
+"$query_doc")
+
+query=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${query_doc//\//\\/}> \./\1/p")
+
+doc=$(./create-item.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
@@ -229,20 +253,20 @@ ski_resorts_doc=$(./create-item.sh \
 --container "$base" \
 "${request_base}service")
 
-select_ski_resorts_content=$(./create-content.sh \
+content=$(./create-content.sh \
 -b "$base" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
---uri "${ski_resorts_doc}#content" \
---first "${select_ski_resorts}#this" \
-"$ski_resorts_doc")
+--uri "${doc}#content" \
+--first "$query" \
+"$doc")
 
-echo -e "<${ski_resorts_doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${ski_resorts_doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --content-type 'text/turtle' \
-"$ski_resorts_doc"
+"$doc"
 
 popd
