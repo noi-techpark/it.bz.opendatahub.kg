@@ -84,6 +84,23 @@ exclude-result-prefixes="#all">
         </xsl:if>
     </xsl:template>
 
+    <!-- intercept links in the navbar's <ul> -->
+    <xsl:template match="a[not(@target)][starts-with(@href, 'http://') or starts-with(@href, 'https://')][not(starts-with(@href, resolve-uri('uploads/', $apl:base)))][ancestor::div[tokenize(@class, ' ') = 'navbar']/ul)]" mode="ixsl:onclick">
+        <xsl:sequence select="ixsl:call(ixsl:event(), 'preventDefault', [])"/>
+        <xsl:variable name="uri" select="xs:anyURI(@href)" as="xs:anyURI"/>
+        <!-- indirect resource URI, dereferenced through a proxy -->
+        <xsl:variable name="request-uri" select="ac:build-uri($apl:base, map{ 'uri': string($uri) })" as="xs:anyURI"/>
+        
+        <ixsl:set-style name="cursor" select="'progress'" object="ixsl:page()//body"/>
+        
+        <ixsl:schedule-action http-request="map{ 'method': 'GET', 'href': $request-uri, 'headers': map{ 'Accept': 'application/xhtml+xml' } }">
+            <xsl:call-template name="onDocumentLoad">
+                <xsl:with-param name="uri" select="ac:document-uri($uri)"/>
+                <xsl:with-param name="fragment" select="encode-for-uri($uri)"/>
+            </xsl:call-template>
+        </ixsl:schedule-action>
+    </xsl:template>
+
     <!-- disable special breadcrumb with dropdown for root containers -->
     <xsl:template match="*[@rdf:about]" mode="bs2:BreadCrumbListItem">
         <xsl:param name="leaf" select="true()" as="xs:boolean"/>
