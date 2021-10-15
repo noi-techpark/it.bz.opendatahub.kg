@@ -13,7 +13,7 @@ xmlns:schema="http://schema.org/"
 xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
 exclude-result-prefixes="#all">
 
-    <xsl:import href="../../../../com/atomgraph/linkeddatahub/xsl/client.xsl"/>
+    <xsl:import href="../../../../../com/atomgraph/linkeddatahub/xsl/client.xsl"/>
 
     <xsl:param name="map-center" select="map{ 'x': 1264010.55, 'y': 5860564.91 }" as="map(xs:string, xs:float)"/>
     <xsl:param name="map-zoom" select="8" as="xs:integer"/>
