@@ -125,20 +125,6 @@ exclude-result-prefixes="#all">
         <xsl:sequence select="schema:image/@rdf:resource"/>
     </xsl:template>
 
-    <!-- rewrite http:// as https:// -->
-<!--     <xsl:template match="*[@rdf:about][starts-with(@rdf:about, 'http://noi.example.org/')]" mode="xhtml:Anchor">
-        <xsl:next-match>
-            <xsl:with-param name="href" select="xs:anyURI('https://noi.example.org/' || substring-after(@rdf:about, 'http://noi.example.org/'))"/>
-        </xsl:next-match>
-    </xsl:template>
-     -->
-    <!-- rewrite http:// as https:// -->
-<!--     <xsl:template match="@rdf:resource[starts-with(., 'http://noi.example.org/')]">
-        <xsl:next-match>
-            <xsl:with-param name="href" select="xs:anyURI('https://noi.example.org/' || substring-after(., 'http://noi.example.org/'))"/>
-        </xsl:next-match>
-    </xsl:template>
-     -->
     <xsl:template match="*[schema:name[lang($ldt:lang)]/text()]" mode="ac:label" priority="1">
         <xsl:sequence select="schema:name[lang($ldt:lang)]/text()"/>
     </xsl:template>
@@ -185,10 +171,9 @@ exclude-result-prefixes="#all">
         </a>
     </xsl:template>
 
-    <xsl:template match="schema:containsPlace | schema:containsPlace/@rdf:resource" priority="1"/>
+    <xsl:template match="schema:containsPlace | schema:containsPlace/@rdf:resource" mode="#all" priority="1"/>
 
     <xsl:template match="gs:defaultGeometry/@rdf:resource" priority="1">
-        <!-- <xsl:variable name="uri" select="xs:anyURI('https://noi.example.org/' || substring-after(., 'http://noi.example.org/'))" as="xs:anyURI"/> -->
         <xsl:variable name="uri" select="." as="xs:anyURI"/>
         <!-- TO-DO: we need to proxy the URI as long as the https/http base URIs don't align -->
         <xsl:variable name="doc-uri" select="xs:anyURI($ldt:base || '?uri=' || encode-for-uri(ac:document-uri($uri)))" as="xs:anyURI"/> <!-- select="ac:document-uri(.)" -->
