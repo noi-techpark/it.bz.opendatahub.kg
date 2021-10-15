@@ -28,8 +28,8 @@ services:
     image: atomgraph/processor:eca779ec4a834289382a2173c63646cc30a0dc9a
     environment:
       - JPDA_ADDRESS=*:8000 # debugger port
-      - ENDPOINT="https://sparql.opendatahub.bz.it/sparql"
-      - GRAPH_STORE="https://sparql.opendatahub.bz.it/sparql"
+      - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
+      - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
       - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
     volumes:
       - ./processor/noi.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/it/bz/opendatahub/kg.ttl
