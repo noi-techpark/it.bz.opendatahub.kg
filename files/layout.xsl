@@ -60,12 +60,12 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="rdf:RDF" mode="xhtml:Script">
         <xsl:apply-imports>
-            <xsl:with-param name="client-stylesheet" select="resolve-uri('static/org/example/noi/xsl/client.xsl.sef.json', $ac:contextUri)"/>
+            <xsl:with-param name="client-stylesheet" select="resolve-uri('static/it/bz/opendatahub/kg/xsl/client.xsl.sef.json', $ac:contextUri)"/>
         </xsl:apply-imports>
 
         <!-- OpenLayers and WKTMap -->
         <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/build/ol.js"></script>
-        <script src="{resolve-uri('static/org/example/noi/js/WKTMap.js', $apl:baseUri)}" type="text/javascript"></script>
+        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $apl:baseUri)}" type="text/javascript"></script>
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:NavBar">
@@ -126,19 +126,19 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <!-- rewrite http:// as https:// -->
-    <xsl:template match="*[@rdf:about][starts-with(@rdf:about, 'http://noi.example.org/')]" mode="xhtml:Anchor">
+<!--     <xsl:template match="*[@rdf:about][starts-with(@rdf:about, 'http://noi.example.org/')]" mode="xhtml:Anchor">
         <xsl:next-match>
             <xsl:with-param name="href" select="xs:anyURI('https://noi.example.org/' || substring-after(@rdf:about, 'http://noi.example.org/'))"/>
         </xsl:next-match>
     </xsl:template>
-
+     -->
     <!-- rewrite http:// as https:// -->
-    <xsl:template match="@rdf:resource[starts-with(., 'http://noi.example.org/')]">
+<!--     <xsl:template match="@rdf:resource[starts-with(., 'http://noi.example.org/')]">
         <xsl:next-match>
             <xsl:with-param name="href" select="xs:anyURI('https://noi.example.org/' || substring-after(., 'http://noi.example.org/'))"/>
         </xsl:next-match>
     </xsl:template>
-
+     -->
     <xsl:template match="*[schema:name[lang($ldt:lang)]/text()]" mode="ac:label" priority="1">
         <xsl:sequence select="schema:name[lang($ldt:lang)]/text()"/>
     </xsl:template>
@@ -188,7 +188,8 @@ exclude-result-prefixes="#all">
     <xsl:template match="schema:containsPlace | schema:containsPlace/@rdf:resource" priority="1"/>
 
     <xsl:template match="gs:defaultGeometry/@rdf:resource" priority="1">
-        <xsl:variable name="uri" select="xs:anyURI('https://noi.example.org/' || substring-after(., 'http://noi.example.org/'))" as="xs:anyURI"/>
+        <!-- <xsl:variable name="uri" select="xs:anyURI('https://noi.example.org/' || substring-after(., 'http://noi.example.org/'))" as="xs:anyURI"/> -->
+        <xsl:variable name="uri" select="." as="xs:anyURI"/>
         <!-- TO-DO: we need to proxy the URI as long as the https/http base URIs don't align -->
         <xsl:variable name="doc-uri" select="xs:anyURI($ldt:base || '?uri=' || encode-for-uri(ac:document-uri($uri)))" as="xs:anyURI"/> <!-- select="ac:document-uri(.)" -->
         <xsl:choose>

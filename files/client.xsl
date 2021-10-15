@@ -19,19 +19,19 @@ exclude-result-prefixes="#all">
     <xsl:param name="map-zoom" select="8" as="xs:integer"/>
 
     <!-- rewrite http:// as https:// -->
-    <xsl:template match="*[@rdf:about][starts-with(@rdf:about, 'http://noi.example.org/')]" mode="xhtml:Anchor">
+<!--     <xsl:template match="*[@rdf:about][starts-with(@rdf:about, 'http://noi.example.org/')]" mode="xhtml:Anchor">
         <xsl:next-match>
             <xsl:with-param name="href" select="xs:anyURI('https://noi.example.org/' || substring-after(@rdf:about, 'http://noi.example.org/'))"/>
         </xsl:next-match>
-    </xsl:template>
+    </xsl:template> -->
 
     <!-- rewrite http:// as https:// -->
-    <xsl:template match="@rdf:resource[starts-with(., 'http://noi.example.org/')]">
+<!--     <xsl:template match="@rdf:resource[starts-with(., 'http://noi.example.org/')]">
         <xsl:next-match>
             <xsl:with-param name="href" select="xs:anyURI('https://noi.example.org/' || substring-after(., 'http://noi.example.org/'))"/>
         </xsl:next-match>
     </xsl:template>
-
+     -->
     <xsl:template match="*[schema:name[lang($ldt:lang)]/text()]" mode="ac:label" priority="1">
         <xsl:sequence select="schema:name[lang($ldt:lang)]/text()"/>
     </xsl:template>

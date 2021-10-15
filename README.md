@@ -1,10 +1,10 @@
-  We will be using `https://noi.example.org/` as the base URI below. Replace it if necessary.
+  We will be using `https://kg.opendatahub.bz.it/` as the base URI below. Replace it if necessary.
 
 # Installation
 
   1. Add a host mapping if you are running on localhost:
      ```
-     127.0.0.1 noi.example.org
+     127.0.0.1 kg.opendatahub.bz.it
      ```
      to `/etc/hosts` (on Linux) or `C:\Windows\System32\Drivers\etc\hosts` (on Windows).
   2. Clone this repository with submodules:
@@ -38,9 +38,9 @@
      - `export PATH=$PATH:"$JENA_HOME"/bin`
   5. Create documents (authenticated as the owner):
      ```
-     ./install.sh https://noi.example.org/ ./ssl/owner/cert.pem $owner_cert_pwd
+     ./install.sh https://kg.opendatahub.bz.it/ ./ssl/owner/cert.pem $owner_cert_pwd
      ```
-  6. Open https://noi.example.org/
+  6. Open https://kg.opendatahub.bz.it/
 
 _:warning: The very first page load can take a while (or even result in `504 Bad Gateway`) while RDF ontologies and XSLT stylesheets are being loaded into memory._
 

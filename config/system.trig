@@ -34,7 +34,7 @@
     ldt:service <urn:linkeddatahub:services/end-user> ;
     lapp:adminApplication <urn:linkeddatahub:apps/admin> ;
     lapp:public true ;
-    ac:stylesheet <static/org/example/noi/xsl/layout.xsl> ;
+    ac:stylesheet <static/it/bz/opendatahub/kg/xsl/layout.xsl> ;
     foaf:logo <https://opendatahub.bz.it/img/IDM_OPENDATAHUB_2_BK.svg> .
 
 # OpenDataHub
@@ -44,7 +44,7 @@
     ldt:base <data/> ;
     lapp:proxy <http://processor-nginx/> ;
     ldt:ontology <admin/model/ontologies/namespace/#> ;
-    ac:stylesheet <static/org/example/noi/xsl/layout.xsl> ;
+    ac:stylesheet <static/it/bz/opendatahub/kg/xsl/layout.xsl> ;
     foaf:logo <https://opendatahub.bz.it/img/IDM_OPENDATAHUB_2_BK.svg> .
 
 # SERVICES

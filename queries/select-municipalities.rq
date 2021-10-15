@@ -1,5 +1,5 @@
 PREFIX  schema: <http://schema.org/>
-PREFIX  odh:  <http://noi.example.org/ontology/odh#>
+PREFIX  odh:  <http://noi.example.org/ontology/odh#> # TO-DO: update namespace
 
 SELECT  ?municipality
 WHERE
