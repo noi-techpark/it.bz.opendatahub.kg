@@ -27,7 +27,6 @@ services:
   processor:
     image: atomgraph/processor:eca779ec4a834289382a2173c63646cc30a0dc9a
     environment:
-      - JPDA_ADDRESS=*:8000 # debugger port
       - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
       - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
       - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
@@ -52,7 +51,6 @@ services:
     ports:
       - 8001:8000 # debugger
     environment:
-    #  - JPDA_ADDRESS=*:8000 # debugger host - performance hit when enabled
       - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
       - TZ="Europe/Copenhagen"
       #- CATALINA_OPTS="-Duser.timezone=Europe/Copenhagen"
