@@ -17,11 +17,6 @@
      ```
      This should add a `linkeddatahub` folder with the submodule.
 
-# Configuration
-
-* Base URI is configured in the `.env` file
-* OpenData SPARQL endpoint is configured as the `ENDPOINT` environment variable for the `processor` service
-
 # Usage
 
   1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_sample` as a template.
@@ -38,11 +33,18 @@
      - `export PATH=$PATH:"$JENA_HOME"/bin`
   5. Create documents (authenticated as the owner):
      ```
-     ./install.sh https://kg.opendatahub.bz.it/ ./ssl/owner/cert.pem $owner_cert_pwd
+     ./install.sh https://kg.opendatahub.bz.it/ https://sparql.opendatahub.testingmachine.eu/sparql ./ssl/owner/cert.pem $owner_cert_pwd
      ```
   6. Open https://kg.opendatahub.bz.it/
 
 _:warning: The very first page load can take a while (or even result in `504 Bad Gateway`) while RDF ontologies and XSLT stylesheets are being loaded into memory._
+
+# Configuration
+
+* Base URI is configured in the `.env` file
+* OpenDataHub SPARQL endpoint is:
+  * configured as the `ENDPOINT` environment variable for the `processor` service
+  * passed as the `$endpoint` argument to the `install.sh` script (step #5 above)
 
 # Reset datasets
 

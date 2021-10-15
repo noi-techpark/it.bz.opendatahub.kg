@@ -2,19 +2,20 @@
 
 [ -z "$SCRIPT_ROOT" ] && echo "Need to set SCRIPT_ROOT" && exit 1;
 
-if [ "$#" -ne 3 ] && [ "$#" -ne 4 ]; then
-  echo "Usage:   $0" '$base $cert_pem_file $cert_password [$request_base]' >&2
-  echo "Example: $0" 'https://linkeddatahub.com/atomgraph/app/ ../../../certs/martynas.localhost.pem Password' >&2
+if [ "$#" -ne 4 ] && [ "$#" -ne 5 ]; then
+  echo "Usage:   $0" '$base $endpoint $cert_pem_file $cert_password [$request_base]' >&2
+  echo "Example: $0" 'https://kg.opendatahub.bz.it/ https://sparql.opendatahub.testingmachine.eu/sparql ./ssl/owner/cert.pem Password' >&2
   echo "Note: special characters such as $ need to be escaped in passwords!" >&2
   exit 1
 fi
 
 base="$1"
-cert_pem_file="$(realpath -s "$2")"
-cert_password="$3"
+endpoint="$2"
+cert_pem_file="$(realpath -s "$3")"
+cert_password="$4"
 
-if [ -n "$4" ]; then
-    request_base="$4"
+if [ -n "$5" ]; then
+    request_base="$5"
 else
     request_base="$base"
 fi
@@ -30,7 +31,7 @@ doc=$(./create-generic-service.sh \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --title "Open Data Hub Knowledge Graph Portal" \
---endpoint https://sparql.opendatahub.bz.it/sparql \
+--endpoint "$endpoint" \
 --slug "open-data-hub" \
  "${request_base}service")
 
