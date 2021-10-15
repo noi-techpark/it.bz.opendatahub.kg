@@ -41,6 +41,7 @@ services:
       - 8888:80
     environment:
       - PROXY_PASS=http://processor:8080 # internal Processor URL (hostname equals docker-compose service name)
+      - PROXY_SET_HOST=${HOST} # the hostname set on the request URI before it's passed to Processor
     volumes:
       - ./processor/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
     command: /bin/bash -c "envsubst '$$PROXY_PASS $$PROXY_SET_HOST' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
