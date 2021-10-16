@@ -41,7 +41,7 @@ exclude-result-prefixes="#all">
             body { font-family: "Open Sans", Arial, sans-serif; color: black; font-size: 16px; }
             .brand img { height: 1em; }
             .navbar .nav > li > a { color: black; letter-spacing: 2px; font-size: 0.8rem; font-weight: 400; text-shadow: none; border-top: 2px solid white; }
-            .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus { background-color: inherit; color: inherit; font-weight: bold; }
+            .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus { background-color: inherit; color: inherit; font-weight: bold; border-top: 2px solid #50742f; }
             .navbar .nav > li > a:focus, .navbar .nav > li > a:hover { color: inherit; text-decoration: none; background-color: white; border-top: 2px solid #50742f; }
             .navbar-inner { background-color: white; }
             .action-bar { background-color: #f5f5f5; }
@@ -113,10 +113,12 @@ exclude-result-prefixes="#all">
 
         <xsl:if test="doc-available($results-uri)">
             <ul class="nav span5">
-                <xsl:apply-templates select="document($results-uri)//rdf:Description" mode="bs2:List">
+                <xsl:for-each select="document($results-uri)//rdf:Description">
                     <xsl:sort select="ac:label(.)"/>
-                    <xsl:with-param name="active" select="@rdf:about = $ac:uri"/>
-                </xsl:apply-templates>
+                    <xsl:apply-templates mode="bs2:List">
+                        <xsl:with-param name="active" select="@rdf:about = $ac:uri"/>
+                    </xsl:apply-templates>
+                </xsl:for-each>
             </ul>
         </xsl:if>
     </xsl:template>
