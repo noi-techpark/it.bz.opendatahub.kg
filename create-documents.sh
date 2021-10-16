@@ -55,7 +55,7 @@ ontology_doc=$(./create-ontology.sh \
 -p "$cert_password" \
 --label "NOI ontology" \
 --slug "noi" \
- "${request_base}service")
+ "${request_base}admin/service")
 
 ./create-select.sh \
 -b "${base}admin/" \
@@ -66,7 +66,7 @@ ontology_doc=$(./create-ontology.sh \
 --slug select-contained-places \
 --query-file "$pwd/queries/admin/select-contained-places.rq" \
 --service "$service" \
-"${request_base}service"
+"${request_base}admin/service"
 
 popd
 
