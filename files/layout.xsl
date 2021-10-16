@@ -40,7 +40,9 @@ exclude-result-prefixes="#all">
             <![CDATA[
             body { font-family: "Open Sans", Arial, sans-serif; color: black; font-size: 16px; }
             .brand img { height: 1em; }
-            .navbar .nav > li > a { color: black; letter-spacing: 2px; font-size: 0.8rem; font-weight: 400; text-shadow: none; }
+            .navbar .nav > li > a { color: black; letter-spacing: 2px; font-size: 0.8rem; font-weight: 400; text-shadow: none; border-top: 2px solid white; }
+            .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus { background-color: inherit; color: inherit; font-weight: bold; }
+            .navbar .nav > li > a:focus, .navbar .nav > li > a:hover { color: inherit; text-decoration: none; background-color: white; border-top: 2px solid #50742f; }
             .navbar-inner { background-color: white; }
             .action-bar { background-color: #f5f5f5; }
             .progress-striped .bar { background-color: #50742F; }
