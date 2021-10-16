@@ -1,0 +1,5 @@
+PREFIX  schema: <http://schema.org/>
+
+SELECT  ?containsPlace
+WHERE
+  { ?this  schema:containsPlace  ?containsPlace }

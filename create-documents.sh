@@ -22,9 +22,9 @@ fi
 
 pwd=$(realpath -s "$PWD")
 
-pushd . && cd "$SCRIPT_ROOT"
+### SERVICE
 
-# SERVICE
+pushd . && cd "$SCRIPT_ROOT"
 
 doc=$(./create-generic-service.sh \
 -b "$base" \
@@ -43,7 +43,36 @@ ntriples=$(./get-document.sh \
 
 service=$(echo "$ntriples" | sed -rn "s/<(.*)> <http:\/\/xmlns.com\/foaf\/0.1\/isPrimaryTopicOf> <${doc//\//\\/}> \./\1/p")
 
+popd
+
+### ONTOLOGY
+
+pushd . && cd "$SCRIPT_ROOT/admin/model"
+
+ontology_doc=$(./create-ontology.sh \
+-b "${base}admin/" \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--label "NOI ontology" \
+--slug "noi" \
+ "${request_base}service")
+
+./create-select.sh \
+-b "${base}admin/" \
+-f "$cert_pem_file" \
+-p "$cert_password" \
+--uri "${ontology_doc}#ContainedPlaces" \
+--title "Select contained places" \
+--slug select-contained-places \
+--query-file "$pwd/queries/admin/select-contained-places.rq" \
+--service "$service" \
+"${request_base}service"
+
+popd
+
 ### QUERIES
+
+pushd . && cd "$SCRIPT_ROOT"
 
 ### lodging businesses
 
