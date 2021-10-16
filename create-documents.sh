@@ -62,7 +62,7 @@ ontology_doc=$(./create-ontology.sh \
 -f "$cert_pem_file" \
 -p "$cert_password" \
 --uri "${ontology_doc}#ContainedPlaces" \
---title "Select contained places" \
+--label "Select contained places" \
 --slug select-contained-places \
 --query-file "$pwd/queries/admin/select-contained-places.rq" \
 --service "$service" \
