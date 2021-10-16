@@ -36,26 +36,7 @@ exclude-result-prefixes="#all">
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports/>
 
-        <style type="text/css">
-            <![CDATA[
-            body { font-family: "Open Sans", Arial, sans-serif; color: black; font-size: 16px; }
-            .brand img { height: 1em; }
-            .navbar .nav > li > a { color: black; letter-spacing: 2px; font-size: 0.8rem; font-weight: 400; text-shadow: none; border-top: 2px solid white; }
-            .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus { background-color: inherit; color: inherit; font-weight: bold; border-top: 2px solid #50742f; }
-            .navbar .nav > li > a:focus, .navbar .nav > li > a:hover { color: inherit; text-decoration: none; background-color: white; border-top: 2px solid #50742f; }
-            .navbar-inner { background-color: white; }
-            .action-bar { background-color: #f5f5f5; }
-            .progress-striped .bar { background-color: #50742F; }
-            a, a:hover, a:focus, .navbar .brand, .nav-list > li > a  { color: black; }
-            .well { background-color: #f5f5f5; }
-            div.span7 h2, .navbar .brand { font-weight: 700; }
-            div.span7 h2 a:after { content: " \279E"; }
-            #map { width: 100%; height: 400px; }
-            .footer { background-color: #50742F; color: white; padding-top: 5rem; font-size: unset; }
-            .footer .nav-header { font-family: "Open Sans", Arial, sans-serif; font-size: 1.2rem; color: white; line-height: 1.8; text-transform: unset; }
-            .footer .nav-list > li > a { color: white; }
-            ]]>
-        </style>
+        <link href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" rel="stylesheet" type="text/css"/>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css"/>
     </xsl:template>

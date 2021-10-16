@@ -89,8 +89,6 @@ services:
       - ./config/system-varnish.trig:/var/linkeddatahub/datasets/system.trig:ro
       - ./linkeddatahub/platform/datasets/admin.trig:/var/linkeddatahub/datasets/admin.trig:ro
       - ./linkeddatahub/platform/datasets/end-user.trig:/var/linkeddatahub/datasets/end-user.trig:ro
-      - ./files/layout.xsl:/usr/local/tomcat/webapps/ROOT/static/it/bz/opendatahub/kg/xsl/layout.xsl
-      - ./files/WKTMap.js:/usr/local/tomcat/webapps/ROOT/static/it/bz/opendatahub/kg/js/WKTMap.js
   fuseki-admin:
     image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
