@@ -115,7 +115,7 @@ exclude-result-prefixes="#all">
             <ul class="nav span5">
                 <xsl:for-each select="document($results-uri)//rdf:Description">
                     <xsl:sort select="ac:label(.)"/>
-                    <xsl:apply-templates mode="bs2:List">
+                    <xsl:apply-templates select="." mode="bs2:List">
                         <xsl:with-param name="active" select="@rdf:about = $ac:uri"/>
                     </xsl:apply-templates>
                 </xsl:for-each>
