@@ -49,24 +49,16 @@ popd
 
 pushd . && cd "$SCRIPT_ROOT/admin/model"
 
-ontology_doc=$(./create-ontology.sh \
--b "${base}admin/" \
--f "$cert_pem_file" \
--p "$cert_password" \
---label "NOI ontology" \
---slug "noi" \
- "${request_base}admin/service")
-
 ./create-select.sh \
 -b "${base}admin/" \
 -f "$cert_pem_file" \
 -p "$cert_password" \
---uri "${ontology_doc}#ContainedPlaces" \
+--uri "${base}admin/model/ontologies/namespace/#ContainedPlaces" \
 --label "Select contained places" \
 --slug select-contained-places \
 --query-file "$pwd/queries/admin/select-contained-places.rq" \
 --service "$service" \
-"${request_base}admin/service"
+"${request_base}admin/model/ontologies/namespace/"
 
 popd
 

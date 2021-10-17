@@ -187,8 +187,7 @@ exclude-result-prefixes="#all">
         
         <xsl:apply-templates select="key('resources', apl:content/@rdf:*)" mode="apl:ContentList"/>
 
-        <!-- this URI resolution will only work with https://noi.example.org/data/ base URI -->
-        <xsl:variable name="ontology" select="resolve-uri('../admin/model/ontologies/noi/#', $ldt:base)" as="xs:anyURI"/>
+        <xsl:variable name="ontology" select="resolve-uri('../admin/model/ontologies/namespace/#', $ldt:base)" as="xs:anyURI"/>
         <xsl:if test="doc-available(ac:document-uri($ontology))">
             <xsl:apply-templates select="key('resources', $ontology || 'ContainedPlaces', document(ac:document-uri($ontology)))" mode="apl:ContentList"/>
         </xsl:if>
