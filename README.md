@@ -20,10 +20,11 @@
 # Usage
 
   1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_sample` as a template.
-  2. Setup owner and server certificates (insert your own passwords, they need to be at least _6 characters long_):
+  2. Setup client certificates (insert your own passwords, they need to be at least _6 characters long_):
      ```
      ./linkeddatahub/scripts/setup.sh .env ./ssl $owner_cert_pwd $secretary_cert_pwd 36500
      ```
+     WebID URIs in the client certifcates are relative to the base URI and have to be regenerated if the base URI changes.
   3. Run the services:
      ```
      docker-compose up --build
@@ -45,6 +46,7 @@ _:warning: The very first page load can take a while (or even result in `504 Bad
 * OpenDataHub SPARQL endpoint is:
   * configured as the `ENDPOINT` environment variable for the `processor` service
   * passed as the `$endpoint` argument to the `install.sh` script (step #5 above)
+* The server's TLS certificate (e.g. LetsEncrypt) can be mounted into the `nginx` container and specified in its `/etc/nginx/nginx.conf` config file
 
 # Reset datasets
 
