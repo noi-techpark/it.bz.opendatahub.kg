@@ -53,6 +53,17 @@ exclude-result-prefixes="#all">
             <xsl:with-param name="push-state" select="$push-state"/>
         </xsl:next-match>
 
+        <xsl:for-each select="ixsl:page()//div[tokenize(@class, ' ') = 'navbar']//ul//a[starts-with(ac:uri(), @href)]">
+            <!-- set .active class on the parent <li> -->
+            <xsl:for-each select="..">
+                <xsl:sequence select="ixsl:call(ixsl:get(., 'classList'), 'toggle', [ 'active', true() ])[current-date() lt xs:date('2000-01-01')]"/>
+            </xsl:for-each>
+            <!-- make other <li> inactive -->
+            <xsl:for-each select="../preceding-sibling::* | ../following-sibling::*">
+                <xsl:sequence select="ixsl:call(ixsl:get(., 'classList'), 'toggle', [ 'active', false() ])[current-date() lt xs:date('2000-01-01')]"/>
+            </xsl:for-each>
+        </xsl:for-each>
+
         <xsl:if test="//input[@name = 'wkt']">
             <xsl:variable name="wkt-literal" select="//input[@name = 'wkt']/@value" as="xs:string"/>
             <xsl:variable name="js-statement" as="element()">
