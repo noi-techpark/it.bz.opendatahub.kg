@@ -2,4 +2,8 @@ PREFIX  schema: <http://schema.org/>
 
 SELECT  ?containsPlace
 WHERE
-  { ?this  schema:containsPlace  ?containsPlace }
+  { ?this     schema:containsPlace  ?containsPlace .
+    ?containsPlace
+              schema:name           ?name
+    FILTER langMatches(lang(?name), "en")
+  }
