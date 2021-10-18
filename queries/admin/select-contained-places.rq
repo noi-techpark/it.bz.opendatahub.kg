@@ -7,3 +7,4 @@ WHERE
               schema:name           ?name
     FILTER langMatches(lang(?name), "en")
   }
+ORDER BY ?name
