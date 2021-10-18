@@ -32,6 +32,8 @@
   4. [Install Jena](https://jena.apache.org/documentation/tools/) and configure it:
      - `export JENA_HOME=the directory you downloaded Jena to`
      - `export PATH=$PATH:"$JENA_HOME"/bin`
+  5. Declare the variable `SCRIPT_ROOT`:
+     - `export SCRIPT_ROOT=linkeddatahub/scripts/`
   5. Create documents (authenticated as the owner):
      ```
      ./install.sh https://kg.opendatahub.bz.it/ https://sparql.opendatahub.testingmachine.eu/sparql ./ssl/owner/cert.pem $owner_cert_pwd
