@@ -62,6 +62,10 @@ query="${base}admin/model/ontologies/namespace/#SelectContainedPlaces"
 --service "$service" \
 "${request_base}admin/model/ontologies/namespace/"
 
+popd
+
+pushd . && cd "$SCRIPT_ROOT"
+
 ./create-content.sh \
 -b "${base}admin/" \
 -f "$cert_pem_file" \
