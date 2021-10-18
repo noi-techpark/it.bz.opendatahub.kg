@@ -1,0 +1,20 @@
+PREFIX  schema: <http://schema.org/>
+
+SELECT  ?lodgingBusiness
+WHERE
+  { ?lodgingBusiness
+              a  schema:LodgingBusiness
+    OPTIONAL
+      { SELECT  ?lodgingBusiness ?name
+        WHERE
+          { ?lodgingBusiness
+                      schema:name  ?name
+            FILTER langMatches(lang(?name), "en")
+          }
+      }
+    OPTIONAL
+      { ?lodgingBusiness
+                  schema:containedInPlace  ?containedInPlace
+      }
+  }
+ORDER BY ?name

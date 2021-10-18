@@ -1,0 +1,16 @@
+PREFIX  schema: <http://schema.org/>
+
+SELECT  ?skiResort ?name
+WHERE
+  { ?skiResort  a  schema:SkiResort
+    OPTIONAL
+      { SELECT  ?skiResort ?name
+        WHERE
+          { ?skiResort  schema:name  ?name
+            FILTER langMatches(lang(?name), "en")
+          }
+      }
+    OPTIONAL
+      { ?skiResort  schema:isPartOf  ?area }
+  }
+ORDER BY ?name

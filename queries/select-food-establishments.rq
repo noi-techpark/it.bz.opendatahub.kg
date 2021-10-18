@@ -1,0 +1,16 @@
+PREFIX  schema: <http://schema.org/>
+
+SELECT  ?foodEstablishment
+WHERE
+  { ?foodEstablishment
+              a  schema:FoodEstablishment
+    OPTIONAL
+      { SELECT  ?foodEstablishment ?name
+        WHERE
+          { ?foodEstablishment
+                      schema:name  ?name
+            FILTER langMatches(lang(?name), "en")
+          }
+      }
+  }
+ORDER BY ?name

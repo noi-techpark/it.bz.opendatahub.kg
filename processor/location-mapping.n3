@@ -1,0 +1,6 @@
+@prefix lm: <http://jena.hpl.hp.com/2004/08/location-mapping#> .
+
+[] lm:mapping
+
+   [ lm:name "https://kg.opendatahub.bz.it/ns/templates#" ; lm:altName "/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/it/bz/opendatahub/kg/noi.ttl" ]
+.

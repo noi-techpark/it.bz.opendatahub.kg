@@ -1,0 +1,11 @@
+PREFIX  schema: <http://schema.org/>
+
+SELECT  ?event
+WHERE
+  { ?event  a  schema:Event
+    OPTIONAL
+      { ?event  schema:startDate  ?startDate }
+    OPTIONAL
+      { ?event  schema:endDate  ?endDate }
+  }
+ORDER BY DESC(?startDate)

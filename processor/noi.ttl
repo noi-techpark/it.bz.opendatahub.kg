@@ -1,0 +1,26 @@
+@prefix :     <#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix ldt:  <https://www.w3.org/ns/ldt#> .
+@prefix c:    <https://www.w3.org/ns/ldt/core/templates#> .
+
+: a ldt:Ontology ;
+    owl:imports c: ;
+    rdfs:label "NOI LDT ontology" .
+
+:Document a ldt:Template ;
+    ldt:extends c:Document ;
+    ldt:lang ("en" "it" "de") ;
+    rdfs:label "Document" ;
+    rdfs:comment "Generic document resource" ;
+    rdfs:isDefinedBy : .
+
+:SPARQLEndpoint a ldt:Template ;
+    ldt:extends c:SPARQLEndpoint ;
+    rdfs:label "SPARQL endpoint" ;
+    rdfs:isDefinedBy : .
+
+:GraphStore a ldt:Template ;
+    ldt:extends c:GraphStore ;
+    rdfs:label "Graph Store" ;
+    rdfs:isDefinedBy : .
