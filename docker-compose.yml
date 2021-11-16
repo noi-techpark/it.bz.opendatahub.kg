@@ -95,7 +95,7 @@ services:
     ports:
       - 3030:3030
     volumes:
-      - ../infrastructure/docker/fuseki-admin/config.ttl:/fuseki/config.ttl:ro
+      - ./infrastructure/docker/fuseki-admin/config.ttl:/fuseki/config.ttl:ro
       - ./data/admin:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
   fuseki-end-user:
@@ -104,7 +104,7 @@ services:
     ports:
       - 3031:3030
     volumes:
-      - ../infrastructure/docker/fuseki-end-user/config.ttl:/fuseki/config.ttl:ro
+      - ./infrastructure/docker/fuseki-end-user/config.ttl:/fuseki/config.ttl:ro
       - ./data/end-user:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
   varnish-admin:
