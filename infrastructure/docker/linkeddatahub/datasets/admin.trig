@@ -1,0 +1,821 @@
+<admin/acl/authorizations/> {
+    <admin/acl/authorizations/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage who has access to which resources" ;
+            <http://purl.org/dc/terms/title>
+                    "Authorizations" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/acl/> .
+}
+
+<admin/acl/authorization-requests/> {
+    <admin/acl/authorization-requests/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage who has access to which resources" ;
+            <http://purl.org/dc/terms/title>
+                    "Authorization requests" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/acl/> .
+}
+
+<admin/acl/authorizations/full-control/> {
+    <admin/acl/authorizations/full-control/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Full control" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/full-control/#this> .
+    
+    <admin/acl/authorizations/full-control/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Allows full read/write access to all application resources" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Full control" ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <service> , <clone> , <imports> , <add> , <sparql> ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/default#Root> , <https://w3id.org/atomgraph/linkeddatahub/default#Item> , <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://www.w3.org/ns/auth/acl#agentGroup>
+                    <admin/acl/groups/owners/#this> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> , <http://www.w3.org/ns/auth/acl#Write> , <http://www.w3.org/ns/auth/acl#Append> , <http://www.w3.org/ns/auth/acl#Control> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/full-control/> .
+}
+
+<admin/acl/authorizations/public/> {
+    <admin/acl/authorizations/public/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Public access" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/public/#this> .
+    
+    <admin/acl/authorizations/public/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Allows unauthorized access" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Public access" ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <sparql> , <admin/model/ontologies/namespace/> ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/default#Root> , <https://w3id.org/atomgraph/linkeddatahub/default#Item> , <https://w3id.org/atomgraph/linkeddatahub/default#Container> , <https://w3id.org/atomgraph/linkeddatahub/default#File> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> , <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/public/> .
+}
+
+<admin/model/ontologies/namespace/> {
+    <admin/model/ontologies/namespace/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Namespace" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/model/ontologies/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/model/ontologies/namespace/#> .
+    
+    <admin/model/ontologies/namespace/#>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Ontology> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Namespace of the application" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Namespace" ;
+            <http://www.w3.org/2002/07/owl#imports>
+                    <https://w3id.org/atomgraph/linkeddatahub/default#> ;
+            <http://www.w3.org/2002/07/owl#versionInfo>
+                    "1.0-SNAPSHOT" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/model/ontologies/namespace/> .
+    
+    <admin/model/ontologies/namespace/select-contained-places/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select contained places" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/model/queries/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "select-contained-places" .
+    
+    <admin/model/ontologies/namespace/#SelectContainedPlaces>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://www.w3.org/2000/01/rdf-schema#isDefinedBy>
+                    <admin/model/ontologies/namespace/#> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Select contained places" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?containsPlace\nWHERE\n  { ?this     schema:containsPlace  ?containsPlace .\n    ?containsPlace\n              schema:name           ?name\n    FILTER langMatches(lang(?name), \"en\")\n  }\nORDER BY ?name" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/model/ontologies/namespace/select-contained-places/> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "e43daa0a-ce1b-410d-877f-70a42f0ef294" .
+    
+    <admin/model/ontologies/namespace/#ContainedPlaces>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    <admin/model/ontologies/namespace/#SelectContainedPlaces> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "d2ac90f3-8c07-4d65-bdf2-20f53c4f5d91" .
+}
+
+<admin/acl/public-keys/> {
+    <admin/acl/public-keys/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage RSA public keys" ;
+            <http://purl.org/dc/terms/title>
+                    "Public keys" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/acl/> .
+}
+
+<admin/acl/authorizations/authorize-google/> {
+    <admin/acl/authorizations/authorize-google/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Google's OAuth2 authorization" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/authorize-google/#this> .
+    
+    <admin/acl/authorizations/authorize-google/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Required to enable public OAuth2 login" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Google's OAuth2 authorization" ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/admin#AuthorizeGoogle> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/authorize-google/> .
+}
+
+<admin/acl/authorizations/0c61bee1-a36c-4904-bc6a-832d9597aad3/> {
+    <admin/acl/authorizations/0c61bee1-a36c-4904-bc6a-832d9597aad3/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Public secretary's WebID" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/0c61bee1-a36c-4904-bc6a-832d9597aad3/#auth> .
+    
+    <admin/acl/authorizations/0c61bee1-a36c-4904-bc6a-832d9597aad3/#auth>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/> , <admin/acl/public-keys/0c61bee1-a36c-4904-bc6a-832d9597aad3/> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> , <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/0c61bee1-a36c-4904-bc6a-832d9597aad3/> .
+}
+
+<admin/model/ontologies/> {
+    <admin/model/ontologies/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage ontologies that define application domain" ;
+            <http://purl.org/dc/terms/title>
+                    "Ontologies" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/model/> .
+}
+
+<admin/acl/users/> {
+    <admin/acl/users/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage agent user accounts and credentials" ;
+            <http://purl.org/dc/terms/title>
+                    "Users" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/acl/> .
+}
+
+<admin/model/> {
+    <admin/model/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage application model: classes, properties, constraints etc." ;
+            <http://purl.org/dc/terms/title>
+                    "Model" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/> .
+}
+
+<admin/acl/public-keys/6b424522-ea90-41be-96cf-56e2b4810c4c/> {
+    <admin/acl/public-keys/6b424522-ea90-41be-96cf-56e2b4810c4c/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#PublicKey> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "LinkedDataHub" ;
+            <http://www.w3.org/ns/auth/cert#exponent>
+                    65537 ;
+            <http://www.w3.org/ns/auth/cert#modulus>
+                    "83fd5c2272adca2ee1dee2b1acf151cc9649fd90134f8e65b9745c1536d738958713667dac5e05d956d9af047eed6f48b794fa7b9898811ff0bd982110c36bd39bf089a65c69f6266f8cc33c87756f5e32912ee0ffff3041fbfee0749f0c3163ea12aec2789e60a75ae78afe8037f80a179abf9d14d4d13f5ca6c362804e72db709f9c14804af1f7ac4b65b91a9bbbcd0d6f77cc0c45c4e35ee1b03f72528d9f69cf41e2df90454695d76c0769e6da5171b0abdf1c946b6e72a04ebef81cef86d28b8ccdf4441a7746a950acaa6148ef2f833a12a085c8782b598e8b1ed17a5ee93d16ef51d2a92698e0f8cf3436dfd5accc9a5c65ce968e8052897d2dc128c7"^^<http://www.w3.org/2001/XMLSchema#hexBinary> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/public-keys/6b424522-ea90-41be-96cf-56e2b4810c4c/> .
+    
+    <admin/acl/public-keys/6b424522-ea90-41be-96cf-56e2b4810c4c/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "LinkedDataHub" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/public-keys/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/public-keys/6b424522-ea90-41be-96cf-56e2b4810c4c/#this> .
+}
+
+<admin/acl/groups/> {
+    <admin/acl/groups/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage agent groups that have access" ;
+            <http://purl.org/dc/terms/title>
+                    "Groups" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/acl/> .
+}
+
+<admin/acl/authorizations/6b424522-ea90-41be-96cf-56e2b4810c4c/> {
+    <admin/acl/authorizations/6b424522-ea90-41be-96cf-56e2b4810c4c/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Public secretary's WebID" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/6b424522-ea90-41be-96cf-56e2b4810c4c/#auth> .
+    
+    <admin/acl/authorizations/6b424522-ea90-41be-96cf-56e2b4810c4c/#auth>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/> , <admin/acl/public-keys/6b424522-ea90-41be-96cf-56e2b4810c4c/> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> , <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/6b424522-ea90-41be-96cf-56e2b4810c4c/> .
+}
+
+<admin/oauth2/login> {
+    <admin/oauth2/login>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#OAuth2Login> ;
+            <http://purl.org/dc/terms/title>
+                    "OAuth 2.0 login" .
+}
+
+<admin/acl/authorizations/sign-up/> {
+    <admin/acl/authorizations/sign-up/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Signup access" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/sign-up/#this> .
+    
+    <admin/acl/authorizations/sign-up/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Required to enable public signup" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Signup access" ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/admin#SignUp> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> , <http://www.w3.org/ns/auth/acl#Append> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/sign-up/> .
+}
+
+<admin/queries/default/select-labelled/> {
+    <admin/queries/default/select-labelled/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select labelled" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/queries/default/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/queries/default/select-labelled/#this> .
+    
+    <admin/queries/default/select-labelled/#this>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select labelled" ;
+            <http://spinrdf.org/sp#text>  "\n    PREFIX  dct:  <http://purl.org/dc/terms/>\n    PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n    PREFIX  skos: <http://www.w3.org/2004/02/skos/core#>\n    PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n    PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n    PREFIX  sioc: <http://rdfs.org/sioc/ns#>\n    PREFIX  dc:   <http://purl.org/dc/elements/1.1/>\n\n    SELECT DISTINCT  ?resource ?label\n    WHERE\n    { GRAPH ?graph\n      { ?resource a ?Type .\n        ?resource (((((((rdfs:label|dc:title)|dct:title)|foaf:name)|foaf:givenName)|foaf:familyName)|sioc:name)|skos:prefLabel)|sioc:content ?label\n        FILTER isURI(?resource)\n        OPTIONAL\n          { ?resource  dct:created  ?created }\n      }\n    }" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/queries/default/select-labelled/> .
+}
+
+<admin/acl/authorizations/request-access/> {
+    <admin/acl/authorizations/request-access/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Authorization request access" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/request-access/#this> .
+    
+    <admin/acl/authorizations/request-access/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Required to enable authorization requests" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Request access" ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/admin#RequestAccess> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> , <http://www.w3.org/ns/auth/acl#Append> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/request-access/> .
+}
+
+<admin/acl/agents/> {
+    <admin/acl/agents/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage people and software agents that have access" ;
+            <http://purl.org/dc/terms/title>
+                    "Agents" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/acl/> .
+}
+
+<admin/acl/groups/readers/> {
+    <admin/acl/groups/readers/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Readers" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/groups/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/groups/readers/#this> .
+    
+    <admin/acl/groups/readers/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Group> ;
+            <http://purl.org/dc/terms/description>
+                    "Group of agents that have read access" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/groups/readers/> ;
+            <http://xmlns.com/foaf/0.1/name>
+                    "Readers" .
+}
+
+<admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/> {
+    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Jusevicius Martynas" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/agents/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/#this> .
+    
+    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Agent> ;
+            <http://www.w3.org/ns/auth/cert#key>
+                    <admin/acl/public-keys/8e4fc82d-505a-4838-a8a2-5e559117b47e/#this> , <admin/acl/public-keys/d629f779-60c1-4cd3-8966-767b02cd9afc/#this> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/> ;
+            <http://xmlns.com/foaf/0.1/mbox>
+                    <mailto:pumba@xml.lt> ;
+            <http://xmlns.com/foaf/0.1/name>
+                    "Jusevicius Martynas" .
+    
+    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/#this>
+            <http://www.w3.org/ns/auth/acl#delegates>
+                    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/#this> .
+}
+
+<admin/request%20access> {
+    <admin/request%20access>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#RequestAccess> ;
+            <http://purl.org/dc/terms/title>
+                    "Request access" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <admin/request%20access#content> .
+    
+    <admin/request%20access#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n    <p class=\"lead\">Request access</p>\n    <p>Ask for access to a restricted resource by making a request. It will be reviewed by the application's\n        administrators.</p>\n    </div>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () .
+}
+
+<admin/queries/default/select-children/> {
+    <admin/queries/default/select-children/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select children" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/queries/default/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/queries/default/select-children/#this> .
+    
+    <admin/queries/default/select-children/#this>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select children" ;
+            <http://spinrdf.org/sp#text>  "\n    PREFIX  dct:  <http://purl.org/dc/terms/>\n    PREFIX  sioc: <http://rdfs.org/sioc/ns#>\n    PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n\n    SELECT DISTINCT  ?child ?title ?thing\n    WHERE\n    { GRAPH ?childGraphGraph\n      {   { ?child  sioc:has_parent  ?this }\n        UNION\n          { ?child  sioc:has_container  ?this }\n      }\n    GRAPH ?childGraph\n      { ?child  a                     ?Type\n        OPTIONAL\n          { ?child  dct:title  ?title }\n        OPTIONAL\n          { ?child  foaf:primaryTopic ?thing }\n      }\n    }\n    " ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/queries/default/select-children/> .
+}
+
+<admin/sign%20up> {
+    <admin/sign%20up>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#SignUp> ;
+            <http://purl.org/dc/terms/title>
+                    "Sign up" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <admin/sign%20up#content> .
+    
+    <admin/sign%20up#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n    <p class=\"lead\">Welcome. Create your free account and join the web of data.</p>\n    <p>LinkedDataHub uses WebID as the single sign-on (SSO) protocol for distributed applications, which is based on\n        authentication using client certficates. <a href=\"http://webid.info\">Read more about WebID</a>.</p>\n    <div class=\"alert alert-info\">\n        <p>Unlike most LinkedDataHub resources, your WebID profile will have <em>public access</em> as required by the\n        protocol. We will hide your email address however.</p>\n    </div>\n    </div>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () .
+}
+
+<admin/acl/public-keys/d629f779-60c1-4cd3-8966-767b02cd9afc/> {
+    <admin/acl/public-keys/d629f779-60c1-4cd3-8966-767b02cd9afc/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#PublicKey> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Jusevicius Martynas" ;
+            <http://www.w3.org/ns/auth/cert#exponent>
+                    65537 ;
+            <http://www.w3.org/ns/auth/cert#modulus>
+                    "a4281a359d2b271127d67472db859b63ea23579648247b56a6366eef1cb5a65cdfa69f9552ddf558b34072794a1cd4bb09d77c0e76cf4384ae2d1cc7728014128eb618534e39638579be5e7bba76a10f7b31edf184f25f5ee95bc47ff9b64b7aa873435ca487a3eb05c2d9df927cd5e2d2dca0ada2e7795db96df2d2e79387784a31a90d9192f938140e339e664e9c3992e671213aef660a8fd0641f2d30178e39fb64a5ee8481a1d0f9d641a1f8a550b6ee146c461493e10bf57502d74479488694067801eef34d2d688e3d16549510cba2b1ad404f4a73a0f531603e42781cc84466974c2d6ed27f556e071baef8d3dc1fa3283a9359c038d85717544714b1"^^<http://www.w3.org/2001/XMLSchema#hexBinary> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/public-keys/d629f779-60c1-4cd3-8966-767b02cd9afc/> .
+    
+    <admin/acl/public-keys/d629f779-60c1-4cd3-8966-767b02cd9afc/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Jusevicius Martynas" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/public-keys/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/public-keys/d629f779-60c1-4cd3-8966-767b02cd9afc/#this> .
+}
+
+<admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/> {
+    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Agent> ;
+            <http://www.w3.org/ns/auth/cert#key>
+                    <admin/acl/public-keys/6b424522-ea90-41be-96cf-56e2b4810c4c/#this> , <admin/acl/public-keys/0c61bee1-a36c-4904-bc6a-832d9597aad3/#this> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/> ;
+            <http://xmlns.com/foaf/0.1/name>
+                    "LinkedDataHub" .
+    
+    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "LinkedDataHub" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/agents/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/#this> .
+}
+
+<admin/acl/authorizations/creator/> {
+    <admin/acl/authorizations/creator/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Creator access" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/creator/#this> .
+    
+    <admin/acl/authorizations/creator/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#CreatorAuthorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Creators have full control of their created resources" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Creator access" ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/default#Root> , <https://w3id.org/atomgraph/linkeddatahub/default#Item> , <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/creator/> ;
+            <https://w3id.org/atomgraph/linkeddatahub/admin/acl/domain#accessProperty>
+                    <http://xmlns.com/foaf/0.1/maker> .
+}
+
+<admin/acl/groups/owners/> {
+    <admin/acl/groups/owners/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Group> ;
+            <http://purl.org/dc/terms/description>
+                    "Group of agents that own the application" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/groups/owners/> ;
+            <http://xmlns.com/foaf/0.1/member>
+                    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/#this> ;
+            <http://xmlns.com/foaf/0.1/name>
+                    "Owners" .
+    
+    <admin/acl/groups/owners/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Owners" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/groups/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/groups/owners/#this> .
+}
+
+<admin/> {
+    <admin/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Root container" ;
+            <http://purl.org/dc/terms/title>
+                    "Root" .
+}
+
+<admin/acl/authorizations/read/> {
+    <admin/acl/authorizations/read/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Read access" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/read/#this> .
+    
+    <admin/acl/authorizations/read/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Allows read access to all resources" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Read access" ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <service> , <clone> , <imports> , <add> , <sparql> ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/default#Root> , <https://w3id.org/atomgraph/linkeddatahub/default#Item> , <https://w3id.org/atomgraph/linkeddatahub/default#Container> , <https://w3id.org/atomgraph/linkeddatahub/default#File> ;
+            <http://www.w3.org/ns/auth/acl#agentGroup>
+                    <admin/acl/groups/owners/#this> , <admin/acl/groups/readers/#this> , <admin/acl/groups/writers/#this> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/read/> .
+}
+
+<admin/acl/authorizations/write-append/> {
+    <admin/acl/authorizations/write-append/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Write/append access" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/write-append/#this> .
+    
+    <admin/acl/authorizations/write-append/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Allows write access to all documents and containers" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Write/append access" ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <service> , <clone> , <imports> , <add> , <sparql> ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/default#Root> , <https://w3id.org/atomgraph/linkeddatahub/default#Item> , <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://www.w3.org/ns/auth/acl#agentGroup>
+                    <admin/acl/groups/owners/#this> , <admin/acl/groups/writers/#this> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Write> , <http://www.w3.org/ns/auth/acl#Append> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/write-append/> .
+}
+
+<admin/acl/authorizations/append-request/> {
+    <admin/acl/authorizations/append-request/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Append authorization request" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/append-request/#this> .
+    
+    <admin/acl/authorizations/append-request/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Required to enable authorization requests" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Append authorization request" ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <admin/acl/authorization-requests/> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Append> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/append-request/> .
+}
+
+<admin/acl/authorizations/d629f779-60c1-4cd3-8966-767b02cd9afc/> {
+    <admin/acl/authorizations/d629f779-60c1-4cd3-8966-767b02cd9afc/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Public owner's WebID" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/d629f779-60c1-4cd3-8966-767b02cd9afc/#auth> .
+    
+    <admin/acl/authorizations/d629f779-60c1-4cd3-8966-767b02cd9afc/#auth>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/> , <admin/acl/public-keys/d629f779-60c1-4cd3-8966-767b02cd9afc/> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> , <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/d629f779-60c1-4cd3-8966-767b02cd9afc/> .
+}
+
+<admin/acl/authorizations/8e4fc82d-505a-4838-a8a2-5e559117b47e/> {
+    <admin/acl/authorizations/8e4fc82d-505a-4838-a8a2-5e559117b47e/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Public owner's WebID" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/8e4fc82d-505a-4838-a8a2-5e559117b47e/#auth> .
+    
+    <admin/acl/authorizations/8e4fc82d-505a-4838-a8a2-5e559117b47e/#auth>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/ns/auth/acl#accessTo>
+                    <admin/acl/agents/5e08c3bd-b4fe-45d2-be65-3c9a3f99cafa/> , <admin/acl/public-keys/8e4fc82d-505a-4838-a8a2-5e559117b47e/> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> , <http://www.w3.org/ns/auth/acl#AuthenticatedAgent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/8e4fc82d-505a-4838-a8a2-5e559117b47e/> .
+}
+
+<admin/oauth2/authorize/google> {
+    <admin/oauth2/authorize/google>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#AuthorizeGoogle> ;
+            <http://purl.org/dc/terms/title>
+                    "Google OAuth2.0 authorization" .
+}
+
+<admin/acl/authorizations/oauth2-login/> {
+    <admin/acl/authorizations/oauth2-login/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "OAuth2 login access" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/authorizations/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/authorizations/oauth2-login/#this> .
+    
+    <admin/acl/authorizations/oauth2-login/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
+            <http://www.w3.org/2000/01/rdf-schema#comment>
+                    "Required to enable public OAuth2 login" ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "OAuth2 login access" ;
+            <http://www.w3.org/ns/auth/acl#accessToClass>
+                    <https://w3id.org/atomgraph/linkeddatahub/admin#OAuth2Login> ;
+            <http://www.w3.org/ns/auth/acl#agentClass>
+                    <http://xmlns.com/foaf/0.1/Agent> ;
+            <http://www.w3.org/ns/auth/acl#mode>
+                    <http://www.w3.org/ns/auth/acl#Read> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/authorizations/oauth2-login/> .
+}
+
+<admin/acl/public-keys/8e4fc82d-505a-4838-a8a2-5e559117b47e/> {
+    <admin/acl/public-keys/8e4fc82d-505a-4838-a8a2-5e559117b47e/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#PublicKey> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Jusevicius Martynas" ;
+            <http://www.w3.org/ns/auth/cert#exponent>
+                    65537 ;
+            <http://www.w3.org/ns/auth/cert#modulus>
+                    "a4281a359d2b271127d67472db859b63ea23579648247b56a6366eef1cb5a65cdfa69f9552ddf558b34072794a1cd4bb09d77c0e76cf4384ae2d1cc7728014128eb618534e39638579be5e7bba76a10f7b31edf184f25f5ee95bc47ff9b64b7aa873435ca487a3eb05c2d9df927cd5e2d2dca0ada2e7795db96df2d2e79387784a31a90d9192f938140e339e664e9c3992e671213aef660a8fd0641f2d30178e39fb64a5ee8481a1d0f9d641a1f8a550b6ee146c461493e10bf57502d74479488694067801eef34d2d688e3d16549510cba2b1ad404f4a73a0f531603e42781cc84466974c2d6ed27f556e071baef8d3dc1fa3283a9359c038d85717544714b1"^^<http://www.w3.org/2001/XMLSchema#hexBinary> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/public-keys/8e4fc82d-505a-4838-a8a2-5e559117b47e/> .
+    
+    <admin/acl/public-keys/8e4fc82d-505a-4838-a8a2-5e559117b47e/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Jusevicius Martynas" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/public-keys/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/public-keys/8e4fc82d-505a-4838-a8a2-5e559117b47e/#this> .
+}
+
+<admin/acl/public-keys/0c61bee1-a36c-4904-bc6a-832d9597aad3/> {
+    <admin/acl/public-keys/0c61bee1-a36c-4904-bc6a-832d9597aad3/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#PublicKey> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "LinkedDataHub" ;
+            <http://www.w3.org/ns/auth/cert#exponent>
+                    65537 ;
+            <http://www.w3.org/ns/auth/cert#modulus>
+                    "83fd5c2272adca2ee1dee2b1acf151cc9649fd90134f8e65b9745c1536d738958713667dac5e05d956d9af047eed6f48b794fa7b9898811ff0bd982110c36bd39bf089a65c69f6266f8cc33c87756f5e32912ee0ffff3041fbfee0749f0c3163ea12aec2789e60a75ae78afe8037f80a179abf9d14d4d13f5ca6c362804e72db709f9c14804af1f7ac4b65b91a9bbbcd0d6f77cc0c45c4e35ee1b03f72528d9f69cf41e2df90454695d76c0769e6da5171b0abdf1c946b6e72a04ebef81cef86d28b8ccdf4441a7746a950acaa6148ef2f833a12a085c8782b598e8b1ed17a5ee93d16ef51d2a92698e0f8cf3436dfd5accc9a5c65ce968e8052897d2dc128c7"^^<http://www.w3.org/2001/XMLSchema#hexBinary> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/public-keys/0c61bee1-a36c-4904-bc6a-832d9597aad3/> .
+    
+    <admin/acl/public-keys/0c61bee1-a36c-4904-bc6a-832d9597aad3/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "LinkedDataHub" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/public-keys/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/public-keys/0c61bee1-a36c-4904-bc6a-832d9597aad3/#this> .
+}
+
+<admin/acl/> {
+    <admin/acl/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Manage agents, user accounts and authorizations" ;
+            <http://purl.org/dc/terms/title>
+                    "Access control" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/> .
+}
+
+<admin/queries/> {
+    <admin/queries/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "SPARQL queries" ;
+            <http://purl.org/dc/terms/title>
+                    "Queries" .
+}
+
+<admin/queries/default/> {
+    <admin/queries/default/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Default queries" ;
+            <http://purl.org/dc/terms/title>
+                    "Default" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <admin/queries/> .
+}
+
+<admin/acl/groups/writers/> {
+    <admin/acl/groups/writers/#this>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Group> ;
+            <http://purl.org/dc/terms/description>
+                    "Group of agents that have write access" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <admin/acl/groups/writers/> ;
+            <http://xmlns.com/foaf/0.1/member>
+                    <admin/acl/agents/c33f8be5-855b-4da3-a052-b3514f1bc1f2/#this> ;
+            <http://xmlns.com/foaf/0.1/name>
+                    "Writers" .
+    
+    <admin/acl/groups/writers/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Writers" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <admin/acl/groups/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <admin/acl/groups/writers/#this> .
+}

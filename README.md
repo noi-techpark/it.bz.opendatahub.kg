@@ -20,11 +20,11 @@
 # Usage
 
   1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_sample` as a template.
-  2. Setup client certificates (insert your own passwords, they need to be at least _6 characters long_):
+  2. Setup client certificates (insert your own passwords, they need to be at least _6 characters long_ and only contain _ASCII characters_ (`keytool` limitation)):
      ```
      ./linkeddatahub/scripts/setup.sh .env ./ssl $owner_cert_pwd $secretary_cert_pwd 36500
      ```
-     WebID URIs in the client certifcates are relative to the base URI and have to be regenerated if the base URI changes.
+     _:warning: WebID URIs in the client certifcates are relative to the base URI and have to be regenerated if the base URI changes._
   3. Run the services:
      ```
      docker-compose up --build
