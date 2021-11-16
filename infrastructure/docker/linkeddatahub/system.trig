@@ -20,7 +20,7 @@
 <urn:linkeddatahub:apps/admin> a lapp:AdminApplication ;
     dct:title "LinkedDataHub admin" ;
     ldt:base <admin/> ;
-    ldt:ontology <admin/ns#> ;
+    ldt:ontology <https://w3id.org/atomgraph/linkeddatahub/admin#> ;
     ldt:service <urn:linkeddatahub:services/admin> ;
     ac:stylesheet <static/com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/admin/layout.xsl> ;
     lapp:endUserApplication <urn:linkeddatahub:apps/end-user> .
@@ -28,12 +28,24 @@
 # root end-user
 
 <urn:linkeddatahub:apps/end-user> a lapp:EndUserApplication ;
-    dct:title "LinkedDataHub" ;
+    dct:title "OpenDataHub" ;
     ldt:base <> ;
     ldt:ontology <admin/model/ontologies/namespace/#> ;
     ldt:service <urn:linkeddatahub:services/end-user> ;
     lapp:adminApplication <urn:linkeddatahub:apps/admin> ;
-    lapp:public true .
+    lapp:public true ;
+    ac:stylesheet <static/it/bz/opendatahub/kg/xsl/layout.xsl> ;
+    foaf:logo <https://opendatahub.bz.it/img/IDM_OPENDATAHUB_2_BK.svg> .
+
+# OpenDataHub
+
+<urn:linkeddatahub:apps/open-data-hub> a lapp:Application ;
+    dct:title "OpenDataHub" ;
+    ldt:base <data/> ;
+    lapp:proxy <http://processor-nginx/> ;
+    ldt:ontology <admin/model/ontologies/namespace/#> ;
+    ac:stylesheet <static/it/bz/opendatahub/kg/xsl/layout.xsl> ;
+    foaf:logo <https://opendatahub.bz.it/img/IDM_OPENDATAHUB_2_BK.svg> .
 
 # SERVICES
 
