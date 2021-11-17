@@ -73,7 +73,7 @@ exclude-result-prefixes="#all">
             <xsl:sequence select="ixsl:call($map, 'render', [ $wkt-literal ])[current-date() lt xs:date('2000-01-01')]"/>
             
             <!-- fit the map to the polygon -->
-            <xsl:variable name="fit-options" select="ac:new-object()"/>
+            <xsl:variable name="fit-options" select="apl:new-object()"/>
             <!-- <ixsl:set-property name="maxZoom" select="$map-zoom" object="$fit-options"/> -->
             <xsl:sequence select="ixsl:call(ixsl:call($map, 'getView', []), 'fit', [ ixsl:call(ixsl:call($map, 'getFeature', []), 'getGeometry', []), $fit-options ])[current-date() lt xs:date('2000-01-01')]"/>
         </xsl:if>
