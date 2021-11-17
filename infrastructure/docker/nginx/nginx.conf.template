@@ -16,12 +16,12 @@ http {
     client_max_body_size $MAX_BODY_SIZE;
 
     server {
-        listen $SERVER_HTTPS_PORT ssl;
+        listen $SERVER_HTTPS_PORT; # listen $SERVER_HTTPS_PORT ssl;
         server_name $SERVER_NAME;
-        ssl_certificate $SERVER_CERT_FILE;
-        ssl_certificate_key $SERVER_KEY_FILE;
-        ssl_session_cache shared:SSL:1m;  
-        ssl_prefer_server_ciphers on;
+        # ssl_certificate $SERVER_CERT_FILE;
+        # ssl_certificate_key $SERVER_KEY_FILE;
+        # ssl_session_cache shared:SSL:1m;  
+        # ssl_prefer_server_ciphers on;
         # ssl_verify_client optional_no_ca;
 
         location / {
