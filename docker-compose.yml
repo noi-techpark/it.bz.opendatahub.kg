@@ -86,14 +86,7 @@ services:
       # - GOOGLE_CLIENT_ID=
       # - GOOGLE_CLIENT_SECRET=
     volumes:
-      - ./ssl/server:/var/linkeddatahub/ssl/server:ro
-      - ./ssl/owner/public.pem:/var/linkeddatahub/ssl/owner/public.pem:ro
-      - ./ssl/secretary:/var/linkeddatahub/ssl/secretary:ro
       - uploads:/var/www/linkeddatahub/uploads
-      - ./infrastructure/docker/linkeddatahub/dev.log4j.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties:ro
-      - ./infrastructure/docker/linkeddatahub/system-varnish.trig:/var/linkeddatahub/datasets/system.trig:ro
-      - ./infrastructure/docker/linkeddatahub/datasets/admin.trig:/var/linkeddatahub/datasets/admin.trig:ro
-      - ./infrastructure/docker/linkeddatahub/datasets/end-user.trig:/var/linkeddatahub/datasets/end-user.trig:ro
   fuseki-admin:
     image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
