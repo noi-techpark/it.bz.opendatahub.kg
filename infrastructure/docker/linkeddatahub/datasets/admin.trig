@@ -61,11 +61,11 @@
     <acl/authorizations/public/#this>
             a       <https://w3id.org/atomgraph/linkeddatahub/admin#Authorization> ;
             <http://www.w3.org/2000/01/rdf-schema#comment>
-                    "Allows unauthorized access" ;
+                    "Allows non-authenticated access" ;
             <http://www.w3.org/2000/01/rdf-schema#label>
                     "Public access" ;
             <http://www.w3.org/ns/auth/acl#accessTo>
-                    <sparql> , <model/ontologies/namespace/> ;
+                    <../sparql> , <model/ontologies/namespace/> ;
             <http://www.w3.org/ns/auth/acl#accessToClass>
                     <https://w3id.org/atomgraph/linkeddatahub/default#Root> , <https://w3id.org/atomgraph/linkeddatahub/default#Item> , <https://w3id.org/atomgraph/linkeddatahub/default#Container> , <https://w3id.org/atomgraph/linkeddatahub/default#File> ;
             <http://www.w3.org/ns/auth/acl#agentClass>
