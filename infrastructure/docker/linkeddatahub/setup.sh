@@ -1,116 +1,46 @@
 #!/bin/bash
 
-if [ "$#" -ne 5 ]; then
-  echo "Usage:   $0" '$env_file $out_folder $owner_cert_pwd $secretary_cert_pwd $validity' >&2
-  echo "Example: $0 .env ssl Password Password 3650" >&2
+if [ "$#" -ne 12 ]; then
+  echo "Usage:   $0" '$out_folder $base_uri $owner_given_name $owner_family_name $owner_org_unit $owner_organization $owner_locality $owner_state_or_province $owner_country_name $owner_cert_pwd $secretary_cert_pwd $validity' >&2
   exit 1
 fi
 
-env_file="$1"
-out_folder="$2"
+out_folder="$1"
+base_uri="$2"
 
 printf "### Output folder: %s\n" "$out_folder"
 
 owner_alias="owner"
 owner_keystore="${out_folder}/owner/keystore.p12"
-owner_cert_pwd="$3"
+owner_given_name="$3"
+owner_family_name="$4"
+owner_org_unit="$5"
+owner_organization="$6"
+owner_locality="$7"
+owner_state_or_province="$8"
+owner_country_name="$9"
+owner_cert_pwd="${10}"
 owner_cert="${out_folder}/owner/cert.pem"
 owner_public_key="${out_folder}/owner/public.pem"
 
 secretary_alias="secretary"
 secretary_keystore="${out_folder}/secretary/keystore.p12"
 secretary_cert="${out_folder}/secretary/cert.pem"
-secretary_cert_pwd="$4"
+secretary_cert_pwd="${11}"
 secretary_cert_dname="CN=LDH, OU=LDH, O=AtomGraph, L=Copenhagen, ST=Denmark, C=DK"
 
-validity="$5"
-
-# append secretary cert password to the env_file
-echo "" >> "$env_file"
-echo "SECRETARY_CERT_PASSWORD=${secretary_cert_pwd}" >> "$env_file"
-
-declare -A env
-
-# read file line by line and populate the array. Field separator is "="
-while IFS='=' read -r k v; do
-    if [ -n "$k" ] ; then env["$k"]="$v"; fi
-done < "$env_file"
-
-if [ -z "${env['PROTOCOL']}" ]; then
-    echo "Configuration is incomplete: PROTOCOL is missing"
-    exit 1
-fi
-if [ -z "${env['HTTPS_PORT']}" ]; then
-    echo "Configuration is incomplete: HTTPS_PORT is missing"
-    exit 1
-fi
-if [ -z "${env['HTTP_PORT']}" ]; then
-    echo "Configuration is incomplete: HTTP_PORT is missing"
-    exit 1
-fi
-if [ -z "${env['HOST']}" ]; then
-    echo "Configuration is incomplete: HOST is missing"
-    exit 1
-fi
-if [ -z "${env['ABS_PATH']}" ]; then
-    echo "Configuration is incomplete: ABS_PATH is missing"
-    exit 1
-fi
-
-if [ "${env['PROTOCOL']}" = "https" ]; then
-    if [ "${env['HTTPS_PORT']}" = 443 ]; then
-        base_uri="${env['PROTOCOL']}://${env['HOST']}${env['ABS_PATH']}"
-    else
-        base_uri="${env['PROTOCOL']}://${env['HOST']}:${env['HTTPS_PORT']}${env['ABS_PATH']}"
-    fi
-else
-    if [ "${env['HTTP_PORT']}" = 80 ]; then
-        base_uri="${env['PROTOCOL']}://${env['HOST']}${env['ABS_PATH']}"
-    else
-        base_uri="${env['PROTOCOL']}://${env['HOST']}:${env['HTTP_PORT']}${env['ABS_PATH']}"
-    fi
-fi
+validity="${12}"
 
 printf "\n### Base URI: %s\n" "$base_uri"
 
-
 ### OWNER CERT ###
-
-if [ -z "${env['OWNER_GIVEN_NAME']}" ]; then
-    echo "Configuration is incomplete: OWNER_GIVEN_NAME is missing"
-    exit 1
-fi
-if [ -z "${env['OWNER_FAMILY_NAME']}" ]; then
-    echo "Configuration is incomplete: OWNER_FAMILY_NAME is missing"
-    exit 1
-fi
-if [ -z "${env['OWNER_ORG_UNIT']}" ]; then
-    echo "Configuration is incomplete: OWNER_ORG_UNIT is missing"
-    exit 1
-fi
-if [ -z "${env['OWNER_ORGANIZATION']}" ]; then
-    echo "Configuration is incomplete: OWNER_ORGANIZATION is missing"
-    exit 1
-fi
-if [ -z "${env['OWNER_LOCALITY']}" ]; then
-    echo "Configuration is incomplete: OWNER_LOCALITY is missing"
-    exit 1
-fi
-if [ -z "${env['OWNER_STATE_OR_PROVINCE']}" ]; then
-    echo "Configuration is incomplete: OWNER_STATE_OR_PROVINCE is missing"
-    exit 1
-fi
-if [ -z "${env['OWNER_COUNTRY_NAME']}" ]; then
-    echo "Configuration is incomplete: OWNER_COUNTRY_NAME is missing"
-    exit 1
-fi
 
 owner_uuid=$(uuidgen | tr '[:upper:]' '[:lower:]') # lowercase
 owner_uri="${base_uri}admin/acl/agents/${owner_uuid}/#this"
 
 printf "\n### Owner's WebID URI: %s\n" "$owner_uri"
 
-owner_cert_dname="CN=${env['OWNER_GIVEN_NAME']} ${env['OWNER_FAMILY_NAME']}, OU=${env['OWNER_ORG_UNIT']}, O=${env['OWNER_ORGANIZATION']}, L=${env['OWNER_LOCALITY']}, ST=${env['OWNER_STATE_OR_PROVINCE']}, C=${env['OWNER_COUNTRY_NAME']}"
+owner_cert_dname="CN=${owner_given_name} ${owner_family_name}, OU=${owner_org_unit}, O=${owner_organization}, L=${owner_locality}, ST=${owner_state_or_province}, C=${owner_country_name}"
 printf "\n### Owner WebID certificate's DName attributes: %s\n" "$owner_cert_dname"
 
 mkdir -p "$out_folder"/owner

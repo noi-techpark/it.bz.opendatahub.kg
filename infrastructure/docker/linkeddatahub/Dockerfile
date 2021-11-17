@@ -3,8 +3,18 @@ FROM atomgraph/linkeddatahub:c4cf6a4b848871ebc2b0b72d28ea23adda43f087
 USER root
 
 ARG SAXON_VERSION=9.9.1-2
-ARG ENV_FILE=
-#ARG CERT_PASSWORD=
+
+ARG BASE_URI=
+ARG OWNER_MBOX=
+ARG OWNER_GIVEN_NAME=
+ARG OWNER_FAMILY_NAME=
+ARG OWNER_ORG_UNIT=
+ARG OWNER_ORGANIZATION=
+ARG OWNER_LOCALITY=
+ARG OWNER_STATE_OR_PROVINCE=
+ARG OWNER_COUNTRY_NAME=
+ARG OWNER_CERT_PASSWORD=
+ARG SECRETARY_CERT_PASSWORD=
 
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get update --allow-releaseinfo-change && \
@@ -17,7 +27,7 @@ USER ldh
 
 WORKDIR $CATALINA_HOME/webapps/ROOT/static
 
-COPY --chown=ldh:ldh config/dev.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
+COPY --chown=ldh:ldh config/prod.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
 COPY --chown=ldh:ldh config/system-varnish.trig /var/linkeddatahub/datasets/system.trig
 COPY --chown=ldh:ldh datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
 COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig
@@ -36,8 +46,20 @@ RUN curl https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/${SAXON_VERSION}/S
 WORKDIR $CATALINA_HOME
 
 COPY --chown=ldh:ldh setup.sh setup.sh
-COPY --chown=ldh:ldh "$ENV_FILE" .env
 
-RUN ./setup.sh .env /var/linkeddatahub/ssl LinkedDataHub LinkedDataHub 3650
+RUN ./setup.sh \
+    /var/linkeddatahub/ssl \
+    "$BASE_URI" \
+    "$OWNER_MBOX" \
+    "$OWNER_GIVEN_NAME" \
+    "$OWNER_FAMILY_NAME" \
+    "$OWNER_ORG_UNIT" \
+    "$OWNER_ORGANIZATION" \
+    "$OWNER_LOCALITY" \
+    "$OWNER_STATE_OR_PROVINCE" \
+    "$OWNER_COUNTRY_NAME" \
+    "$OWNER_CERT_PASSWORD" \
+    "$SECRETARY_CERT_PASSWORD" \
+    3650
 
 ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
