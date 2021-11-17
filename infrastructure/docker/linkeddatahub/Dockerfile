@@ -26,7 +26,7 @@ USER ldh
 
 WORKDIR $CATALINA_HOME/webapps/ROOT/static
 
-COPY --chown=ldh:ldh config/prod.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
+COPY --chown=ldh:ldh config/dev.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
 COPY --chown=ldh:ldh config/system-varnish.trig /var/linkeddatahub/datasets/system.trig
 COPY --chown=ldh:ldh datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
 COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig

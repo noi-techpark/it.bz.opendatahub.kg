@@ -10,7 +10,7 @@ http {
     }
 
     limit_req_zone $binary_remote_addr zone=linked_data:10m rate=6r/s;
-    limit_req_zone $binary_remote_addr zone=static_files:10m rate=20r/s burst=50;
+    limit_req_zone $binary_remote_addr zone=static_files:10m rate=20r/s;
     limit_req_status 429;
 
     client_max_body_size $MAX_BODY_SIZE;
@@ -21,7 +21,6 @@ http {
 
         location / {
             proxy_pass http://linkeddatahub;
-            #proxy_cache backcache;
             limit_req zone=linked_data burst=20 nodelay;
 
             proxy_set_header Client-Cert '';
@@ -30,7 +29,7 @@ http {
 
         location ^~ /static/ {
             proxy_pass http://linkeddatahub;
-            limit_req zone=static_files burst=20 nodelay;
+            limit_req zone=static_files burst=50 nodelay;
         }
     }
 
