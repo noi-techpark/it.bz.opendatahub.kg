@@ -61,7 +61,7 @@ services:
     build:
       context: infrastructure/docker/linkeddatahub
       args:
-        - ENV_FILE: ./.env
+        ENV_FILE: .env
     ports:
       - 8001:8000 # debugger
     environment:
