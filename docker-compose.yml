@@ -12,14 +12,10 @@ services:
     ports:
       - ${HTTP_PORT}:8080 # allow Tomcat to do HTTP to HTTPS redirect
     environment:
-      - HTTPS_PORT=${HTTPS_PORT}
       - UPSTREAM_SERVER=linkeddatahub
       - UPSTREAM_HTTP_PORT=7070
       - SERVER_NAME=${HOST}
-      - SERVER_HTTPS_PORT=8443 # because of nginx-unprivileged
       - SERVER_HTTP_PORT=8080 # because of nginx-unprivileged
-      - SERVER_CERT_FILE=/etc/nginx/ssl/server.crt
-      - SERVER_KEY_FILE=/etc/nginx/ssl/server.key
       - MAX_BODY_SIZE=2097152
     networks:
       default:
@@ -56,8 +52,6 @@ services:
         OWNER_COUNTRY_NAME: ${OWNER_COUNTRY_NAME}
         OWNER_CERT_PASSWORD: ${OWNER_CERT_PASSWORD}
         SECRETARY_CERT_PASSWORD: ${SECRETARY_CERT_PASSWORD}
-    ports:
-      - 8001:8000 # debugger
     environment:
       - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
       - TZ="Europe/Copenhagen"
