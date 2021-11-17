@@ -47,7 +47,6 @@ services:
       context: infrastructure/docker/linkeddatahub
       args:
         BASE_URI: ${PROTOCOL}://${HOST}${ABS_PATH} # will break with explicit port numbers
-        OWNER_MBOX: ${OWNER_MBOX}
         OWNER_GIVEN_NAME: ${OWNER_GIVEN_NAME}
         OWNER_FAMILY_NAME: ${OWNER_FAMILY_NAME}
         OWNER_ORG_UNIT: ${OWNER_ORG_UNIT}

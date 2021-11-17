@@ -5,7 +5,6 @@ USER root
 ARG SAXON_VERSION=9.9.1-2
 
 ARG BASE_URI=
-ARG OWNER_MBOX=
 ARG OWNER_GIVEN_NAME=
 ARG OWNER_FAMILY_NAME=
 ARG OWNER_ORG_UNIT=
@@ -50,7 +49,6 @@ COPY --chown=ldh:ldh setup.sh setup.sh
 RUN ./setup.sh \
     /var/linkeddatahub/ssl \
     "$BASE_URI" \
-    "$OWNER_MBOX" \
     "$OWNER_GIVEN_NAME" \
     "$OWNER_FAMILY_NAME" \
     "$OWNER_ORG_UNIT" \
