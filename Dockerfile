@@ -38,6 +38,6 @@ WORKDIR $CATALINA_HOME
 COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/setup.sh setup.sh
 COPY --chown=ldh:ldh "$ENV_FILE" .env
 
-RUN ./setup.sh .env /var/linkeddatahub/ssl OpenDataHub OpenDataHub 3650
+RUN ./setup.sh .env /var/linkeddatahub/ssl LinkedDataHub LinkedDataHub 3650
 
 ENTRYPOINT ["/bin/sh", "entrypoint.sh"]
