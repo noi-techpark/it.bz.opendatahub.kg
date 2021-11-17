@@ -11,11 +11,6 @@ out_folder="$2"
 
 printf "### Output folder: %s\n" "$out_folder"
 
-proxy_host="nginx"
-
-server_cert="${out_folder}/server/server.crt"
-server_public_key="${out_folder}/server/server.key"
-
 owner_alias="owner"
 owner_keystore="${out_folder}/owner/keystore.p12"
 owner_cert_pwd="$3"
@@ -78,31 +73,6 @@ fi
 
 printf "\n### Base URI: %s\n" "$base_uri"
 
-### SERVER CERT ###
-
-mkdir -p "$out_folder"/server
-
-# crude check if the host is an IP address
-IP_ADDR_MATCH=$(echo "${env['HOST']}" | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b" || test $? = 1)
-
-if [ -n "$IP_ADDR_MATCH" ]; then
-    if [ -n "$proxy_host" ]; then
-        ext="subjectAltName=IP:${env['HOST']},DNS:${proxy_host}" # IP address - special case for localhost
-    else
-        ext="subjectAltName=IP:${env['HOST']}" # IP address
-    fi
-else
-    if [ -n "$proxy_host" ]; then
-        ext="subjectAltName=DNS:${env['HOST']},DNS:${proxy_host}" # hostname - special case for localhost
-    else
-        ext="subjectAltName=DNS:${env['HOST']}" # hostname
-    fi
-fi
-
-openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes \
-  -keyout "$server_public_key" -out "$server_cert" \
-  -subj "/CN=${env['HOST']}/OU=LinkedDataHub/O=AtomGraph/L=Copenhagen/C=DK" \
-  -addext "$ext"
 
 ### OWNER CERT ###
 
