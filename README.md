@@ -10,7 +10,7 @@ to `/etc/hosts` (on Linux) or `C:\Windows\System32\Drivers\etc\hosts` (on Window
 
 # Usage
 
-  1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_sample` as a template.
+  1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_dev` (plain HTTP) or `.env_prod` (HTTPS with a self-signed server certificate) as templates.
   2. Run the services:
      ```
      docker-compose up --build
@@ -19,11 +19,12 @@ to `/etc/hosts` (on Linux) or `C:\Windows\System32\Drivers\etc\hosts` (on Window
 
 _:warning: The very first page load can take a while (or even result in `504 Bad Gateway`) while RDF ontologies and XSLT stylesheets are being loaded into memory._
 
+HTTP server's (which is the `nginx` service) port within the Docker network is 8080.
+
 # Configuration
 
 * Base URI is configured in the `.env` file
 * OpenDataHub SPARQL endpoint is configured as the `ENDPOINT` environment variable for the `processor` service
-* The server's TLS certificate (e.g. LetsEncrypt) can be mounted into the `nginx` container and specified in its `/etc/nginx/nginx.conf` config file
 
 # Reset datasets
 
