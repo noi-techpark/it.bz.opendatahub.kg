@@ -1,4 +1,4 @@
-FROM atomgraph/linkeddatahub:1b3b6bfd975b2a06ff1da0d757cac5ad243d179d
+FROM atomgraph/linkeddatahub:15ceca1a285cf98be8e9f3bd78b9f885ec29d47c
 
 USER root
 

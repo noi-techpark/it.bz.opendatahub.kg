@@ -193,6 +193,8 @@ exclude-result-prefixes="#all">
         </xsl:if>
     </xsl:template>
 
+    <xsl:apply-templates select="." mode="bs2:ModeTabs"/>
+
     <xsl:template match="rdf:RDF" mode="bs2:Footer">
         <div class="footer container-fluid">
             <div class="row-fluid">
