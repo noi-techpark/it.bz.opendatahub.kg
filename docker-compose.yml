@@ -6,9 +6,11 @@ volumes:
   data-end-user:
 services:
   nginx:
-    image: atomgraph/nginx:d329ba2207773d849c41894408fc073dbe27e3b8
+    # image: atomgraph/nginx:d329ba2207773d849c41894408fc073dbe27e3b8
+    build:
+      context: infrastructure/docker/nginx
     mem_limit: 128m
-    command: /bin/bash -c "envsubst '$$HTTPS_PORT $$UPSTREAM_SERVER $$UPSTREAM_HTTP_PORT $$SERVER_NAME $$SERVER_HTTPS_PORT $$SERVER_HTTP_PORT $$SERVER_CERT_FILE $$SERVER_KEY_FILE $$MAX_BODY_SIZE' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    # command: /bin/bash -c "envsubst '$$HTTPS_PORT $$UPSTREAM_SERVER $$UPSTREAM_HTTP_PORT $$SERVER_NAME $$SERVER_HTTPS_PORT $$SERVER_HTTP_PORT $$SERVER_CERT_FILE $$SERVER_KEY_FILE $$MAX_BODY_SIZE' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
     ports:
       - ${HTTP_PORT}:8080 # allow Tomcat to do HTTP to HTTPS redirect
     environment:
@@ -21,25 +23,29 @@ services:
       - SERVER_CERT_FILE=/etc/nginx/ssl/server.crt
       - SERVER_KEY_FILE=/etc/nginx/ssl/server.key
       - MAX_BODY_SIZE=2097152
-    volumes:
-      - ./infrastructure/docker/nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
-      - ./ssl/server:/etc/nginx/ssl:ro
+    #volumes:
+    #  - ./infrastructure/docker/nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+    #  - ./ssl/server:/etc/nginx/ssl:ro
     networks:
       default:
         aliases:
           - ${HOST}
   processor:
-    image: atomgraph/processor:eca779ec4a834289382a2173c63646cc30a0dc9a
+    # image: atomgraph/processor:eca779ec4a834289382a2173c63646cc30a0dc9a
+    build:
+      context: infrastructure/docker/processor
     environment:
       - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
       - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
       - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
-    volumes:
-      - ./infrastructure/docker/processor/noi.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/it/bz/opendatahub/kg/noi.ttl
-      - ./infrastructure/docker/processor/location-mapping.n3:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/custom-mapping.n3
-      - ./infrastructure/docker/processor/context.xml:/usr/local/tomcat/conf/Catalina/localhost/ROOT.xml
+    #volumes:
+    #  - ./infrastructure/docker/processor/noi.ttl:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/it/bz/opendatahub/kg/noi.ttl
+    #  - ./infrastructure/docker/processor/location-mapping.n3:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/custom-mapping.n3
+    #  - ./infrastructure/docker/processor/context.xml:/usr/local/tomcat/conf/Catalina/localhost/ROOT.xml
   processor-nginx:
-    image: nginx
+    # image: nginx
+    build:
+      context: infrastructure/docker/processor-nginx
     depends_on:
       - processor
     ports:
@@ -47,12 +53,13 @@ services:
     environment:
       - PROXY_PASS=http://processor:8080 # internal Processor URL (hostname equals docker-compose service name)
       - PROXY_SET_HOST=${HOST} # the hostname set on the request URI before it's passed to Processor
-    volumes:
-      - ./infrastructure/docker/processor-nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
-    command: /bin/bash -c "envsubst '$$PROXY_PASS $$PROXY_SET_HOST' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    #volumes:
+    #  - ./infrastructure/docker/processor-nginx/nginx.conf.template:/etc/nginx/nginx.conf.template:ro
+    #command: /bin/bash -c "envsubst '$$PROXY_PASS $$PROXY_SET_HOST' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
   linkeddatahub:
-    image: noi/opendatahub:latest
-    build: .
+    # image: noi/opendatahub:latest
+    build:
+      context: infrastructure/docker/linkeddatahub
     ports:
       - 8001:8000 # debugger
     environment:
@@ -60,8 +67,7 @@ services:
       - TZ="Europe/Copenhagen"
       #- CATALINA_OPTS="-Duser.timezone=Europe/Copenhagen"
       - PROXY_HOST=nginx
-      #- PROXY_HTTP_PORT=8080
-      - PROXY_HTTPS_PORT=8080
+      - PROXY_PORT=8080 # HTTP
       - PROTOCOL=${PROTOCOL}
       - HOST=${HOST}
       - ABS_PATH=${ABS_PATH}
@@ -87,25 +93,31 @@ services:
     volumes:
       - uploads:/var/www/linkeddatahub/uploads
   fuseki-admin:
-    image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
+    # image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
+    build:
+      context: infrastructure/docker/fuseki-admin
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
-    ports:
-      - 3030:3030
+    #ports:
+    #  - 3030:3030
     volumes:
-      - ./infrastructure/docker/fuseki-admin/config.ttl:/fuseki/config.ttl:ro
+      #- ./infrastructure/docker/fuseki-admin/config.ttl:/fuseki/config.ttl:ro
       - data-admin:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
   fuseki-end-user:
-    image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
+    # image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
+    build:
+      context: infrastructure/docker/fuseki-end-user
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
     ports:
       - 3031:3030
     volumes:
-      - ./infrastructure/docker/fuseki-end-user/config.ttl:/fuseki/config.ttl:ro
+      # - ./infrastructure/docker/fuseki-end-user/config.ttl:/fuseki/config.ttl:ro
       - data-end-user:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
   varnish-admin:
-    image: atomgraph/varnish:446f28a3cfedc276b2c27a971455659be98d7351
+    # image: atomgraph/varnish:446f28a3cfedc276b2c27a971455659be98d7351
+    build:
+      context: infrastructure/docker/varnish-admin
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
     depends_on:
       - linkeddatahub
@@ -117,10 +129,12 @@ services:
       - VARNISH_TTL=86400
       - VARNISH_SIZE=1G
     entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /usr/local/bin/docker-varnish-entrypoint"
-    volumes:
-      - ./infrastructure/docker/varnish-admin/varnish.vcl.template:/etc/varnish/default.vcl.template:ro
+    #volumes:
+    #  - ./infrastructure/docker/varnish-admin/varnish.vcl.template:/etc/varnish/default.vcl.template:ro
   varnish-end-user:
-    image: atomgraph/varnish:446f28a3cfedc276b2c27a971455659be98d7351
+    # image: atomgraph/varnish:446f28a3cfedc276b2c27a971455659be98d7351
+    build:
+      context: infrastructure/docker/varnish-end-user
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
     depends_on:
       - linkeddatahub
@@ -132,8 +146,8 @@ services:
       - VARNISH_TTL=86400
       - VARNISH_SIZE=1G
     entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /usr/local/bin/docker-varnish-entrypoint"
-    volumes:
-      - ./infrastructure/docker/varnish-end-user/varnish.vcl.template:/etc/varnish/default.vcl.template:ro
+    #volumes:
+    #  - ./infrastructure/docker/varnish-end-user/varnish.vcl.template:/etc/varnish/default.vcl.template:ro
   email-server:
     image: namshi/smtp
     environment:

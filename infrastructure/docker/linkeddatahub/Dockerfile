@@ -17,14 +17,14 @@ USER ldh
 
 WORKDIR $CATALINA_HOME/webapps/ROOT/static
 
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/files/layout.xsl it/bz/opendatahub/kg/xsl/layout.xsl
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/files/client.xsl it/bz/opendatahub/kg/xsl/client.xsl
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/files/bootstrap.css it/bz/opendatahub/kg/css/bootstrap.css
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/files/WKTMap.js it/bz/opendatahub/kg/js/WKTMap.js
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/dev.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/system-varnish.trig /var/linkeddatahub/datasets/system.trig
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig
+COPY --chown=ldh:ldh config/dev.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
+COPY --chown=ldh:ldh config/system-varnish.trig /var/linkeddatahub/datasets/system.trig
+COPY --chown=ldh:ldh datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
+COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig
+COPY --chown=ldh:ldh files/layout.xsl it/bz/opendatahub/kg/xsl/layout.xsl
+COPY --chown=ldh:ldh files/client.xsl it/bz/opendatahub/kg/xsl/client.xsl
+COPY --chown=ldh:ldh files/bootstrap.css it/bz/opendatahub/kg/css/bootstrap.css
+COPY --chown=ldh:ldh files/WKTMap.js it/bz/opendatahub/kg/js/WKTMap.js
 
 RUN curl https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/${SAXON_VERSION}/Saxon-HE-${SAXON_VERSION}.jar -O && \
     cat com/atomgraph/linkeddatahub/xsl/client.xsl | grep 'xsl:import' | cut -d '"' -f 2 | xargs -n 1 -I{} java -cp Saxon-HE-${SAXON_VERSION}.jar net.sf.saxon.Query -qs:"." -s:com/atomgraph/linkeddatahub/xsl/{} -o:com/atomgraph/linkeddatahub/xsl/{} && \
@@ -35,7 +35,7 @@ RUN curl https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/${SAXON_VERSION}/S
 
 WORKDIR $CATALINA_HOME
 
-COPY --chown=ldh:ldh infrastructure/docker/linkeddatahub/setup.sh setup.sh
+COPY --chown=ldh:ldh setup.sh setup.sh
 COPY --chown=ldh:ldh "$ENV_FILE" .env
 
 RUN ./setup.sh .env /var/linkeddatahub/ssl LinkedDataHub LinkedDataHub 3650
