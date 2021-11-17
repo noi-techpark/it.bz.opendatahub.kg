@@ -3,7 +3,7 @@ FROM atomgraph/linkeddatahub:c4cf6a4b848871ebc2b0b72d28ea23adda43f087
 USER root
 
 ARG SAXON_VERSION=9.9.1-2
-ARG ENV_FILE=.env
+ARG ENV_FILE=
 #ARG CERT_PASSWORD=
 
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
