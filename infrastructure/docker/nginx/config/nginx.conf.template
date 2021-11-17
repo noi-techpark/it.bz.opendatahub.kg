@@ -10,7 +10,7 @@ http {
     }
 
     limit_req_zone $binary_remote_addr zone=linked_data:10m rate=6r/s;
-    limit_req_zone $binary_remote_addr zone=static_files:10m rate=20r/s;
+    limit_req_zone $binary_remote_addr zone=static_files:10m rate=35r/s;
     limit_req_status 429;
 
     client_max_body_size $MAX_BODY_SIZE;
