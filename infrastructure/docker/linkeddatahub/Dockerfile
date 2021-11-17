@@ -37,6 +37,7 @@ COPY --chown=ldh:ldh files/WKTMap.js it/bz/opendatahub/kg/js/WKTMap.js
 
 RUN curl https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/${SAXON_VERSION}/Saxon-HE-${SAXON_VERSION}.jar -O && \
     cat com/atomgraph/linkeddatahub/xsl/client.xsl | grep 'xsl:import' | cut -d '"' -f 2 | xargs -n 1 -I{} java -cp Saxon-HE-${SAXON_VERSION}.jar net.sf.saxon.Query -qs:"." -s:com/atomgraph/linkeddatahub/xsl/{} -o:com/atomgraph/linkeddatahub/xsl/{} && \
+    cat com/atomgraph/linkeddatahub/xsl/client.xsl | grep 'xsl:include' | cut -d '"' -f 2 | xargs -n 1 -I{} java -cp Saxon-HE-${SAXON_VERSION}.jar net.sf.saxon.Query -qs:"." -s:com/atomgraph/linkeddatahub/xsl/{} -o:com/atomgraph/linkeddatahub/xsl/{} && \
     java -cp Saxon-HE-${SAXON_VERSION}.jar net.sf.saxon.Query -qs:"." -s:com/atomgraph/linkeddatahub/xsl/client.xsl -o:com/atomgraph/linkeddatahub/xsl/client.xsl && \
     npx xslt3 -t -xsl:it/bz/opendatahub/kg/xsl/client.xsl -export:it/bz/opendatahub/kg/xsl/client.xsl.sef.json -nogo -ns:##html5 && \
     rm Saxon-HE-${SAXON_VERSION}.jar && \
