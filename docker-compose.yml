@@ -1,4 +1,9 @@
 version: "2.3"
+volumes:
+  ssl:
+  uploads:
+  data-admin:
+  data-end-user:
 services:
   nginx:
     image: atomgraph/nginx:d329ba2207773d849c41894408fc073dbe27e3b8
@@ -84,7 +89,7 @@ services:
       - ./ssl/server:/var/linkeddatahub/ssl/server:ro
       - ./ssl/owner/public.pem:/var/linkeddatahub/ssl/owner/public.pem:ro
       - ./ssl/secretary:/var/linkeddatahub/ssl/secretary:ro
-      - ./uploads:/var/www/linkeddatahub/uploads
+      - uploads:/var/www/linkeddatahub/uploads
       - ./infrastructure/docker/linkeddatahub/dev.log4j.properties:/usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties:ro
       - ./infrastructure/docker/linkeddatahub/system-varnish.trig:/var/linkeddatahub/datasets/system.trig:ro
       - ./infrastructure/docker/linkeddatahub/datasets/admin.trig:/var/linkeddatahub/datasets/admin.trig:ro
@@ -96,7 +101,7 @@ services:
       - 3030:3030
     volumes:
       - ./infrastructure/docker/fuseki-admin/config.ttl:/fuseki/config.ttl:ro
-      - ./data/admin:/fuseki/databases
+      - data-admin:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
   fuseki-end-user:
     image: atomgraph/fuseki:61eb41c33b2f9ee4bf4ab0156818145806215738
@@ -105,7 +110,7 @@ services:
       - 3031:3030
     volumes:
       - ./infrastructure/docker/fuseki-end-user/config.ttl:/fuseki/config.ttl:ro
-      - ./data/end-user:/fuseki/databases
+      - data-end-user:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
   varnish-admin:
     image: atomgraph/varnish:446f28a3cfedc276b2c27a971455659be98d7351
