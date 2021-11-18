@@ -231,7 +231,7 @@ exclude-result-prefixes="#all">
                 </div>
             </div>
             <div class="row-fluid">
-                <div class="span12">
+                <div class="offset2 span8">
                     <p class="text-left">
                         Knowledge Graph platform: <a href="https://atomgraph.github.io/LinkedDataHub/" target="_blank">LinkedDataHub</a> by <a href="https://atomgraph.com" target="_blank">AtomGraph</a>
                     </p>
