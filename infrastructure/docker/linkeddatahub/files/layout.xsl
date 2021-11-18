@@ -230,6 +230,13 @@ exclude-result-prefixes="#all">
                     </div>
                 </div>
             </div>
+            <div class="row-fluid">
+                <div class="span12">
+                    <p class="text-center">
+                        Knowledge Graph platform: <a href="https://atomgraph.github.io/LinkedDataHub/" target="_blank">LinkedDataHub</a> by <a href="https://atomgraph.com" target="_blank">AtomGraph</a>
+                    </p>
+                </div>
+            </div>
         </div>
     </xsl:template>
 
