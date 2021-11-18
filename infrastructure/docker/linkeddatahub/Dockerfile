@@ -34,6 +34,7 @@ COPY --chown=ldh:ldh files/layout.xsl it/bz/opendatahub/kg/xsl/layout.xsl
 COPY --chown=ldh:ldh files/client.xsl it/bz/opendatahub/kg/xsl/client.xsl
 COPY --chown=ldh:ldh files/bootstrap.css it/bz/opendatahub/kg/css/bootstrap.css
 COPY --chown=ldh:ldh files/WKTMap.js it/bz/opendatahub/kg/js/WKTMap.js
+COPY --chown=ldh:ldh files/favicon.ico /usr/local/tomcat/webapps/ROOT/static/favicon.ico
 
 RUN curl https://repo1.maven.org/maven2/net/sf/saxon/Saxon-HE/${SAXON_VERSION}/Saxon-HE-${SAXON_VERSION}.jar -O && \
     cat com/atomgraph/linkeddatahub/xsl/client.xsl | grep 'xsl:import' | cut -d '"' -f 2 | xargs -n 1 -I{} java -cp Saxon-HE-${SAXON_VERSION}.jar net.sf.saxon.Query -qs:"." -s:com/atomgraph/linkeddatahub/xsl/{} -o:com/atomgraph/linkeddatahub/xsl/{} && \

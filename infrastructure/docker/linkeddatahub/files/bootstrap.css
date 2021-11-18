@@ -13,4 +13,6 @@ div.span7 h2 a:after { content: " \279E"; }
 #map { width: 100%; height: 400px; }
 .footer { background-color: #50742F; color: white; padding-top: 5rem; font-size: unset; }
 .footer .nav-header { font-family: "Open Sans", Arial, sans-serif; font-size: 1.2rem; color: white; line-height: 1.8; text-transform: unset; }
-.footer .nav-list > li > a { color: white; }
+.footer a, .footer .nav-list > li > a { color: white; }
+.footer .nav-list > li > a:hover, .footer .nav > li > a:focus { color: white; text-decoration: underline; background-color: inherit; }
+.footer p { padding-top: 2rem; font-size: 0.8rem; }
