@@ -33,17 +33,11 @@ exclude-result-prefixes="#all">
 
     <xsl:param name="apl:baseUri" as="xs:anyURI" static="yes"/>
 
-    <xsl:template match="rdf:RDF" mode="xhtml:Meta">
-        <xsl:next-match/>
-
-        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:baseUri)}"/>
-    </xsl:template>
-
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports/>
 
-        <link href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" rel="stylesheet" type="text/css"/>
-
+        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:baseUri)}" type="image/x-icon"/>
+        <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css"/>
     </xsl:template>
 
