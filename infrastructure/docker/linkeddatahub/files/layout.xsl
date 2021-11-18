@@ -33,6 +33,12 @@ exclude-result-prefixes="#all">
 
     <xsl:param name="apl:baseUri" as="xs:anyURI" static="yes"/>
 
+    <xsl:template match="rdf:RDF" mode="xhtml:Meta">
+        <xsl:next-match/>
+
+        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:baseUri)}"/>
+    </xsl:template>
+
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports/>
 
