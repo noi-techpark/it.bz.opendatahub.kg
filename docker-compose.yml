@@ -132,7 +132,3 @@ services:
       - VARNISH_TTL=86400
       - VARNISH_SIZE=1G
     entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /usr/local/bin/docker-varnish-entrypoint"
-  email-server:
-    image: namshi/smtp
-    environment:
-      - DISABLE_IPV6=true
