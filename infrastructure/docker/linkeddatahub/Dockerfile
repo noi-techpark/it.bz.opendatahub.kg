@@ -33,6 +33,7 @@ COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user
 COPY --chown=ldh:ldh files/layout.xsl it/bz/opendatahub/kg/xsl/layout.xsl
 COPY --chown=ldh:ldh files/client.xsl it/bz/opendatahub/kg/xsl/client.xsl
 COPY --chown=ldh:ldh files/bootstrap.css it/bz/opendatahub/kg/css/bootstrap.css
+COPY --chown=ldh:ldh files/bootstrap-responsive.css it/bz/opendatahub/kg/css/bootstrap-responsive.css
 COPY --chown=ldh:ldh files/WKTMap.js it/bz/opendatahub/kg/js/WKTMap.js
 COPY --chown=ldh:ldh files/favicon.ico /usr/local/tomcat/webapps/ROOT/static/favicon.ico
 

@@ -38,6 +38,7 @@ exclude-result-prefixes="#all">
 
         <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:baseUri)}" type="image/x-icon"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
+        <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap-responsive.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css"/>
     </xsl:template>
 
