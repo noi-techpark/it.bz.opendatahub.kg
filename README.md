@@ -10,7 +10,7 @@ to `/etc/hosts` (on Linux) or `C:\Windows\System32\Drivers\etc\hosts` (on Window
 
 # Usage
 
-  1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_dev` (plain HTTP) or `.env_prod` (HTTPS with a self-signed server certificate) as templates.
+  1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_dev` (HTTP) or `.env_prod` (HTTPS) as templates.
   2. Run the services:
      ```
      docker-compose up --build
