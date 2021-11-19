@@ -1,14 +1,14 @@
 @media (min-width: 768px) and (max-width: 979px) {
-  .navbar .brand { margin-left: 0 !important; float: none !important; }
+  .brand { margin-left: 0; float: none; }
 }
 
 @media (min-width: 1200px) {
-  .navbar .brand { margin-left: 0 !important; float: none !important; }
+  .brand { margin-left: 0; float: none; }
 }
 
 @media (max-width: 1919px) {
   body { padding-top: 0; }
-  .navbar .brand { margin-left: 0 !important; float: none !important; }
+  .brand { margin-left: 0; float: none; }
 
   /* from Bootstrap: */
 
