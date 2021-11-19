@@ -167,6 +167,6 @@
   .row-fluid .offset2.brand { margin-left: 0; float: none; }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1200px) and @media (max-width: 1919px) {
   .row-fluid .offset2.brand { margin-left: 0; float: none; }
 }
