@@ -26,6 +26,7 @@ services:
       context: infrastructure/docker/processor
     mem_limit: 512m
     environment:
+      - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
       - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
       - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
       - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
@@ -54,7 +55,7 @@ services:
         OWNER_COUNTRY_NAME: ${OWNER_COUNTRY_NAME}
         OWNER_CERT_PASSWORD: ${OWNER_CERT_PASSWORD}
         SECRETARY_CERT_PASSWORD: ${SECRETARY_CERT_PASSWORD}
-    mem_limit: 1024m
+    mem_limit: 2048m
     environment:
       - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
       - TZ="Europe/Copenhagen"
@@ -89,7 +90,7 @@ services:
   fuseki-admin:
     build:
       context: infrastructure/docker/fuseki-admin
-    mem_limit: 1024m
+    mem_limit: 1872m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
     volumes:
       - data-admin:/fuseki/databases
@@ -97,7 +98,7 @@ services:
   fuseki-end-user:
     build:
       context: infrastructure/docker/fuseki-end-user
-    mem_limit: 1024m
+    mem_limit: 1872m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
     volumes:
       - data-end-user:/fuseki/databases
