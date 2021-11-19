@@ -1,5 +1,8 @@
 @media (max-width: 1919px) {
+  body { padding-top: 0; }
   .brand { float: none; }
+
+  /* from Bootstrap: */
 
   body {
     padding-top: 0;
