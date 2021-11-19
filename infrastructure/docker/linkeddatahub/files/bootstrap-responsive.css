@@ -1,6 +1,10 @@
+@media (min-width: 768px) and (max-width: 979px) {
+  .brand { margin-left: 0; float: none; }
+}
+
 @media (max-width: 1919px) {
   body { padding-top: 0; }
-  .brand { float: none; }
+  .brand { margin-left: 0; float: none; }
 
   /* from Bootstrap: */
 
