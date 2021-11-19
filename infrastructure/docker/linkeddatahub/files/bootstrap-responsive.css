@@ -1,17 +1,4 @@
-@media (min-width: 768px) and (max-width: 979px) {
-  .brand { margin-left: 0; float: none; }
-}
-
-@media (min-width: 1200px) {
-  .brand { margin-left: 0; float: none; }
-}
-
 @media (max-width: 1919px) {
-  body { padding-top: 0; }
-  .brand { margin-left: 0; float: none; }
-
-  /* from Bootstrap: */
-
   body {
     padding-top: 0;
   }
@@ -168,4 +155,18 @@
     height: auto !important;
     overflow: visible !important;
   }
+}
+
+@media (max-width: 1919px) {
+  body { padding-top: 0; }
+  .row-fluid .offset2.brand { margin-left: 0; float: none; }
+}
+
+@media (min-width: 768px) and (max-width: 979px) {
+  .brand { margin-left: 0; float: none; }
+  .row-fluid .offset2.brand { margin-left: 0; float: none; }
+}
+
+@media (min-width: 1200px) {
+  .row-fluid .offset2.brand { margin-left: 0; float: none; }
 }
