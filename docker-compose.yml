@@ -55,7 +55,7 @@ services:
         OWNER_COUNTRY_NAME: ${OWNER_COUNTRY_NAME}
         OWNER_CERT_PASSWORD: ${OWNER_CERT_PASSWORD}
         SECRETARY_CERT_PASSWORD: ${SECRETARY_CERT_PASSWORD}
-    mem_limit: 2048m
+    mem_limit: 1872m
     environment:
       - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
       - TZ="Europe/Copenhagen"
@@ -98,7 +98,7 @@ services:
   fuseki-end-user:
     build:
       context: infrastructure/docker/fuseki-end-user
-    mem_limit: 1872m
+    mem_limit: 2048m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
     volumes:
       - data-end-user:/fuseki/databases
