@@ -41,14 +41,14 @@ exclude-result-prefixes="#all">
     <xsl:template match="/" mode="apl:Document">
         <xsl:param name="uri" as="xs:anyURI?"/>
         <xsl:param name="fragment" as="xs:string?"/>
-        <xsl:param name="container-id" select="'content-body'" as="xs:string"/>
+        <xsl:param name="container" as="element()"/>
         <xsl:param name="state" as="item()?"/>
         <xsl:param name="push-state" select="true()" as="xs:boolean"/>
 
         <xsl:next-match>
             <xsl:with-param name="uri" select="$uri"/>
             <xsl:with-param name="fragment" select="$fragment"/>
-            <xsl:with-param name="container-id" select="$container-id"/>
+            <xsl:with-param name="container" select="$container"/>
             <xsl:with-param name="state" select="$state"/>
             <xsl:with-param name="push-state" select="$push-state"/>
         </xsl:next-match>
@@ -73,7 +73,7 @@ exclude-result-prefixes="#all">
             <xsl:sequence select="ixsl:call($map, 'render', [ $wkt-literal ])[current-date() lt xs:date('2000-01-01')]"/>
             
             <!-- fit the map to the polygon -->
-            <xsl:variable name="fit-options" select="ac:new-object()"/>
+            <xsl:variable name="fit-options" select="apl:new-object()"/>
             <!-- <ixsl:set-property name="maxZoom" select="$map-zoom" object="$fit-options"/> -->
             <xsl:sequence select="ixsl:call(ixsl:call($map, 'getView', []), 'fit', [ ixsl:call(ixsl:call($map, 'getFeature', []), 'getGeometry', []), $fit-options ])[current-date() lt xs:date('2000-01-01')]"/>
         </xsl:if>

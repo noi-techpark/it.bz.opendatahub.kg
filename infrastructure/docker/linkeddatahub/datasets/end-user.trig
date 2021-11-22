@@ -1,0 +1,414 @@
+<> {
+    <>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Root> ;
+            <http://purl.org/dc/terms/description>
+                    "Root container" ;
+            <http://purl.org/dc/terms/title>
+                    "Root" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <#content> .
+    
+    <#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n    <p class=\"lead\">Welcome to the <a href=\"https://opendatahub.bz.it\" target=\"_blank\">Open Data Hub</a> browseable Knowledge Graph. Data is presented as <a href=\"https://www.w3.org/standards/semanticweb/data\" target=\"_blank\">Linked Data</a>, so that it can be easily accessed and it is fully browseable.</p>\n    <p>All data is taken from the Open Data Hub <a href=\"https://sparql.opendatahub.bz.it\" target=\"_blank\">SPARQL endpoint</a>. Read more on how to query data through SPARQL on the <a href=\"https://docs.opendatahub.bz.it/en/latest/howto/generic/sparql-endpoint.html\" target=\"_blank\">ODH documentation site</a>.</p>\n</div>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () .
+}
+
+<queries/select-municipalities/> {
+    <queries/select-municipalities/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select municipalities" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "select-municipalities" .
+    
+    <queries/select-municipalities/#idb45ca893-948d-432c-9d29-6a9aa16b5473>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select municipalities" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\nPREFIX  odh:  <http://noi.example.org/ontology/odh#> # TO-DO: update namespace\n\nSELECT  ?municipality\nWHERE\n  { ?municipality\n              a  odh:Municipality\n    OPTIONAL\n      { SELECT  ?municipality ?name\n        WHERE\n          { ?municipality\n                      schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n  }\nORDER BY ?name" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/select-municipalities/> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "b45ca893-948d-432c-9d29-6a9aa16b5473" .
+}
+
+<ski-resorts/> {
+    <ski-resorts/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Ski resorts" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <ski-resorts/#content> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "ski-resorts" , "f226a1a2-3f2f-4c7a-ad61-b637c1995823" .
+    
+    <ski-resorts/#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    <queries/select-ski-resorts/#id5333565a-03a7-45ee-8d58-ad25d2e733f9> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "5111af17-6d07-4e1e-adef-341178951907" .
+}
+
+<queries/default/select-children/> {
+    <queries/default/select-children/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select children" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/default/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <queries/default/select-children/#this> .
+    
+    <queries/default/select-children/#this>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select children" ;
+            <http://spinrdf.org/sp#text>  "\n    PREFIX  dct:  <http://purl.org/dc/terms/>\n    PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n    PREFIX  sioc: <http://rdfs.org/sioc/ns#>\n\n    SELECT DISTINCT  ?child ?thing\n    WHERE\n    { GRAPH ?childGraph\n      {   { ?child  sioc:has_parent  ?this }\n        UNION\n          { ?child  sioc:has_container  ?this }\n        ?child  a                     ?Type\n        OPTIONAL\n          { ?child  dct:title  ?title }\n        OPTIONAL\n         { ?thing  foaf:isPrimaryTopicOf  ?child }\n      }\n    }\n    ORDER BY ?title\n    " ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/default/select-children/> .
+}
+
+<queries/> {
+    <queries/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "SPARQL queries" ;
+            <http://purl.org/dc/terms/title>
+                    "Queries" .
+}
+
+<events/> {
+    <events/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Events" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <events/#content> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "events" , "c00afe3b-6929-4102-808f-06d960bae947" .
+    
+    <events/#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    <queries/select-events/#ideb5258c6-eb81-4170-aaea-c6acd1c10ce4> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "10dd1866-eb68-4520-bcee-7ed48105046d" .
+}
+
+<services/open-data-hub/> {
+    <services/open-data-hub/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Open Data Hub Knowledge Graph Portal" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <services/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "open-data-hub" .
+    
+    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#GenericService> ;
+            <http://purl.org/dc/terms/title>
+                    "Open Data Hub Knowledge Graph Portal" ;
+            <http://www.w3.org/ns/sparql-service-description#endpoint>
+                    <https://sparql.opendatahub.testingmachine.eu/sparql> ;
+            <http://www.w3.org/ns/sparql-service-description#supportedLanguage>
+                    <http://www.w3.org/ns/sparql-service-description#SPARQL11Query> , <http://www.w3.org/ns/sparql-service-description#SPARQL11Update> ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <services/open-data-hub/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed" .
+}
+
+<municipalities/> {
+    <municipalities/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Municipalities" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <municipalities/#content> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "municipalities" , "6c1d739c-5893-4be6-94bf-25b08a009a39" .
+    
+    <municipalities/#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    <queries/select-municipalities/#idb45ca893-948d-432c-9d29-6a9aa16b5473> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "f240bed4-2a39-45db-b060-942fde76273b" .
+}
+
+<queries/default/select-geo-resources/> {
+    <queries/default/select-geo-resources/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select geo resources" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/default/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <queries/default/select-geo-resources/#this> .
+    
+    <queries/default/select-geo-resources/#this>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select geo resources" ;
+            <http://spinrdf.org/sp#text>  "\n    PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>\n    PREFIX  dct:  <http://purl.org/dc/terms/>\n\n    SELECT  DISTINCT ?resource\n    WHERE\n    { GRAPH ?graph\n      { ?resource  geo:lat  ?lat ;\n                  geo:long  ?long\n        OPTIONAL\n          { ?resource  a                    ?type }\n        OPTIONAL\n          { ?resource  dct:title  ?title }\n      }\n    }\n    ORDER BY ?title\n    " ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/default/select-geo-resources/> .
+}
+
+<queries/select-lodging-businesses/> {
+    <queries/select-lodging-businesses/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select lodging businesses" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "select-lodging-businesses" .
+    
+    <queries/select-lodging-businesses/#id96417b49-565a-4cc8-a6c5-b772f791598d>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select lodging businesses" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?lodgingBusiness\nWHERE\n  { ?lodgingBusiness\n              a  schema:LodgingBusiness\n    OPTIONAL\n      { SELECT  ?lodgingBusiness ?name\n        WHERE\n          { ?lodgingBusiness\n                      schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n    OPTIONAL\n      { ?lodgingBusiness\n                  schema:containedInPlace  ?containedInPlace\n      }\n  }\nORDER BY ?name" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/select-lodging-businesses/> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "96417b49-565a-4cc8-a6c5-b772f791598d" .
+}
+
+<services/> {
+    <services/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "SPARQL services" ;
+            <http://purl.org/dc/terms/title>
+                    "Services" .
+}
+
+<files/> {
+    <files/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Uploaded files" ;
+            <http://purl.org/dc/terms/title>
+                    "Files" .
+}
+
+<lodging-businesses/> {
+    <lodging-businesses/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Lodging businesses" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <lodging-businesses/#content> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "lodging-businesses" , "174a09af-dc35-49c4-b387-da5f158f4c0c" .
+    
+    <lodging-businesses/#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    <queries/select-lodging-businesses/#id96417b49-565a-4cc8-a6c5-b772f791598d> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "5ec8748f-6af6-4b2a-9ded-47b9850054e0" .
+}
+
+<queries/select-events/> {
+    <queries/select-events/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select events" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "select-events" .
+    
+    <queries/select-events/#ideb5258c6-eb81-4170-aaea-c6acd1c10ce4>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select events" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?event\nWHERE\n  { ?event  a  schema:Event\n    OPTIONAL\n      { ?event  schema:startDate  ?startDate }\n    OPTIONAL\n      { ?event  schema:endDate  ?endDate }\n  }\nORDER BY DESC(?startDate)" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/select-events/> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "eb5258c6-eb81-4170-aaea-c6acd1c10ce4" .
+}
+
+<queries/select-food-establishments/> {
+    <queries/select-food-establishments/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select food establishments" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "select-food-establishments" .
+    
+    <queries/select-food-establishments/#id79712575-3fef-44cb-b55c-ff77c3974510>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select food establishments" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?foodEstablishment\nWHERE\n  { ?foodEstablishment\n              a  schema:FoodEstablishment\n    OPTIONAL\n      { SELECT  ?foodEstablishment ?name\n        WHERE\n          { ?foodEstablishment\n                      schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n  }\nORDER BY ?name" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/select-food-establishments/> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "79712575-3fef-44cb-b55c-ff77c3974510" .
+}
+
+<latest/> {
+    <latest/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Latest resources" ;
+            <http://purl.org/dc/terms/title>
+                    "Latest" .
+}
+
+<queries/select-ski-resorts/> {
+    <queries/select-ski-resorts/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select ski resorts" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "select-ski-resorts" .
+    
+    <queries/select-ski-resorts/#id5333565a-03a7-45ee-8d58-ad25d2e733f9>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select ski resorts" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?skiResort ?name\nWHERE\n  { ?skiResort  a  schema:SkiResort\n    OPTIONAL\n      { SELECT  ?skiResort ?name\n        WHERE\n          { ?skiResort  schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n    OPTIONAL\n      { ?skiResort  schema:isPartOf  ?area }\n  }\nORDER BY ?name" ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/select-ski-resorts/> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "5333565a-03a7-45ee-8d58-ad25d2e733f9" .
+}
+
+<queries/default/> {
+    <queries/default/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Default queries" ;
+            <http://purl.org/dc/terms/title>
+                    "Default" ;
+            <http://rdfs.org/sioc/ns#has_parent>
+                    <queries/> .
+}
+
+<queries/default/select-latest/> {
+    <queries/default/select-latest/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select latest" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/default/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <queries/default/select-latest/#this> .
+    
+    <queries/default/select-latest/#this>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select latest" ;
+            <http://spinrdf.org/sp#text>  "\n    PREFIX  dct:  <http://purl.org/dc/terms/>\n\n    SELECT DISTINCT  ?dated\n    WHERE\n    { GRAPH ?graph\n      { ?dated  dct:created  ?created }\n    }\n    ORDER BY DESC(?created)\n    " ;
+            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
+                    <queries/default/select-latest/> .
+}
+
+<queries/default/select-labelled/> {
+    <queries/default/select-labelled/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Select labelled" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <queries/default/> ;
+            <http://xmlns.com/foaf/0.1/primaryTopic>
+                    <queries/default/select-labelled/#this> .
+    
+    <queries/default/select-labelled/#this>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/default#Select> ;
+            <http://purl.org/dc/terms/title>
+                    "Select labelled" ;
+            <http://spinrdf.org/sp#text>  "\n    PREFIX  dct:  <http://purl.org/dc/terms/>\n    PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n    PREFIX  skos: <http://www.w3.org/2004/02/skos/core#>\n    PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n    PREFIX  foaf: <http://xmlns.com/foaf/0.1/>\n    PREFIX  sioc: <http://rdfs.org/sioc/ns#>\n    PREFIX  dc:   <http://purl.org/dc/elements/1.1/>\n\n    SELECT DISTINCT  ?resource\n    WHERE\n      {   { ?resource  a  ?Type .\n            ?resource (((((((rdfs:label|dc:title)|dct:title)|foaf:name)|foaf:givenName)|foaf:familyName)|sioc:name)|skos:prefLabel)|sioc:content ?label\n            FILTER isURI(?resource)\n          }\n        UNION\n          { GRAPH ?graph\n              { ?resource  a  ?Type .\n                ?resource (((((((rdfs:label|dc:title)|dct:title)|foaf:name)|foaf:givenName)|foaf:familyName)|sioc:name)|skos:prefLabel)|sioc:content ?label\n                FILTER isURI(?resource)\n              }\n          }\n      }\n    " .
+}
+
+<food-establishments/> {
+    <food-establishments/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            <http://purl.org/dc/terms/title>
+                    "Food establishments" ;
+            <http://rdfs.org/sioc/ns#has_container>
+                    <> ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+                    <food-establishments/#content> ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "food-establishments" , "999ab945-952b-4106-a656-0501cd363401" .
+    
+    <food-establishments/#content>
+            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
+                    <queries/select-food-establishments/#id79712575-3fef-44cb-b55c-ff77c3974510> ;
+            <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
+                    () ;
+            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+                    "12736acb-a7d6-4d92-b238-db567d2c3e8b" .
+}
+
+<imports/> {
+    <imports/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Data imports" ;
+            <http://purl.org/dc/terms/title>
+                    "Imports" .
+}
+
+<geo/> {
+    <geo/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Geolocated resources" ;
+            <http://purl.org/dc/terms/title>
+                    "geo" .
+}
+
+<charts/> {
+    <charts/>
+            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            <http://purl.org/dc/terms/description>
+                    "Saved charts" ;
+            <http://purl.org/dc/terms/title>
+                    "Charts" .
+}

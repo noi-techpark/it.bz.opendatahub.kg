@@ -36,8 +36,9 @@ exclude-result-prefixes="#all">
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports/>
 
-        <link href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" rel="stylesheet" type="text/css"/>
-
+        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:baseUri)}" type="image/x-icon"/>
+        <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
+        <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap-responsive.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css"/>
     </xsl:template>
 
@@ -193,6 +194,10 @@ exclude-result-prefixes="#all">
         </xsl:if>
     </xsl:template>
 
+    <xsl:template match="rdf:RDF" mode="bs2:ModeTabs"/>
+
+    <xsl:template match="*[*][@rdf:about]" mode="apl:ContentHeader"/>
+
     <xsl:template match="rdf:RDF" mode="bs2:Footer">
         <div class="footer container-fluid">
             <div class="row-fluid">
@@ -224,6 +229,13 @@ exclude-result-prefixes="#all">
                             <li><a href="https://opendatahub.bz.it/services#app-dev" target="_blank">Data Visualization</a></li>
                         </ul>
                     </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="offset2 span8">
+                    <p class="text-left">
+                        Knowledge Graph platform: <a href="https://atomgraph.github.io/LinkedDataHub/" target="_blank">LinkedDataHub</a> by <a href="https://atomgraph.com" target="_blank">AtomGraph</a>
+                    </p>
                 </div>
             </div>
         </div>
