@@ -17,7 +17,7 @@
 
 # root admin
 
-<urn:linkeddatahub:apps/admin> a lapp:AdminApplication ;
+<urn:linkeddatahub:apps/admin> a lapp:Application, lapp:ClientApplication, lapp:AdminApplication ;
     dct:title "LinkedDataHub admin" ;
     ldt:base <admin/> ;
     ldt:ontology <https://w3id.org/atomgraph/linkeddatahub/admin#> ;
@@ -27,7 +27,7 @@
 
 # root end-user
 
-<urn:linkeddatahub:apps/end-user> a lapp:EndUserApplication ;
+<urn:linkeddatahub:apps/end-user> a lapp:Application, lapp:ClientApplication, lapp:EndUserApplication ;
     dct:title "OpenDataHub" ;
     ldt:base <> ;
     ldt:ontology <admin/model/ontologies/namespace/#> ;
@@ -39,13 +39,25 @@
 
 # OpenDataHub
 
-<urn:linkeddatahub:apps/open-data-hub> a lapp:Application ;
-    dct:title "OpenDataHub" ;
-    ldt:base <data/> ;
-    lapp:proxy <http://processor-nginx/> ;
-    ldt:ontology <admin/model/ontologies/namespace/#> ;
-    ac:stylesheet <static/it/bz/opendatahub/kg/xsl/layout.xsl> ;
-    foaf:logo <https://opendatahub.bz.it/img/IDM_OPENDATAHUB_2_BK.svg> .
+<urn:linkeddatahub:apps/open-data-hub/data> a lapp:Application ;
+    lapp:prefix <data/> ;
+    lapp:proxy <http://processor-nginx/> .
+
+<urn:linkeddatahub:apps/open-data-hub/events> a lapp:Application ;
+    lapp:prefix <events/> ;
+    lapp:proxy <http://processor-nginx/> .
+
+<urn:linkeddatahub:apps/open-data-hub/food-establishments> a lapp:Application ;
+    lapp:prefix <food-establishments/> ;
+    lapp:proxy <http://processor-nginx/> .
+
+<urn:linkeddatahub:apps/open-data-hub/lodging-businesses> a lapp:Application ;
+    lapp:prefix <lodging-businesses/> ;
+    lapp:proxy <http://processor-nginx/> .
+
+<urn:linkeddatahub:apps/open-data-hub/ski-resorts> a lapp:Application ;
+    lapp:prefix <ski-resorts/> ;
+    lapp:proxy <http://processor-nginx/> .
 
 # SERVICES
 

@@ -79,6 +79,9 @@ exclude-result-prefixes="#all">
         </xsl:if>
     </xsl:template>
 
+    <!-- do not intercept RDF download links -->
+    <xsl:template match="button[@id = 'export-rdf']/following-sibling::ul//a" mode="ixsl:onclick" priority="1"/>
+
     <!-- intercept links in the navbar's <ul> -->
     <xsl:template match="a[not(@target)][starts-with(@href, 'http://') or starts-with(@href, 'https://')][not(starts-with(@href, resolve-uri('uploads/', $apl:base)))][ancestor::div[tokenize(@class, ' ') = 'navbar']//ul]" mode="ixsl:onclick">
         <xsl:sequence select="ixsl:call(ixsl:event(), 'preventDefault', [])"/>

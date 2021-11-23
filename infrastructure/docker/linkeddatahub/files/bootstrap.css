@@ -8,7 +8,7 @@ body { font-family: "Open Sans", Arial, sans-serif; color: black; font-size: 16p
 .progress-striped .bar { background-color: #50742F; }
 a, a:hover, a:focus, .navbar .brand, .nav-list > li > a { color: black; }
 .xhtml-content a { text-decoration: underline; }
-.well { background-color: #f5f5f5; }
+.well:not(.alert) { background-color: #f5f5f5; }
 div.span7 h2, .navbar .brand { font-weight: 700; }
 div.span7 h2 a:after { content: " \279E"; }
 li.map-mode { display: none; } /* hide the "Map" tabs with Google Maps" for now */
