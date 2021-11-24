@@ -31,12 +31,12 @@ exclude-result-prefixes="#all">
 
     <xsl:import href="../../../../../com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/layout.xsl"/>
 
-    <xsl:param name="apl:baseUri" as="xs:anyURI" static="yes"/>
+    <xsl:param name="apl:base" as="xs:anyURI" static="yes"/>
 
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports/>
 
-        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:baseUri)}" type="image/x-icon"/>
+        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:base)}" type="image/x-icon"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap-responsive.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css"/>
@@ -49,7 +49,7 @@ exclude-result-prefixes="#all">
 
         <!-- OpenLayers and WKTMap -->
         <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/build/ol.js"></script>
-        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $apl:baseUri)}" type="text/javascript"></script>
+        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $apl:base)}" type="text/javascript"></script>
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:NavBar">
@@ -79,19 +79,19 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:Brand">
-        <a class="brand offset2 span1" href="{$apl:base}">
-            <img alt="{ac:label($apl:client//*[@rdf:about])}" src="{$apl:client//foaf:logo/@rdf:resource}"/>
+        <a class="brand offset2 span1" href="{$ldt:base}">
+            <img alt="{ac:label($lapp:Application//*[ldt:base/@rdf:resource = $ldt:base])}" src="{$lapp:Application//foaf:logo/@rdf:resource}"/>
         </a>
     </xsl:template>
 
     <!-- in the end-user app, retrieve the select-children SELECT query, wrap it into a DESCRIBE and render root container nav bar instead of the search bar -->
-    <xsl:template match="rdf:RDF[$apl:client//rdf:type/@rdf:resource = '&lapp;EndUserApplication']" mode="bs2:SearchBar">
-        <xsl:variable name="query-uri" select="resolve-uri('queries/default/select-children/#this', $apl:base)" as="xs:anyURI"/>
+    <xsl:template match="rdf:RDF[$lapp:Application//*[ldt:base/@rdf:resource = $ldt:base]/rdf:type/@rdf:resource = '&lapp;EndUserApplication']" mode="bs2:SearchBar">
+        <xsl:variable name="query-uri" select="resolve-uri('queries/default/select-children/#this', $ldt:base)" as="xs:anyURI"/>
         <xsl:variable name="select-string" select="key('resources', $query-uri, document(ac:document-uri($query-uri)))/sp:text" as="xs:string"/>
         <xsl:variable name="regex-groups" select="analyze-string(normalize-space($select-string), '^(.*)(SELECT)(.*)$', 'i')" as="element()"/>
         <xsl:variable name="query-string" select="$regex-groups/fn:match[1]/fn:group[@nr = '1']/string() || ' DESCRIBE ?child { ' || $regex-groups/fn:match[1]/fn:group[@nr = '2']/string() || $regex-groups/fn:match[1]/fn:group[@nr = '3']/string() || ' }'" as="xs:string"/>
-        <xsl:variable name="query-string" select="replace($query-string, '\?this', concat('&lt;', $apl:base, '&gt;'))" as="xs:string"/>
-        <xsl:variable name="results-uri" select="ac:build-uri(resolve-uri('sparql', $apl:base),  map{ 'query': $query-string })" as="xs:anyURI"/>
+        <xsl:variable name="query-string" select="replace($query-string, '\?this', concat('&lt;', $ldt:base, '&gt;'))" as="xs:string"/>
+        <xsl:variable name="results-uri" select="ac:build-uri(resolve-uri('sparql', $ldt:base),  map{ 'query': $query-string })" as="xs:anyURI"/>
 
         <xsl:if test="doc-available($results-uri)">
             <ul class="nav span5">

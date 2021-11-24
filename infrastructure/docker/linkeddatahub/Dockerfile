@@ -1,6 +1,4 @@
-FROM atomgraph/linkeddatahub:541fc072691639f772eccd66058ab6d3db077af9
-
-USER root
+FROM atomgraph/linkeddatahub:89dd5a34fca702d9a43dbc39125d0f5c99c042ba
 
 ARG SAXON_VERSION=9.9.1-2
 
@@ -14,6 +12,8 @@ ARG OWNER_STATE_OR_PROVINCE=
 ARG OWNER_COUNTRY_NAME=
 ARG OWNER_CERT_PASSWORD=
 ARG SECRETARY_CERT_PASSWORD=
+
+USER root
 
 RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get update --allow-releaseinfo-change && \
