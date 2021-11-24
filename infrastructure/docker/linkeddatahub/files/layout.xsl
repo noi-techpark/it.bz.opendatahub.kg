@@ -36,7 +36,7 @@ exclude-result-prefixes="#all">
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports/>
 
-        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:baseUri)}" type="image/x-icon"/>
+        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:base)}" type="image/x-icon"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap-responsive.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css"/>
@@ -49,7 +49,7 @@ exclude-result-prefixes="#all">
 
         <!-- OpenLayers and WKTMap -->
         <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/build/ol.js"></script>
-        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $apl:baseUri)}" type="text/javascript"></script>
+        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $apl:base)}" type="text/javascript"></script>
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:NavBar">
