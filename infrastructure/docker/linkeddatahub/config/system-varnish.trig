@@ -55,6 +55,10 @@
     lapp:prefix <lodging-businesses/> ;
     lapp:proxy <http://processor-nginx/> .
 
+<urn:linkeddatahub:apps/open-data-hub/municipalities> a lapp:Application ;
+    lapp:prefix <municipalities/> ;
+    lapp:proxy <http://processor-nginx/> .
+
 <urn:linkeddatahub:apps/open-data-hub/ski-resorts> a lapp:Application ;
     lapp:prefix <ski-resorts/> ;
     lapp:proxy <http://processor-nginx/> .
