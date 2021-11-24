@@ -31,7 +31,7 @@ exclude-result-prefixes="#all">
 
     <xsl:import href="../../../../../com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/layout.xsl"/>
 
-    <xsl:param name="apl:baseUri" as="xs:anyURI" static="yes"/>
+    <xsl:param name="apl:base" as="xs:anyURI" static="yes"/>
 
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports/>
@@ -79,19 +79,19 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:Brand">
-        <a class="brand offset2 span1" href="{$apl:base}">
+        <a class="brand offset2 span1" href="{$ldt:base}">
             <img alt="{ac:label($apl:client//*[@rdf:about])}" src="{$apl:client//foaf:logo/@rdf:resource}"/>
         </a>
     </xsl:template>
 
     <!-- in the end-user app, retrieve the select-children SELECT query, wrap it into a DESCRIBE and render root container nav bar instead of the search bar -->
     <xsl:template match="rdf:RDF[$apl:client//rdf:type/@rdf:resource = '&lapp;EndUserApplication']" mode="bs2:SearchBar">
-        <xsl:variable name="query-uri" select="resolve-uri('queries/default/select-children/#this', $apl:base)" as="xs:anyURI"/>
+        <xsl:variable name="query-uri" select="resolve-uri('queries/default/select-children/#this', $ldt:base)" as="xs:anyURI"/>
         <xsl:variable name="select-string" select="key('resources', $query-uri, document(ac:document-uri($query-uri)))/sp:text" as="xs:string"/>
         <xsl:variable name="regex-groups" select="analyze-string(normalize-space($select-string), '^(.*)(SELECT)(.*)$', 'i')" as="element()"/>
         <xsl:variable name="query-string" select="$regex-groups/fn:match[1]/fn:group[@nr = '1']/string() || ' DESCRIBE ?child { ' || $regex-groups/fn:match[1]/fn:group[@nr = '2']/string() || $regex-groups/fn:match[1]/fn:group[@nr = '3']/string() || ' }'" as="xs:string"/>
-        <xsl:variable name="query-string" select="replace($query-string, '\?this', concat('&lt;', $apl:base, '&gt;'))" as="xs:string"/>
-        <xsl:variable name="results-uri" select="ac:build-uri(resolve-uri('sparql', $apl:base),  map{ 'query': $query-string })" as="xs:anyURI"/>
+        <xsl:variable name="query-string" select="replace($query-string, '\?this', concat('&lt;', $ldt:base, '&gt;'))" as="xs:string"/>
+        <xsl:variable name="results-uri" select="ac:build-uri(resolve-uri('sparql', $ldt:base),  map{ 'query': $query-string })" as="xs:anyURI"/>
 
         <xsl:if test="doc-available($results-uri)">
             <ul class="nav span5">
