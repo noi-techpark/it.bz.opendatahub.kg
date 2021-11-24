@@ -80,12 +80,12 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="rdf:RDF" mode="bs2:Brand">
         <a class="brand offset2 span1" href="{$ldt:base}">
-            <img alt="{ac:label($apl:client//*[@rdf:about])}" src="{$apl:client//foaf:logo/@rdf:resource}"/>
+            <img alt="{ac:label($lapp:Application//*[ldt:base/@rdf:resource = $ldt:base])}" src="{$lapp:Application//foaf:logo/@rdf:resource}"/>
         </a>
     </xsl:template>
 
     <!-- in the end-user app, retrieve the select-children SELECT query, wrap it into a DESCRIBE and render root container nav bar instead of the search bar -->
-    <xsl:template match="rdf:RDF[$apl:client//rdf:type/@rdf:resource = '&lapp;EndUserApplication']" mode="bs2:SearchBar">
+    <xsl:template match="rdf:RDF[$lapp:Application//*[ldt:base/@rdf:resource = $ldt:base]/rdf:type/@rdf:resource = '&lapp;EndUserApplication']" mode="bs2:SearchBar">
         <xsl:variable name="query-uri" select="resolve-uri('queries/default/select-children/#this', $ldt:base)" as="xs:anyURI"/>
         <xsl:variable name="select-string" select="key('resources', $query-uri, document(ac:document-uri($query-uri)))/sp:text" as="xs:string"/>
         <xsl:variable name="regex-groups" select="analyze-string(normalize-space($select-string), '^(.*)(SELECT)(.*)$', 'i')" as="element()"/>
