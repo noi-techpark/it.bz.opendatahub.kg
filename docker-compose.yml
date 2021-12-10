@@ -1,6 +1,5 @@
 version: "2.3"
 volumes:
-  ssl:
   uploads:
   data-admin:
   data-end-user:
