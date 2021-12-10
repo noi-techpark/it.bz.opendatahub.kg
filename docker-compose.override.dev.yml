@@ -13,6 +13,8 @@ services:
     volumes:
       - ssl:/etc/nginx/ssl
   linkeddatahub:
+    depends_on:
+      - nginx
     environment:
         - SELF_SIGNED_CERT=true # only on localhost
     volumes:
