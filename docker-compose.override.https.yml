@@ -16,6 +16,7 @@ services:
     depends_on:
       - nginx
     environment:
+      - PROXY_SCHEME=https
       - PROXY_PORT=8443 # HTTPS
       - SELF_SIGNED_CERT=true
     volumes:
