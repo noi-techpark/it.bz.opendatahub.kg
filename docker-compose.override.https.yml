@@ -17,6 +17,6 @@ services:
       - nginx
     environment:
       - PROXY_PORT=8443 # HTTPS
-      - SELF_SIGNED_CERT=true # only on localhost
+      - SELF_SIGNED_CERT=true
     volumes:
       - ssl:/var/linkeddatahub/ssl/server:ro
