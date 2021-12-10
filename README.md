@@ -10,6 +10,8 @@ to `/etc/hosts` (on Linux) or `C:\Windows\System32\Drivers\etc\hosts` (on Window
 
 # Usage
 
+The default setup provides a plain HTTP service. In order to enable HTTPS, apply the `docker-compose.override.https.yml` by copying it to `docker-compose.override.yml` before running the services.
+
   1. Create an `.env` file and use it to configure the base URI as well as owner metadata. You can use `.env_sample` as a template.
   2. Run the services:
      ```
