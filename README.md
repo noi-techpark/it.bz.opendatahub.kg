@@ -21,11 +21,12 @@ The default setup provides a plain HTTP service. In order to enable HTTPS, apply
 
 _:warning: The very first page load can take a while (or even result in `504 Bad Gateway`) while RDF ontologies and XSLT stylesheets are being loaded into memory._
 
+HTTP server's (which is the `nginx` service) port within the Docker network is 8080.
+
 # Configuration
 
 * Base URI is configured in the `.env` file
 * OpenDataHub SPARQL endpoint is configured as the `ENDPOINT` environment variable for the `processor` service
-* The server's TLS certificate (e.g. LetsEncrypt) can be mounted into the `nginx` container and specified in its `/etc/nginx/nginx.conf` config file
 
 # Reset datasets
 
