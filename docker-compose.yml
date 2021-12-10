@@ -20,26 +20,6 @@ services:
       default:
         aliases:
           - ${HOST}
-  processor:
-    build:
-      context: infrastructure/docker/processor
-    mem_limit: 512m
-    environment:
-      - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
-      - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
-      - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
-      - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
-  processor-nginx:
-    build:
-      context: infrastructure/docker/processor-nginx
-    mem_limit: 128m
-    depends_on:
-      - processor
-    ports:
-      - 8888:80
-    environment:
-      - PROXY_PASS=http://processor:8080 # internal Processor URL (hostname equals docker-compose service name)
-      - PROXY_SET_HOST=${HOST} # the hostname set on the request URI before it's passed to Processor
   linkeddatahub:
     build:
       context: infrastructure/docker/linkeddatahub
@@ -55,6 +35,8 @@ services:
         OWNER_CERT_PASSWORD: ${OWNER_CERT_PASSWORD}
         SECRETARY_CERT_PASSWORD: ${SECRETARY_CERT_PASSWORD}
     mem_limit: 1872m
+    depends_on:
+      - nginx
     environment:
       - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
       - TZ="Europe/Copenhagen"
@@ -132,3 +114,26 @@ services:
       - VARNISH_TTL=86400
       - VARNISH_SIZE=1G
     entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /usr/local/bin/docker-varnish-entrypoint"
+#####################
+## CUSTOM SERVICES ##
+#####################
+  processor:
+    build:
+      context: infrastructure/docker/processor
+    mem_limit: 512m
+    environment:
+      - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
+      - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
+      - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
+      - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
+  processor-nginx:
+    build:
+      context: infrastructure/docker/processor-nginx
+    mem_limit: 128m
+    depends_on:
+      - processor
+    ports:
+      - 8888:80
+    environment:
+      - PROXY_PASS=http://processor:8080 # internal Processor URL (hostname equals docker-compose service name)
+      - PROXY_SET_HOST=${HOST} # the hostname set on the request URI before it's passed to Processor
