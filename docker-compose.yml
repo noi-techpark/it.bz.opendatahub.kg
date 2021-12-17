@@ -16,10 +16,6 @@ services:
       - SERVER_NAME=${HOST}
       - SERVER_HTTP_PORT=8080 # because of nginx-unprivileged
       - MAX_BODY_SIZE=2097152
-    networks:
-      default:
-        aliases:
-          - ${HOST}
   linkeddatahub:
     build:
       context: infrastructure/docker/linkeddatahub
@@ -86,7 +82,7 @@ services:
     build:
       context: infrastructure/docker/varnish-admin
     mem_limit: 256m
-    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    user: root # otherwise varnish user does not have permissions to the mounted folder which is owner by root
     depends_on:
       - linkeddatahub
     tmpfs: /var/lib/varnish:exec
@@ -101,7 +97,7 @@ services:
     build:
       context: infrastructure/docker/varnish-end-user
     mem_limit: 256m
-    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    user: root # otherwise varnish user does not have permissions to the mounted folder which is owner by root
     depends_on:
       - linkeddatahub
     tmpfs: /var/lib/varnish:exec
