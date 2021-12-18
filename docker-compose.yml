@@ -67,6 +67,8 @@ services:
       context: infrastructure/docker/fuseki-admin
     mem_limit: 1872m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    environment:
+      - JAVA_OPTIONS=-Xmx1700m -Xms1700m
     volumes:
       - data-admin:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
@@ -75,6 +77,8 @@ services:
       context: infrastructure/docker/fuseki-end-user
     mem_limit: 2048m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    environment:
+      - JAVA_OPTIONS=-Xmx1900m -Xms1900m
     volumes:
       - data-end-user:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
