@@ -75,7 +75,7 @@ services:
   fuseki-end-user:
     build:
       context: infrastructure/docker/fuseki-end-user
-    mem_limit: 2048m
+    mem_limit: 2584m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
     environment:
       - JAVA_OPTIONS=-Xmx1900m -Xms1900m
