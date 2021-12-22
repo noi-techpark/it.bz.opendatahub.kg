@@ -1,0 +1,23 @@
+version: "2.3"
+volumes:
+  ssl:
+services:
+  nginx:
+    ports:
+      - ${HTTPS_PORT}:8443 # HTTPS
+    environment:
+      - HTTPS_PORT=${HTTPS_PORT}
+      - SERVER_HTTPS_PORT=8443 # because of nginx-unprivileged
+      - GENERATE_SERVER_CERT=true
+      - CONF_TEMPLATE=/etc/nginx/nginx.https.conf.template
+    volumes:
+      - ssl:/etc/nginx/ssl
+  linkeddatahub:
+    depends_on:
+      - nginx
+    environment:
+      - PROXY_SCHEME=https
+      - PROXY_PORT=8443 # HTTPS
+      - SELF_SIGNED_CERT=true
+    volumes:
+      - ssl:/var/linkeddatahub/ssl/server:ro

@@ -1,6 +1,5 @@
 version: "2.3"
 volumes:
-  ssl:
   uploads:
   data-admin:
   data-end-user:
@@ -17,30 +16,6 @@ services:
       - SERVER_NAME=${HOST}
       - SERVER_HTTP_PORT=8080 # because of nginx-unprivileged
       - MAX_BODY_SIZE=2097152
-    networks:
-      default:
-        aliases:
-          - ${HOST}
-  processor:
-    build:
-      context: infrastructure/docker/processor
-    mem_limit: 512m
-    environment:
-      - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
-      - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
-      - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
-      - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
-  processor-nginx:
-    build:
-      context: infrastructure/docker/processor-nginx
-    mem_limit: 128m
-    depends_on:
-      - processor
-    ports:
-      - 8888:80
-    environment:
-      - PROXY_PASS=http://processor:8080 # internal Processor URL (hostname equals docker-compose service name)
-      - PROXY_SET_HOST=${HOST} # the hostname set on the request URI before it's passed to Processor
   linkeddatahub:
     build:
       context: infrastructure/docker/linkeddatahub
@@ -92,14 +67,18 @@ services:
       context: infrastructure/docker/fuseki-admin
     mem_limit: 1872m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    environment:
+      - JAVA_OPTIONS=-Xmx1700m -Xms1700m
     volumes:
       - data-admin:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
   fuseki-end-user:
     build:
       context: infrastructure/docker/fuseki-end-user
-    mem_limit: 2048m
+    mem_limit: 2584m
     user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    environment:
+      - JAVA_OPTIONS=-Xmx1900m -Xms1900m
     volumes:
       - data-end-user:/fuseki/databases
     command: [ "--config", "/fuseki/config.ttl" ]
@@ -107,7 +86,7 @@ services:
     build:
       context: infrastructure/docker/varnish-admin
     mem_limit: 256m
-    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    user: root # otherwise varnish user does not have permissions to the mounted folder which is owner by root
     depends_on:
       - linkeddatahub
     tmpfs: /var/lib/varnish:exec
@@ -122,7 +101,7 @@ services:
     build:
       context: infrastructure/docker/varnish-end-user
     mem_limit: 256m
-    user: root # otherwise fuseki user does not have permissions to the mounted folder which is owner by root
+    user: root # otherwise varnish user does not have permissions to the mounted folder which is owner by root
     depends_on:
       - linkeddatahub
     tmpfs: /var/lib/varnish:exec
@@ -133,3 +112,26 @@ services:
       - VARNISH_TTL=86400
       - VARNISH_SIZE=1G
     entrypoint: /bin/sh -c "envsubst < /etc/varnish/default.vcl.template > /etc/varnish/default.vcl && /usr/local/bin/docker-varnish-entrypoint"
+#####################
+## CUSTOM SERVICES ##
+#####################
+  processor:
+    build:
+      context: infrastructure/docker/processor
+    mem_limit: 512m
+    environment:
+      - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
+      - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
+      - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
+      - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
+  processor-nginx:
+    build:
+      context: infrastructure/docker/processor-nginx
+    mem_limit: 128m
+    depends_on:
+      - processor
+    ports:
+      - 8888:80
+    environment:
+      - PROXY_PASS=http://processor:8080 # internal Processor URL (hostname equals docker-compose service name)
+      - PROXY_SET_HOST=${HOST} # the hostname set on the request URI before it's passed to Processor
