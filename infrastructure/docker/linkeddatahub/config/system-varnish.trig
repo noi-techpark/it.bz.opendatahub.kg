@@ -7,7 +7,6 @@
 @prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
 @prefix ldt:	<https://www.w3.org/ns/ldt#> .
 @prefix sd:	<http://www.w3.org/ns/sparql-service-description#> .
-@prefix void:   <http://rdfs.org/ns/void#> .
 @prefix dct:	<http://purl.org/dc/terms/> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1/> .
 
@@ -62,26 +61,26 @@
 
 # OpenDataHub
 
-<urn:linkeddatahub:apps/open-data-hub/data> a void:Dataset ;
+<urn:linkeddatahub:apps/open-data-hub/data> a lapp:Dataset ;
     lapp:prefix <data/> ;
     lapp:proxy <http://processor-nginx/> .
 
-<urn:linkeddatahub:apps/open-data-hub/events> a void:Dataset ;
+<urn:linkeddatahub:apps/open-data-hub/events> a lapp:Dataset ;
     lapp:prefix <events/> ;
     lapp:proxy <http://processor-nginx/> .
 
-<urn:linkeddatahub:apps/open-data-hub/food-establishments> a void:Dataset ;
+<urn:linkeddatahub:apps/open-data-hub/food-establishments> a lapp:Dataset ;
     lapp:prefix <food-establishments/> ;
     lapp:proxy <http://processor-nginx/> .
 
-<urn:linkeddatahub:apps/open-data-hub/lodging-businesses> a void:Dataset ;
+<urn:linkeddatahub:apps/open-data-hub/lodging-businesses> a lapp:Dataset ;
     lapp:prefix <lodging-businesses/> ;
     lapp:proxy <http://processor-nginx/> .
 
-<urn:linkeddatahub:apps/open-data-hub/municipalities> a void:Dataset ;
+<urn:linkeddatahub:apps/open-data-hub/municipalities> a lapp:Dataset ;
     lapp:prefix <municipalities/> ;
     lapp:proxy <http://processor-nginx/> .
 
-<urn:linkeddatahub:apps/open-data-hub/ski-resorts> a void:Dataset ;
+<urn:linkeddatahub:apps/open-data-hub/ski-resorts> a lapp:Dataset ;
     lapp:prefix <ski-resorts/> ;
     lapp:proxy <http://processor-nginx/> .
