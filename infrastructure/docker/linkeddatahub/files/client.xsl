@@ -38,7 +38,7 @@ exclude-result-prefixes="#all">
         <xsl:sequence select="schema:image/@rdf:resource"/>
     </xsl:template>
 
-    <xsl:template match="/" mode="apl:Document">
+    <xsl:template match="/" mode="apl:LoadedHTMLDocument">
         <xsl:param name="uri" as="xs:anyURI?"/>
         <xsl:param name="fragment" as="xs:string?"/>
         <xsl:param name="container" as="element()"/>
