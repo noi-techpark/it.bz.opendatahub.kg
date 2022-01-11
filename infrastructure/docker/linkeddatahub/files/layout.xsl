@@ -44,6 +44,10 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="rdf:RDF" mode="xhtml:Script">
         <xsl:apply-imports>
+            <!-- not using SPARQLMap + Google Maps, using OpenLayers instead -->
+            <xsl:with-param name="load-sparql-map" select="false()"/>
+            <!-- not showing the SPARQL editor anywhere, so exclude the YASQE editor -->
+            <xsl:with-param name="load-yasqe" select="false()"/>
             <xsl:with-param name="client-stylesheet" select="resolve-uri('static/it/bz/opendatahub/kg/xsl/client.xsl.sef.json', $ac:contextUri)"/>
         </xsl:apply-imports>
 
@@ -188,9 +192,9 @@ exclude-result-prefixes="#all">
         
         <xsl:apply-templates select="key('resources', apl:content/@rdf:*)" mode="apl:ContentList"/>
 
-        <xsl:variable name="ontology" select="resolve-uri('../admin/model/ontologies/namespace/#', $ldt:base)" as="xs:anyURI"/>
+        <xsl:variable name="ontology" select="resolve-uri('admin/model/ontologies/namespace/', $ldt:base)" as="xs:anyURI"/>
         <xsl:if test="doc-available(ac:document-uri($ontology))">
-            <xsl:apply-templates select="key('resources', $ontology || 'ContainedPlaces', document(ac:document-uri($ontology)))" mode="apl:ContentList"/>
+            <xsl:apply-templates select="key('resources', $ontology || '#ContainedPlaces', document(ac:document-uri($ontology)))" mode="apl:ContentList"/>
         </xsl:if>
     </xsl:template>
 

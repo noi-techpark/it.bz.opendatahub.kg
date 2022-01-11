@@ -99,15 +99,6 @@
             <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
                     <model/ontologies/namespace/> .
     
-    <model/ontologies/namespace/select-contained-places/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/admin#Item> ;
-            <http://purl.org/dc/terms/title>
-                    "Select contained places" ;
-            <http://rdfs.org/sioc/ns#has_container>
-                    <model/queries/> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
-                    "select-contained-places" .
-    
     <model/ontologies/namespace/#SelectContainedPlaces>
             a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
             <http://www.w3.org/2000/01/rdf-schema#isDefinedBy>
@@ -115,12 +106,8 @@
             <http://www.w3.org/2000/01/rdf-schema#label>
                     "Select contained places" ;
             <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?containsPlace\nWHERE\n  { ?this     schema:containsPlace  ?containsPlace .\n    ?containsPlace\n              schema:name           ?name\n    FILTER langMatches(lang(?name), \"en\")\n  }\nORDER BY ?name" ;
-            <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
-                    <model/ontologies/namespace/select-contained-places/> ;
             <https://w3id.org/atomgraph/linkeddatahub/domain#service>
-                    <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
-                    "e43daa0a-ce1b-410d-877f-70a42f0ef294" .
+                    <../services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> .
     
     <model/ontologies/namespace/#ContainedPlaces>
             a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
@@ -130,6 +117,56 @@
                     () ;
             <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
                     "d2ac90f3-8c07-4d65-bdf2-20f53c4f5d91" .
+
+    <model/ontologies/namespace/#SelectMunicipalities>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://www.w3.org/2000/01/rdf-schema#isDefinedBy>
+                    <model/ontologies/namespace/#> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Select municipalities" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\nPREFIX  odh:  <http://noi.example.org/ontology/odh#> # TO-DO: update namespace\n\nSELECT  ?municipality\nWHERE\n  { ?municipality\n              a  odh:Municipality\n    OPTIONAL\n      { SELECT  ?municipality ?name\n        WHERE\n          { ?municipality\n                      schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n  }\nORDER BY ?name" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <../services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> .
+
+    <model/ontologies/namespace/#SelectLodgingBusinesses>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://www.w3.org/2000/01/rdf-schema#isDefinedBy>
+                    <model/ontologies/namespace/#> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Select lodging businesses" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?lodgingBusiness\nWHERE\n  { ?lodgingBusiness\n              a  schema:LodgingBusiness\n    OPTIONAL\n      { SELECT  ?lodgingBusiness ?name\n        WHERE\n          { ?lodgingBusiness\n                      schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n    OPTIONAL\n      { ?lodgingBusiness\n                  schema:containedInPlace  ?containedInPlace\n      }\n  }\nORDER BY ?name" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <../services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> .
+
+    <model/ontologies/namespace/#SelectEvents>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://www.w3.org/2000/01/rdf-schema#isDefinedBy>
+                    <model/ontologies/namespace/#> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Select events" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?event\nWHERE\n  { ?event  a  schema:Event\n    OPTIONAL\n      { ?event  schema:startDate  ?startDate }\n    OPTIONAL\n      { ?event  schema:endDate  ?endDate }\n  }\nORDER BY DESC(?startDate)" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <../services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> .
+
+    <model/ontologies/namespace/#SelectFoodEstablishments>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://www.w3.org/2000/01/rdf-schema#isDefinedBy>
+                    <model/ontologies/namespace/#> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Select food establishments" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?foodEstablishment\nWHERE\n  { ?foodEstablishment\n              a  schema:FoodEstablishment\n    OPTIONAL\n      { SELECT  ?foodEstablishment ?name\n        WHERE\n          { ?foodEstablishment\n                      schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n  }\nORDER BY ?name" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <../services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> .
+
+    <model/ontologies/namespace/#SelectSkiResorts>
+            a                             <https://w3id.org/atomgraph/linkeddatahub/admin#Select> ;
+            <http://www.w3.org/2000/01/rdf-schema#isDefinedBy>
+                    <model/ontologies/namespace/#> ;
+            <http://www.w3.org/2000/01/rdf-schema#label>
+                    "Select ski resorts" ;
+            <http://spinrdf.org/sp#text>  "PREFIX  schema: <http://schema.org/>\n\nSELECT  ?skiResort ?name\nWHERE\n  { ?skiResort  a  schema:SkiResort\n    OPTIONAL\n      { SELECT  ?skiResort ?name\n        WHERE\n          { ?skiResort  schema:name  ?name\n            FILTER langMatches(lang(?name), \"en\")\n          }\n      }\n    OPTIONAL\n      { ?skiResort  schema:isPartOf  ?area }\n  }\nORDER BY ?name" ;
+            <https://w3id.org/atomgraph/linkeddatahub/domain#service>
+                    <../services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed> .
 }
 
 <acl/public-keys/> {
