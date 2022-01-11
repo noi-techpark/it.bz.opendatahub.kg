@@ -167,7 +167,7 @@ exclude-result-prefixes="#all">
     <xsl:template match="gs:defaultGeometry/@rdf:resource" priority="1">
         <xsl:variable name="uri" select="." as="xs:anyURI"/>
         <!-- TO-DO: we need to proxy the URI as long as the https/http base URIs don't align -->
-        <xsl:variable name="doc-uri" select="xs:anyURI($ldt:base || '?uri=' || encode-for-uri(ac:document-uri($uri)))" as="xs:anyURI"/> <!-- select="ac:document-uri(.)" -->
+        <xsl:variable name="doc-uri" select="ac:document-uri(.)" as="xs:anyURI"/>
         <xsl:choose>
             <xsl:when test="doc-available($doc-uri)">
                 <xsl:variable name="wkt-literal" select="key('resources', ., document($doc-uri))/gs:asWKT" as="xs:string"/>
@@ -182,7 +182,7 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <!-- append content with places contained in this resource -->
-    <xsl:template match="*[rdf:type/@rdf:resource = ('http://noi.example.org/ontology/odh#Municipality', '&schema;LodgingBusiness')]" mode="xhtml:Body" priority="1">
+    <xsl:template match="*[rdf:type/@rdf:resource = ('http://noi.example.org/ontology/odh#Municipality', '&schema;LodgingBusiness')]" mode="bs2:RowBlock" priority="1">
         <div class="row-fluid">
             <xsl:apply-templates select="." mode="bs2:Left"/>
 
