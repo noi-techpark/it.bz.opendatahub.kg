@@ -11,6 +11,7 @@
     <!ENTITY gs     "http://www.opengis.net/ont/geosparql#">
     <!ENTITY schema "http://schema.org/">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
+    <!ENTITY odh    "http://noi.example.org/ontology/odh#">
 ]>
 <xsl:stylesheet version="3.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,6 +28,7 @@ xmlns:sp="&sp;"
 xmlns:gs="&gs;"
 xmlns:schema="&schema;"
 xmlns:foaf="&foaf;"
+xmlns:odh="&odh;"
 xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
 xmlns:functx="http://www.functx.com"
 exclude-result-prefixes="#all">
@@ -159,7 +161,7 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <!-- do not derefence these properties, build label from URL path instead -->
-    <xsl:template match="schema:*" mode="ac:property-label">
+    <xsl:template match="schema:* | gs:* | odh:*" mode="ac:property-label">
         <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
 
         <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&schema;'),' '))"/>
