@@ -34,6 +34,28 @@ exclude-result-prefixes="#all">
 
     <xsl:param name="apl:base" as="xs:anyURI" static="yes"/>
 
+    <xsl:function name="functx:camel-case-to-words" as="xs:string" xmlns:functx="http://www.functx.com">
+        <xsl:param name="arg" as="xs:string?"/>
+        <xsl:param name="delim" as="xs:string"/>
+
+        <xsl:sequence select="
+        concat(substring($arg,1,1),
+                 replace(substring($arg,2),'(\p{Lu})',
+                            concat($delim, '$1')))
+        "/>
+
+    </xsl:function>
+
+    <xsl:function name="functx:capitalize-first" as="xs:string?" xmlns:functx="http://www.functx.com">
+        <xsl:param name="arg" as="xs:string?"/>
+
+        <xsl:sequence select="
+        concat(upper-case(substring($arg,1,1)),
+                 substring($arg,2))
+        "/>
+
+    </xsl:function>
+
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
         <xsl:apply-imports>
             <xsl:with-param name="load-wymeditor" select="false()"/>
@@ -135,6 +157,23 @@ exclude-result-prefixes="#all">
         <xsl:sequence select="schema:description/text()"/>
     </xsl:template>
 
+    <!-- do not derefence these properties, build label from URL path instead -->
+    <xsl:template match="schema:*" mode="ac:property-label">
+        <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
+
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words($this,' '))"/>
+    </xsl:template>
+
+    <!-- do not dereference these objects to get their labels, use the last path segment instead -->
+    <xsl:template match="schema:address/@rdf:resource | schema:hasMenu/@rdf:resource | schema:aggregateRating/@rdf:resource | schema:isPartOf/@rdf:resource | schema:geo/@rdf:resource | schema:hasGeometry/@rdf:resource" mode="ac:object-label">
+        <xsl:sequence select="tokenize(., '/')[last()]"/>
+    </xsl:template>
+
+    <!-- do not derefence these objects, build label from URL path instead -->
+    <xsl:template match="@rdf:resource[starts-with(., '&schema;')]" mode="ac:object-label">
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(.,' '))"/>
+    </xsl:template>
+
     <xsl:template match="schema:image/@rdf:resource" priority="1">
         <a href="{.}">
             <img src="{.}">
@@ -145,11 +184,6 @@ exclude-result-prefixes="#all">
                 </xsl:attribute>
             </img>
         </a>
-    </xsl:template>
-
-    <!-- do not dereference these objects to get their labels, use the last path segment instead -->
-    <xsl:template match="schema:address/@rdf:resource | schema:hasMenu/@rdf:resource | schema:aggregateRating/@rdf:resource | schema:isPartOf/@rdf:resource | schema:geo/@rdf:resource | schema:hasGeometry/@rdf:resource" mode="ac:object-label">
-        <xsl:sequence select="tokenize(., '/')[last()]"/>
     </xsl:template>
 
     <xsl:template match="schema:url/@rdf:resource" priority="1">
