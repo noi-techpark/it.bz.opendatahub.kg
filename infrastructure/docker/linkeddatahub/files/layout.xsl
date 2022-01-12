@@ -147,6 +147,11 @@ exclude-result-prefixes="#all">
         </a>
     </xsl:template>
 
+    <!-- do not dereference these objects to get their labels, use the last path segment instead -->
+    <xsl:template match="schema:address/@rdf:resource | schema:hasMenu/@rdf:resource | schema:aggregateRating/@rdf:resource | schema:isPartOf/@rdf:resource | schema:geo/@rdf:resource | schema:hasGeometry/@rdf:resource" mode="ac:object-label">
+        <xsl:sequence select="tokenize(., '/')[last()]"/>
+    </xsl:template>
+
     <xsl:template match="schema:url/@rdf:resource" priority="1">
         <xsl:next-match>
             <xsl:with-param name="target" select="'_blank'"/>
