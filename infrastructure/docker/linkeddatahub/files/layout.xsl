@@ -277,6 +277,20 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="*[*][@rdf:about]" mode="apl:ContentHeader"/>
 
+    <!-- show type list for resources except for the 1st level documents -->
+    <xsl:template match="*[@rdf:about or @rdf:nodeID][rdf:type/@rdf:resource][not(sioc:has_parent/@rdf:resource = $ldt:base)][not(sioc:has_container/@rdf:resource = $ldt:base)]" mode="bs2:TypeList">
+        <ul class="inline">
+            <xsl:for-each select="rdf:type/@rdf:resource">
+                <xsl:sort select="ac:object-label(.)" order="ascending" lang="{$ldt:lang}" use-when="system-property('xsl:product-name') = 'SAXON'"/>
+                <xsl:sort select="ac:object-label(.)" order="ascending" use-when="system-property('xsl:product-name') eq 'Saxon-JS'"/>
+
+                <li>
+                    <xsl:apply-templates select="."/>
+                </li>
+            </xsl:for-each>
+        </ul>
+    </xsl:template>
+
     <xsl:template match="rdf:RDF" mode="bs2:Footer">
         <div class="footer container-fluid">
             <div class="row-fluid">
