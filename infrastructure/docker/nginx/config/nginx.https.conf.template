@@ -1,6 +1,6 @@
 pid /tmp/nginx.pid;
 
-events { 
+events {
     worker_connections 1024;
 }
 
@@ -20,7 +20,7 @@ http {
         server_name $SERVER_NAME;
         ssl_certificate $SERVER_CERT_FILE;
         ssl_certificate_key $SERVER_KEY_FILE;
-        ssl_session_cache shared:SSL:1m;  
+        ssl_session_cache shared:SSL:1m;
         ssl_prefer_server_ciphers on;
         #ssl_verify_client optional_no_ca;
 
@@ -42,7 +42,7 @@ http {
     server {
         listen $SERVER_HTTP_PORT;
         server_name $SERVER_NAME;
-    
+
         location / {
             return 301 https://$server_name:$HTTPS_PORT$request_uri;
         }
