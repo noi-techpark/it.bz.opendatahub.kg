@@ -161,10 +161,24 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <!-- do not derefence these properties, build label from URL path instead -->
-    <xsl:template match="schema:* | gs:* | odh:*" mode="ac:property-label">
+    <xsl:template match="schema:*" mode="ac:property-label">
         <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
 
         <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&schema;'),' '))"/>
+    </xsl:template>
+
+    <!-- do not derefence these properties, build label from URL path instead -->
+    <xsl:template match="gs:*" mode="ac:property-label">
+        <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
+
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&gs;'),' '))"/>
+    </xsl:template>
+
+    <!-- do not derefence these properties, build label from URL path instead -->
+    <xsl:template match="odh:*" mode="ac:property-label">
+        <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
+
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&odh;'),' '))"/>
     </xsl:template>
 
     <!-- do not dereference these objects to get their labels, use the last path segment instead -->
