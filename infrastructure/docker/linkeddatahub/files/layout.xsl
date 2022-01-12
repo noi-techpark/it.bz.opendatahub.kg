@@ -162,7 +162,7 @@ exclude-result-prefixes="#all">
     <xsl:template match="schema:*" mode="ac:property-label">
         <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
 
-        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words($this,' '))"/>
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&schema;'),' '))"/>
     </xsl:template>
 
     <!-- do not dereference these objects to get their labels, use the last path segment instead -->
@@ -172,7 +172,7 @@ exclude-result-prefixes="#all">
 
     <!-- do not derefence these objects, build label from URL path instead -->
     <xsl:template match="@rdf:resource[starts-with(., '&schema;')]" mode="ac:object-label">
-        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(.,' '))"/>
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after(., '&schema;'),' '))"/>
     </xsl:template>
 
     <xsl:template match="schema:image/@rdf:resource" priority="1">
