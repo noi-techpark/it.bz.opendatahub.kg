@@ -183,16 +183,31 @@ exclude-result-prefixes="#all">
 
     <!-- append content with places contained in this resource -->
     <xsl:template match="*[rdf:type/@rdf:resource = ('http://noi.example.org/ontology/odh#Municipality', '&schema;LodgingBusiness')]" mode="bs2:RowBlock" priority="1">
-        <div class="row-fluid">
+        <xsl:param name="id" select="generate-id()" as="xs:string?"/>
+        <xsl:param name="content-uri" as="xs:anyURI?"/>
+        <xsl:param name="class" select="'row-fluid'" as="xs:string?"/>
+
+        <div>
+            <xsl:if test="$id">
+                <xsl:attribute name="id"><xsl:sequence select="$id"/></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="$class">
+                <xsl:attribute name="class"><xsl:sequence select="$class"/></xsl:attribute>
+            </xsl:if>
+
             <xsl:apply-templates select="." mode="bs2:Left"/>
 
-            <xsl:apply-templates select="." mode="bs2:Main"/>
+            <div class="span7">
+                <xsl:apply-templates select="." mode="bs2:Block"/>
+                
+                <xsl:if test="$content-uri">
+                    <div id="{$id || '-content'}" class="content resource-content" data-content-uri="{$content-uri}"/>
+                </xsl:if>
+            </div>
 
             <xsl:apply-templates select="." mode="bs2:Right"/>
         </div>
         
-        <xsl:apply-templates select="key('resources', apl:content/@rdf:*)" mode="apl:ContentList"/>
-
         <xsl:variable name="ontology" select="resolve-uri('admin/model/ontologies/namespace/', $ldt:base)" as="xs:anyURI"/>
         <xsl:if test="doc-available(ac:document-uri($ontology))">
             <xsl:apply-templates select="key('resources', $ontology || '#ContainedPlaces', document(ac:document-uri($ontology)))" mode="apl:ContentList"/>
