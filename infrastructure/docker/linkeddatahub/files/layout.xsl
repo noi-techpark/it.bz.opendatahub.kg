@@ -28,13 +28,14 @@ xmlns:gs="&gs;"
 xmlns:schema="&schema;"
 xmlns:foaf="&foaf;"
 xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
+xmlns:functx="http://www.functx.com"
 exclude-result-prefixes="#all">
 
     <xsl:import href="../../../../../com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/layout.xsl"/>
 
     <xsl:param name="apl:base" as="xs:anyURI" static="yes"/>
 
-    <xsl:function name="functx:camel-case-to-words" as="xs:string" xmlns:functx="http://www.functx.com">
+    <xsl:function name="functx:camel-case-to-words" as="xs:string">
         <xsl:param name="arg" as="xs:string?"/>
         <xsl:param name="delim" as="xs:string"/>
 
@@ -46,7 +47,7 @@ exclude-result-prefixes="#all">
 
     </xsl:function>
 
-    <xsl:function name="functx:capitalize-first" as="xs:string?" xmlns:functx="http://www.functx.com">
+    <xsl:function name="functx:capitalize-first" as="xs:string?">
         <xsl:param name="arg" as="xs:string?"/>
 
         <xsl:sequence select="
