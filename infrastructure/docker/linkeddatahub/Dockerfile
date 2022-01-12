@@ -24,12 +24,15 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
 
 USER ldh
 
-WORKDIR $CATALINA_HOME/webapps/ROOT/static
-
 COPY --chown=ldh:ldh config/dev.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
+COPY --chown=ldh:ldh files/prefix-mapping.ttl /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/prefix-mapping.ttl
+COPY --chown=ldh:ldh files/schemaorg.rdf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/it/bz/opendatahub/kg/schemaorg.rdf
 COPY --chown=ldh:ldh config/system-varnish.trig /var/linkeddatahub/datasets/system.trig
 COPY --chown=ldh:ldh datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
 COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig
+
+WORKDIR $CATALINA_HOME/webapps/ROOT/static
+
 COPY --chown=ldh:ldh files/layout.xsl it/bz/opendatahub/kg/xsl/layout.xsl
 COPY --chown=ldh:ldh files/client.xsl it/bz/opendatahub/kg/xsl/client.xsl
 COPY --chown=ldh:ldh files/bootstrap.css it/bz/opendatahub/kg/css/bootstrap.css

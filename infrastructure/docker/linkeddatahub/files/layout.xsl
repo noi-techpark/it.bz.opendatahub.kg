@@ -35,7 +35,10 @@ exclude-result-prefixes="#all">
     <xsl:param name="apl:base" as="xs:anyURI" static="yes"/>
 
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
-        <xsl:apply-imports/>
+        <xsl:apply-imports>
+            <xsl:with-param name="load-wymeditor" select="false()"/>
+            <xsl:with-param name="load-yasqe" select="false()"/>
+        </xsl:apply-imports>
 
         <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:base)}" type="image/x-icon"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
