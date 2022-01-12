@@ -11,6 +11,7 @@
     <!ENTITY gs     "http://www.opengis.net/ont/geosparql#">
     <!ENTITY schema "http://schema.org/">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
+    <!ENTITY sioc   "http://rdfs.org/sioc/ns#">
     <!ENTITY odh    "http://noi.example.org/ontology/odh#">
 ]>
 <xsl:stylesheet version="3.0"
@@ -28,6 +29,7 @@ xmlns:sp="&sp;"
 xmlns:gs="&gs;"
 xmlns:schema="&schema;"
 xmlns:foaf="&foaf;"
+xmlns:sioc="&sioc;"
 xmlns:odh="&odh;"
 xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
 xmlns:functx="http://www.functx.com"
