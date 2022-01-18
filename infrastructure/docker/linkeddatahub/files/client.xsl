@@ -39,14 +39,14 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <xsl:template match="/" mode="apl:LoadedHTMLDocument">
-        <xsl:param name="uri" as="xs:anyURI?"/>
+        <xsl:param name="href" as="xs:anyURI"/>
+        <xsl:param name="uri" select="apl:absolute-path($href)" as="xs:anyURI?"/>
         <xsl:param name="fragment" as="xs:string?"/>
         <xsl:param name="container" as="element()"/>
-        <xsl:param name="state" as="item()?"/>
         <xsl:param name="push-state" select="true()" as="xs:boolean"/>
 
         <xsl:next-match>
-            <xsl:with-param name="uri" select="$uri"/>
+            <xsl:with-param name="href" select="$href"/>
             <xsl:with-param name="fragment" select="$fragment"/>
             <xsl:with-param name="container" select="$container"/>
             <xsl:with-param name="state" select="$state"/>
