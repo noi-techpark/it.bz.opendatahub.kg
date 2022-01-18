@@ -39,7 +39,7 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <xsl:template match="/" mode="apl:LoadedHTMLDocument">
-        <xsl:param name="href" as="xs:anyURI"/>
+        <xsl:param name="href" as="xs:anyURI?"/>
         <xsl:param name="uri" select="apl:absolute-path($href)" as="xs:anyURI?"/>
         <xsl:param name="fragment" as="xs:string?"/>
         <xsl:param name="container" as="element()"/>
