@@ -49,7 +49,6 @@ exclude-result-prefixes="#all">
             <xsl:with-param name="href" select="$href"/>
             <xsl:with-param name="fragment" select="$fragment"/>
             <xsl:with-param name="container" select="$container"/>
-            <xsl:with-param name="state" select="$state"/>
             <xsl:with-param name="push-state" select="$push-state"/>
         </xsl:next-match>
 
