@@ -1,4 +1,4 @@
-FROM atomgraph/linkeddatahub:fae531766529822aa5c9a43c9cbdbc6e8571063c
+FROM atomgraph/linkeddatahub:68dd15a9faa4ec2f15f32adb0f19d2fae4173bdf
 
 ARG SAXON_VERSION=9.9.1-2
 
