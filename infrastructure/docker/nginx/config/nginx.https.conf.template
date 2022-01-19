@@ -31,6 +31,7 @@ http {
 
             proxy_set_header Client-Cert '';
             #proxy_set_header Client-Cert $ssl_client_escaped_cert;
+            add_header  Cache-Control "public,max-age=1800";
         }
 
         location ^~ /static/ {
