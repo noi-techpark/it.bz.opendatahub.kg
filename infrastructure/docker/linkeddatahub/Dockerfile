@@ -1,4 +1,4 @@
-FROM atomgraph/linkeddatahub:e3e0ebff49394cb74f98ffa69603cdc3135ec40d
+FROM atomgraph/linkeddatahub:7b25207a10e67d8557cce5e7784b4b5e396ca44a
 
 ARG SAXON_VERSION=9.9.1-2
 
@@ -24,12 +24,15 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
 
 USER ldh
 
-WORKDIR $CATALINA_HOME/webapps/ROOT/static
-
 COPY --chown=ldh:ldh config/dev.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
+COPY --chown=ldh:ldh files/prefix-mapping.ttl /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/prefix-mapping.ttl
+COPY --chown=ldh:ldh files/geosparql.rdf /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/it/bz/opendatahub/kg/geosparql.rdf
 COPY --chown=ldh:ldh config/system-varnish.trig /var/linkeddatahub/datasets/system.trig
 COPY --chown=ldh:ldh datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
 COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig
+
+WORKDIR $CATALINA_HOME/webapps/ROOT/static
+
 COPY --chown=ldh:ldh files/layout.xsl it/bz/opendatahub/kg/xsl/layout.xsl
 COPY --chown=ldh:ldh files/client.xsl it/bz/opendatahub/kg/xsl/client.xsl
 COPY --chown=ldh:ldh files/bootstrap.css it/bz/opendatahub/kg/css/bootstrap.css

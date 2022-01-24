@@ -2,6 +2,7 @@
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY lapp   "https://w3id.org/atomgraph/linkeddatahub/apps/domain#">
     <!ENTITY apl    "https://w3id.org/atomgraph/linkeddatahub/domain#">
+    <!ENTITY def    "https://w3id.org/atomgraph/linkeddatahub/default#">
     <!ENTITY ac     "https://w3id.org/atomgraph/client#">
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs   "http://www.w3.org/2000/01/rdf-schema#">
@@ -10,6 +11,8 @@
     <!ENTITY gs     "http://www.opengis.net/ont/geosparql#">
     <!ENTITY schema "http://schema.org/">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
+    <!ENTITY sioc   "http://rdfs.org/sioc/ns#">
+    <!ENTITY odh    "http://noi.example.org/ontology/odh#">
 ]>
 <xsl:stylesheet version="3.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -26,15 +29,43 @@ xmlns:sp="&sp;"
 xmlns:gs="&gs;"
 xmlns:schema="&schema;"
 xmlns:foaf="&foaf;"
+xmlns:sioc="&sioc;"
+xmlns:odh="&odh;"
 xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
+xmlns:functx="http://www.functx.com"
 exclude-result-prefixes="#all">
 
     <xsl:import href="../../../../../com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/layout.xsl"/>
 
     <xsl:param name="apl:base" as="xs:anyURI" static="yes"/>
 
+    <xsl:function name="functx:camel-case-to-words" as="xs:string">
+        <xsl:param name="arg" as="xs:string?"/>
+        <xsl:param name="delim" as="xs:string"/>
+
+        <xsl:sequence select="
+        concat(substring($arg,1,1),
+                 replace(substring($arg,2),'(\p{Lu})',
+                            concat($delim, '$1')))
+        "/>
+
+    </xsl:function>
+
+    <xsl:function name="functx:capitalize-first" as="xs:string?">
+        <xsl:param name="arg" as="xs:string?"/>
+
+        <xsl:sequence select="
+        concat(upper-case(substring($arg,1,1)),
+                 substring($arg,2))
+        "/>
+
+    </xsl:function>
+
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
-        <xsl:apply-imports/>
+        <xsl:apply-imports>
+            <xsl:with-param name="load-wymeditor" select="false()"/>
+            <xsl:with-param name="load-yasqe" select="false()"/>
+        </xsl:apply-imports>
 
         <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:base)}" type="image/x-icon"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
@@ -44,6 +75,10 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="rdf:RDF" mode="xhtml:Script">
         <xsl:apply-imports>
+            <!-- not using SPARQLMap + Google Maps, using OpenLayers instead -->
+            <xsl:with-param name="load-sparql-map" select="false()"/>
+            <!-- not showing the SPARQL editor anywhere, so exclude the YASQE editor -->
+            <xsl:with-param name="load-yasqe" select="false()"/>
             <xsl:with-param name="client-stylesheet" select="resolve-uri('static/it/bz/opendatahub/kg/xsl/client.xsl.sef.json', $ac:contextUri)"/>
         </xsl:apply-imports>
 
@@ -86,7 +121,7 @@ exclude-result-prefixes="#all">
 
     <!-- in the end-user app, retrieve the select-children SELECT query, wrap it into a DESCRIBE and render root container nav bar instead of the search bar -->
     <xsl:template match="rdf:RDF[$lapp:Application//*[ldt:base/@rdf:resource = $ldt:base]/rdf:type/@rdf:resource = '&lapp;EndUserApplication']" mode="bs2:SearchBar">
-        <xsl:variable name="query-uri" select="resolve-uri('queries/default/select-children/#this', $ldt:base)" as="xs:anyURI"/>
+        <xsl:variable name="query-uri" select="xs:anyURI('&def;SelectChildren')" as="xs:anyURI"/>
         <xsl:variable name="select-string" select="key('resources', $query-uri, document(ac:document-uri($query-uri)))/sp:text" as="xs:string"/>
         <xsl:variable name="regex-groups" select="analyze-string(normalize-space($select-string), '^(.*)(SELECT)(.*)$', 'i')" as="element()"/>
         <xsl:variable name="query-string" select="$regex-groups/fn:match[1]/fn:group[@nr = '1']/string() || ' DESCRIBE ?child { ' || $regex-groups/fn:match[1]/fn:group[@nr = '2']/string() || $regex-groups/fn:match[1]/fn:group[@nr = '3']/string() || ' }'" as="xs:string"/>
@@ -127,6 +162,37 @@ exclude-result-prefixes="#all">
         <xsl:sequence select="schema:description/text()"/>
     </xsl:template>
 
+    <!-- do not derefence these properties, build label from URL path instead -->
+    <xsl:template match="schema:*" mode="ac:property-label">
+        <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
+
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&schema;'),' '))"/>
+    </xsl:template>
+
+    <!-- do not derefence these properties, build label from URL path instead -->
+    <xsl:template match="gs:*" mode="ac:property-label">
+        <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
+
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&gs;'),' '))"/>
+    </xsl:template>
+
+    <!-- do not derefence these properties, build label from URL path instead -->
+    <xsl:template match="odh:*" mode="ac:property-label">
+        <xsl:variable name="this" select="concat(namespace-uri(), local-name())"/>
+
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after($this, '&odh;'),' '))"/>
+    </xsl:template>
+
+    <!-- do not dereference these objects to get their labels, use the last path segment instead -->
+    <xsl:template match="schema:address/@rdf:resource | schema:hasMenu/@rdf:resource | schema:aggregateRating/@rdf:resource | schema:isPartOf/@rdf:resource | schema:geo/@rdf:resource | schema:hasGeometry/@rdf:resource" mode="ac:object-label">
+        <xsl:sequence select="tokenize(., '/')[last()]"/>
+    </xsl:template>
+
+    <!-- do not derefence these objects, build label from URL path instead -->
+    <xsl:template match="@rdf:resource[starts-with(., '&schema;')]" mode="ac:object-label">
+        <xsl:sequence select="functx:capitalize-first(functx:camel-case-to-words(substring-after(., '&schema;'),' '))"/>
+    </xsl:template>
+
     <xsl:template match="schema:image/@rdf:resource" priority="1">
         <a href="{.}">
             <img src="{.}">
@@ -162,7 +228,7 @@ exclude-result-prefixes="#all">
     <xsl:template match="gs:defaultGeometry/@rdf:resource" priority="1">
         <xsl:variable name="uri" select="." as="xs:anyURI"/>
         <!-- TO-DO: we need to proxy the URI as long as the https/http base URIs don't align -->
-        <xsl:variable name="doc-uri" select="xs:anyURI($ldt:base || '?uri=' || encode-for-uri(ac:document-uri($uri)))" as="xs:anyURI"/> <!-- select="ac:document-uri(.)" -->
+        <xsl:variable name="doc-uri" select="ac:document-uri(.)" as="xs:anyURI"/>
         <xsl:choose>
             <xsl:when test="doc-available($doc-uri)">
                 <xsl:variable name="wkt-literal" select="key('resources', ., document($doc-uri))/gs:asWKT" as="xs:string"/>
@@ -177,26 +243,55 @@ exclude-result-prefixes="#all">
     </xsl:template>
 
     <!-- append content with places contained in this resource -->
-    <xsl:template match="*[rdf:type/@rdf:resource = ('http://noi.example.org/ontology/odh#Municipality', '&schema;LodgingBusiness')]" mode="xhtml:Body" priority="1">
-        <div class="row-fluid">
+    <xsl:template match="*[rdf:type/@rdf:resource = ('http://noi.example.org/ontology/odh#Municipality', '&schema;LodgingBusiness')]" mode="bs2:RowBlock" priority="1">
+        <xsl:param name="id" select="generate-id()" as="xs:string?"/>
+        <xsl:param name="content-uri" as="xs:anyURI?"/>
+        <xsl:param name="class" select="'row-fluid'" as="xs:string?"/>
+
+        <div>
+            <xsl:if test="$id">
+                <xsl:attribute name="id"><xsl:sequence select="$id"/></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="$class">
+                <xsl:attribute name="class"><xsl:sequence select="$class"/></xsl:attribute>
+            </xsl:if>
+
             <xsl:apply-templates select="." mode="bs2:Left"/>
 
-            <xsl:apply-templates select="." mode="bs2:Main"/>
+            <div class="span7">
+                <xsl:apply-templates select="." mode="bs2:Block"/>
+                
+                <xsl:if test="$content-uri">
+                    <div id="{$id || '-content'}" class="content resource-content" data-content-uri="{$content-uri}"/>
+                </xsl:if>
+            </div>
 
             <xsl:apply-templates select="." mode="bs2:Right"/>
         </div>
         
-        <xsl:apply-templates select="key('resources', apl:content/@rdf:*)" mode="apl:ContentList"/>
-
-        <xsl:variable name="ontology" select="resolve-uri('../admin/model/ontologies/namespace/#', $ldt:base)" as="xs:anyURI"/>
+        <xsl:variable name="ontology" select="resolve-uri('admin/model/ontologies/namespace/', $ldt:base)" as="xs:anyURI"/>
         <xsl:if test="doc-available(ac:document-uri($ontology))">
-            <xsl:apply-templates select="key('resources', $ontology || 'ContainedPlaces', document(ac:document-uri($ontology)))" mode="apl:ContentList"/>
+            <xsl:apply-templates select="key('resources', $ontology || '#ContainedPlaces', document(ac:document-uri($ontology)))" mode="apl:ContentList"/>
         </xsl:if>
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:ModeTabs"/>
 
     <xsl:template match="*[*][@rdf:about]" mode="apl:ContentHeader"/>
+
+    <!-- show type list for resources except for the 1st level documents -->
+    <xsl:template match="*[@rdf:about or @rdf:nodeID][rdf:type/@rdf:resource][not(sioc:has_parent/@rdf:resource = $ldt:base)][not(sioc:has_container/@rdf:resource = $ldt:base)]" mode="bs2:TypeList">
+        <ul class="inline">
+            <xsl:for-each select="rdf:type/@rdf:resource">
+                <xsl:sort select="ac:object-label(.)" order="ascending" lang="{$ldt:lang}" use-when="system-property('xsl:product-name') = 'SAXON'"/>
+                <xsl:sort select="ac:object-label(.)" order="ascending" use-when="system-property('xsl:product-name') eq 'Saxon-JS'"/>
+
+                <li>
+                    <xsl:apply-templates select="."/>
+                </li>
+            </xsl:for-each>
+        </ul>
+    </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:Footer">
         <div class="footer container-fluid">

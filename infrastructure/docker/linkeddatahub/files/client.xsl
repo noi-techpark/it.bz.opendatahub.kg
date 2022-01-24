@@ -38,18 +38,17 @@ exclude-result-prefixes="#all">
         <xsl:sequence select="schema:image/@rdf:resource"/>
     </xsl:template>
 
-    <xsl:template match="/" mode="apl:Document">
-        <xsl:param name="uri" as="xs:anyURI?"/>
+    <xsl:template match="/" mode="apl:LoadedHTMLDocument">
+        <xsl:param name="href" as="xs:anyURI?"/>
+        <xsl:param name="uri" select="apl:absolute-path($href)" as="xs:anyURI?"/>
         <xsl:param name="fragment" as="xs:string?"/>
         <xsl:param name="container" as="element()"/>
-        <xsl:param name="state" as="item()?"/>
         <xsl:param name="push-state" select="true()" as="xs:boolean"/>
 
         <xsl:next-match>
-            <xsl:with-param name="uri" select="$uri"/>
+            <xsl:with-param name="href" select="$href"/>
             <xsl:with-param name="fragment" select="$fragment"/>
             <xsl:with-param name="container" select="$container"/>
-            <xsl:with-param name="state" select="$state"/>
             <xsl:with-param name="push-state" select="$push-state"/>
         </xsl:next-match>
 
@@ -85,16 +84,16 @@ exclude-result-prefixes="#all">
     <!-- intercept links in the navbar's <ul> -->
     <xsl:template match="a[not(@target)][starts-with(@href, 'http://') or starts-with(@href, 'https://')][not(starts-with(@href, resolve-uri('uploads/', $ldt:base)))][ancestor::div[tokenize(@class, ' ') = 'navbar']//ul]" mode="ixsl:onclick">
         <xsl:sequence select="ixsl:call(ixsl:event(), 'preventDefault', [])"/>
-        <xsl:variable name="uri" select="xs:anyURI(@href)" as="xs:anyURI"/>
+        <xsl:variable name="href" select="xs:anyURI(@href)" as="xs:anyURI"/>
         <!-- indirect resource URI, dereferenced through a proxy -->
-        <xsl:variable name="request-uri" select="ac:build-uri($ldt:base, map{ 'uri': string($uri) })" as="xs:anyURI"/>
+        <xsl:variable name="request-uri" select="ac:build-uri($ldt:base, map{ 'uri': string($href) })" as="xs:anyURI"/>
         
         <ixsl:set-style name="cursor" select="'progress'" object="ixsl:page()//body"/>
         
         <ixsl:schedule-action http-request="map{ 'method': 'GET', 'href': $request-uri, 'headers': map{ 'Accept': 'application/xhtml+xml' } }">
             <xsl:call-template name="onDocumentLoad">
-                <xsl:with-param name="uri" select="ac:document-uri($uri)"/>
-                <xsl:with-param name="fragment" select="encode-for-uri($uri)"/>
+                <xsl:with-param name="href" select="ac:document-uri($href)"/>
+                <xsl:with-param name="fragment" select="encode-for-uri($href)"/>
             </xsl:call-template>
         </ixsl:schedule-action>
 
