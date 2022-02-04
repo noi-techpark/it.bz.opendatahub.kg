@@ -57,7 +57,6 @@ exclude-result-prefixes="#all">
         concat(upper-case(substring($arg,1,1)),
                  substring($arg,2))
         "/>
-
     </xsl:function>
 
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
