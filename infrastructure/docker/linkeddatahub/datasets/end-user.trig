@@ -5,11 +5,11 @@
                     "Root container" ;
             <http://purl.org/dc/terms/title>
                     "Root" ;
-            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+            <https://w3id.org/atomgraph/linkeddatahub#content>
                     <#content> .
     
     <#content>
-            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            a       <https://w3id.org/atomgraph/linkeddatahub#Content> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
                     "<div xmlns=\"http://www.w3.org/1999/xhtml\">\n    <p class=\"lead\">Welcome to the <a href=\"https://opendatahub.bz.it\" target=\"_blank\">Open Data Hub</a> browseable Knowledge Graph. Data is presented as <a href=\"https://www.w3.org/standards/semanticweb/data\" target=\"_blank\">Linked Data</a>, so that it can be easily accessed and it is fully browseable.</p>\n    <p>All data is taken from the Open Data Hub <a href=\"https://sparql.opendatahub.bz.it\" target=\"_blank\">SPARQL endpoint</a>. Read more on how to query data through SPARQL on the <a href=\"https://docs.opendatahub.bz.it/en/latest/howto/generic/sparql-endpoint.html\" target=\"_blank\">ODH documentation site</a>.</p>\n</div>"^^<http://www.w3.org/1999/02/22-rdf-syntax-ns#XMLLiteral> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
@@ -18,56 +18,56 @@
 
 <ski-resorts/> {
     <ski-resorts/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Item> ;
             <http://purl.org/dc/terms/title>
                     "Ski resorts" ;
             <http://rdfs.org/sioc/ns#has_container>
                     <> ;
-            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+            <https://w3id.org/atomgraph/linkeddatahub#content>
                     <ski-resorts/#content> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "ski-resorts" , "f226a1a2-3f2f-4c7a-ad61-b637c1995823" .
     
     <ski-resorts/#content>
-            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            a       <https://w3id.org/atomgraph/linkeddatahub#Content> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
                     <admin/model/ontologies/namespace/#SelectSkiResorts> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
                     () ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "5111af17-6d07-4e1e-adef-341178951907" .
 }
 
 <events/> {
     <events/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Item> ;
             <http://purl.org/dc/terms/title>
                     "Events" ;
             <http://rdfs.org/sioc/ns#has_container>
                     <> ;
-            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+            <https://w3id.org/atomgraph/linkeddatahub#content>
                     <events/#content> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "events" , "c00afe3b-6929-4102-808f-06d960bae947" .
     
     <events/#content>
-            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            a       <https://w3id.org/atomgraph/linkeddatahub#Content> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
                     <admin/model/ontologies/namespace/#SelectEvents> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
                     () ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "10dd1866-eb68-4520-bcee-7ed48105046d" .
 }
 
 <services/open-data-hub/> {
     <services/open-data-hub/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Item> ;
             <http://purl.org/dc/terms/title>
                     "Open Data Hub Knowledge Graph Portal" ;
             <http://rdfs.org/sioc/ns#has_container>
                     <services/> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "open-data-hub" .
     
     <services/open-data-hub/#id9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed>
@@ -80,35 +80,35 @@
                     <http://www.w3.org/ns/sparql-service-description#SPARQL11Query> , <http://www.w3.org/ns/sparql-service-description#SPARQL11Update> ;
             <http://xmlns.com/foaf/0.1/isPrimaryTopicOf>
                     <services/open-data-hub/> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "9ab8520e-c4dc-4162-8fc2-7c85e1aa22ed" .
 }
 
 <municipalities/> {
     <municipalities/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Item> ;
             <http://purl.org/dc/terms/title>
                     "Municipalities" ;
             <http://rdfs.org/sioc/ns#has_container>
                     <> ;
-            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+            <https://w3id.org/atomgraph/linkeddatahub#content>
                     <municipalities/#content> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "municipalities" , "6c1d739c-5893-4be6-94bf-25b08a009a39" .
     
     <municipalities/#content>
-            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            a       <https://w3id.org/atomgraph/linkeddatahub#Content> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
                     <admin/model/ontologies/namespace/#SelectMunicipalities> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
                     () ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "f240bed4-2a39-45db-b060-942fde76273b" .
 }
 
 <services/> {
     <services/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Container> ;
             <http://purl.org/dc/terms/description>
                     "SPARQL services" ;
             <http://purl.org/dc/terms/title>
@@ -117,7 +117,7 @@
 
 <files/> {
     <files/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Container> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Container> ;
             <http://purl.org/dc/terms/description>
                     "Uploaded files" ;
             <http://purl.org/dc/terms/title>
@@ -126,44 +126,44 @@
 
 <lodging-businesses/> {
     <lodging-businesses/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Item> ;
             <http://purl.org/dc/terms/title>
                     "Lodging businesses" ;
             <http://rdfs.org/sioc/ns#has_container>
                     <> ;
-            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+            <https://w3id.org/atomgraph/linkeddatahub#content>
                     <lodging-businesses/#content> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "lodging-businesses" , "174a09af-dc35-49c4-b387-da5f158f4c0c" .
     
     <lodging-businesses/#content>
-            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            a       <https://w3id.org/atomgraph/linkeddatahub#Content> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
                     <admin/model/ontologies/namespace/#SelectLodgingBusinesses> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
                     () ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "5ec8748f-6af6-4b2a-9ded-47b9850054e0" .
 }
 
 <food-establishments/> {
     <food-establishments/>
-            a       <https://w3id.org/atomgraph/linkeddatahub/default#Item> ;
+            a       <https://www.w3.org/ns/ldt/document-hierarchy#Item> ;
             <http://purl.org/dc/terms/title>
                     "Food establishments" ;
             <http://rdfs.org/sioc/ns#has_container>
                     <> ;
-            <https://w3id.org/atomgraph/linkeddatahub/domain#content>
+            <https://w3id.org/atomgraph/linkeddatahub#content>
                     <food-establishments/#content> ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "food-establishments" , "999ab945-952b-4106-a656-0501cd363401" .
     
     <food-establishments/#content>
-            a       <https://w3id.org/atomgraph/linkeddatahub/domain#Content> ;
+            a       <https://w3id.org/atomgraph/linkeddatahub#Content> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#first>
                     <admin/model/ontologies/namespace/#SelectFoodEstablishments> ;
             <http://www.w3.org/1999/02/22-rdf-syntax-ns#rest>
                     () ;
-            <https://www.w3.org/ns/ldt/document-hierarchy/domain#slug>
+            <https://www.w3.org/ns/ldt/document-hierarchy#slug>
                     "12736acb-a7d6-4d92-b238-db567d2c3e8b" .
 }

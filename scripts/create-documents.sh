@@ -117,7 +117,7 @@ content=$(./create-content.sh \
 --first "$query" \
 "$doc")
 
-echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
@@ -162,7 +162,7 @@ content=$(./create-content.sh \
 --first "$query" \
 "$doc")
 
-echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
@@ -207,7 +207,7 @@ content=$(./create-content.sh \
 --first "$query" \
 "$doc")
 
-echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
@@ -252,7 +252,7 @@ content=$(./create-content.sh \
 --first "$query" \
 "$doc")
 
-echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
@@ -297,7 +297,7 @@ content=$(./create-content.sh \
 --first "$query" \
 "$doc")
 
-echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub/domain#content> <${doc}#content> ." \
+echo -e "<${doc}> <https://w3id.org/atomgraph/linkeddatahub#content> <${doc}#content> ." \
 | turtle --base="$base" \
 | ./create-document.sh \
 -f "$cert_pem_file" \
