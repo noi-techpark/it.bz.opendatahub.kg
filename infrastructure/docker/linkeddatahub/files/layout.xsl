@@ -276,6 +276,8 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="rdf:RDF" mode="bs2:ModeTabs"/>
 
+    <xsl:template match="*[*][@rdf:about or @rdf:nodeID]" mode="bs2:Left"/>
+
     <xsl:template match="*[*][@rdf:about]" mode="ldh:ContentHeader"/>
 
     <!-- show type list for resources except for the 1st level documents -->
