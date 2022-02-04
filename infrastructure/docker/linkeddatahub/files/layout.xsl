@@ -275,7 +275,15 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="rdf:RDF" mode="bs2:ModeTabs"/>
 
-    <xsl:template match="*[*][@rdf:about or @rdf:nodeID]" mode="bs2:Left"/>
+    <xsl:template match="*[*][@rdf:about or @rdf:nodeID]" mode="bs2:Left">
+        <xsl:param name="id" as="xs:string?"/>
+        <xsl:param name="class" select="'span2'" as="xs:string?"/> <!-- omit .left-nav -->
+
+        <xsl:next-match>
+            <xsl:with-param name="id" select="$id"/>
+            <xsl:with-param name="class" select="$class"/>
+        </xsl:next-match>
+    </xsl:template>
 
     <xsl:template match="*[*][@rdf:about]" mode="ldh:ContentHeader"/>
 
