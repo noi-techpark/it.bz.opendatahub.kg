@@ -62,26 +62,37 @@
 
 # OpenDataHub
 
+<urn:linkeddatahub:services/open-data-hub> a sd:Service ;
+    sd:supportedLanguage sd:SPARQL11Query, sd:SPARQL11Update ;
+    sd:endpoint <https://sparql.opendatahub.testingmachine.eu/sparql> ;
+    lapp:proxy <http://varnish-end-user/> .
+
 <urn:linkeddatahub:apps/open-data-hub/data> a lapp:Dataset ;
     lapp:prefix <data/> ;
-    lapp:proxy <http://processor-nginx/> .
+    lapp:proxy <http://processor-nginx/> ;
+    ldt:service <urn:linkeddatahub:services/open-data-hub> .
 
 <urn:linkeddatahub:apps/open-data-hub/events> a lapp:Dataset ;
     lapp:prefix <events/> ;
-    lapp:proxy <http://processor-nginx/> .
+    lapp:proxy <http://processor-nginx/> ;
+    ldt:service <urn:linkeddatahub:services/open-data-hub> .
 
 <urn:linkeddatahub:apps/open-data-hub/food-establishments> a lapp:Dataset ;
     lapp:prefix <food-establishments/> ;
-    lapp:proxy <http://processor-nginx/> .
+    lapp:proxy <http://processor-nginx/> ;
+    ldt:service <urn:linkeddatahub:services/open-data-hub> .
 
 <urn:linkeddatahub:apps/open-data-hub/lodging-businesses> a lapp:Dataset ;
     lapp:prefix <lodging-businesses/> ;
-    lapp:proxy <http://processor-nginx/> .
+    lapp:proxy <http://processor-nginx/> ;
+    ldt:service <urn:linkeddatahub:services/open-data-hub> .
 
 <urn:linkeddatahub:apps/open-data-hub/municipalities> a lapp:Dataset ;
     lapp:prefix <municipalities/> ;
-    lapp:proxy <http://processor-nginx/> .
+    lapp:proxy <http://processor-nginx/> ;
+    ldt:service <urn:linkeddatahub:services/open-data-hub> .
 
 <urn:linkeddatahub:apps/open-data-hub/ski-resorts> a lapp:Dataset ;
     lapp:prefix <ski-resorts/> ;
-    lapp:proxy <http://processor-nginx/> .
+    lapp:proxy <http://processor-nginx/> ;
+    ldt:service <urn:linkeddatahub:services/open-data-hub> .
