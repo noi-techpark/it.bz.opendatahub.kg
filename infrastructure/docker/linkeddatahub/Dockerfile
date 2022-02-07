@@ -1,4 +1,4 @@
-FROM atomgraph/linkeddatahub:bfa49ea9f55ac0fdb0157b707b114d747b157c51
+FROM atomgraph/linkeddatahub:d866798c7b125773d11fa9675045b36bd1ebc7c1
 
 ARG DEFAULT_ENDPOINT
 RUN test -n "$DEFAULT_ENDPOINT" || (echo "DEFAULT_ENDPOINT not set" && false)
