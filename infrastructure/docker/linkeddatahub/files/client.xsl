@@ -17,6 +17,7 @@ exclude-result-prefixes="#all">
 
     <xsl:param name="map-center" select="map{ 'x': 1264010.55, 'y': 5860564.91 }" as="map(xs:string, xs:float)"/>
     <xsl:param name="map-zoom" select="8" as="xs:integer"/>
+    <xsl:param name="map-max-zoom" select="16" as="xs:integer"/>
     <xsl:param name="backlinks-string" as="xs:string">
 <![CDATA[
 PREFIX schema: <http://schema.org/>
@@ -92,7 +93,10 @@ WHERE
             
             <!-- fit the map to the polygon -->
             <xsl:variable name="fit-options" select="ldh:new-object()"/>
-            <ixsl:set-property name="maxZoom" select="$map-zoom" object="$fit-options"/>
+            <xsl:if test="starts-with($wkt-literal, 'POINT')">
+                <!-- if the WKT literal is a POINT, set a max zoom level -->
+                <ixsl:set-property name="maxZoom" select="$map-max-zoom" object="$fit-options"/>
+            </xsl:if>
             <xsl:sequence select="ixsl:call(ixsl:call($map, 'getView', []), 'fit', [ ixsl:call(ixsl:call($map, 'getFeature', []), 'getGeometry', []), $fit-options ])[current-date() lt xs:date('2000-01-01')]"/>
         </xsl:if>
     </xsl:template>
