@@ -13,6 +13,9 @@ services:
     volumes:
       - ssl:/etc/nginx/ssl
   linkeddatahub:
+    build:
+      args:
+        ENDPOINT: https://odh-kg.ontopic.cloud:4443/sparql
     depends_on:
       - nginx
     environment:
