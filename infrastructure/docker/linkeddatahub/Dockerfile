@@ -37,8 +37,8 @@ COPY --chown=ldh:ldh datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
 COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig
 
 # replace endpoint URLs
-RUN if [ "$ENDPOINT" != "$DEFAULT_ENDPOINT" ]; then sed -i "s/$DEFAULT_ENDPOINT/$ENDPOINT/" /var/linkeddatahub/datasets/system.trig; fi
-RUN if [ "$ENDPOINT" != "$DEFAULT_ENDPOINT" ]; then sed -i "s/$DEFAULT_ENDPOINT/$ENDPOINT/" /var/linkeddatahub/datasets/end-user.trig; fi
+RUN if [ "$ENDPOINT" != "$DEFAULT_ENDPOINT" ]; then sed -i "s|$DEFAULT_ENDPOINT|$ENDPOINT|" /var/linkeddatahub/datasets/system.trig; fi
+RUN if [ "$ENDPOINT" != "$DEFAULT_ENDPOINT" ]; then sed -i "s|$DEFAULT_ENDPOINT|$ENDPOINT|" /var/linkeddatahub/datasets/end-user.trig; fi
 
 WORKDIR $CATALINA_HOME/webapps/ROOT/static
 
