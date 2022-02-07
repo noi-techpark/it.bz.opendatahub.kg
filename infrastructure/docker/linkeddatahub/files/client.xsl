@@ -17,6 +17,25 @@ exclude-result-prefixes="#all">
 
     <xsl:param name="map-center" select="map{ 'x': 1264010.55, 'y': 5860564.91 }" as="map(xs:string, xs:float)"/>
     <xsl:param name="map-zoom" select="8" as="xs:integer"/>
+    <xsl:param name="backlinks-string" as="xs:string">
+<![CDATA[
+PREFIX schema: <http://schema.org/>
+
+DESCRIBE ?subject
+WHERE
+  { SELECT DISTINCT  ?subject
+    WHERE
+      {   { ?subject  ?p  ?this }
+        UNION
+          { GRAPH ?g
+              { ?subject  ?p  ?this }
+          }
+        FILTER (?p NOT IN (schema:image))
+        FILTER isURI(?subject)
+      }
+    LIMIT   10
+  }
+]]></xsl:param>
 
     <xsl:template match="*[schema:name[lang($ldt:lang)]/text()]" mode="ac:label" priority="1">
         <xsl:sequence select="schema:name[lang($ldt:lang)]/text()"/>
