@@ -1,4 +1,9 @@
-FROM atomgraph/linkeddatahub:7b25207a10e67d8557cce5e7784b4b5e396ca44a
+FROM atomgraph/linkeddatahub:d866798c7b125773d11fa9675045b36bd1ebc7c1
+
+ARG DEFAULT_ENDPOINT
+RUN test -n "$DEFAULT_ENDPOINT" || (echo "DEFAULT_ENDPOINT not set" && false)
+ARG ENDPOINT="$DEFAULT_ENDPOINT"
+RUN test -n "$ENDPOINT" || (echo "ENDPOINT not set" && false)
 
 ARG SAXON_VERSION=9.9.1-2
 
@@ -30,6 +35,10 @@ COPY --chown=ldh:ldh files/geosparql.rdf /usr/local/tomcat/webapps/ROOT/WEB-INF/
 COPY --chown=ldh:ldh config/system-varnish.trig /var/linkeddatahub/datasets/system.trig
 COPY --chown=ldh:ldh datasets/admin.trig /var/linkeddatahub/datasets/admin.trig
 COPY --chown=ldh:ldh datasets/end-user.trig /var/linkeddatahub/datasets/end-user.trig
+
+# replace endpoint URLs
+RUN if [ "$ENDPOINT" != "$DEFAULT_ENDPOINT" ]; then sed -i "s|$DEFAULT_ENDPOINT|$ENDPOINT|" /var/linkeddatahub/datasets/system.trig; fi
+RUN if [ "$ENDPOINT" != "$DEFAULT_ENDPOINT" ]; then sed -i "s|$DEFAULT_ENDPOINT|$ENDPOINT|" /var/linkeddatahub/datasets/end-user.trig; fi
 
 WORKDIR $CATALINA_HOME/webapps/ROOT/static
 

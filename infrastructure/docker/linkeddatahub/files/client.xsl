@@ -4,7 +4,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:ixsl="http://saxonica.com/ns/interactiveXSLT"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-xmlns:apl="https://w3id.org/atomgraph/linkeddatahub/domain#"
+xmlns:ldh="https://w3id.org/atomgraph/linkeddatahub#"
 xmlns:ac="https://w3id.org/atomgraph/client#"
 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
@@ -17,6 +17,26 @@ exclude-result-prefixes="#all">
 
     <xsl:param name="map-center" select="map{ 'x': 1264010.55, 'y': 5860564.91 }" as="map(xs:string, xs:float)"/>
     <xsl:param name="map-zoom" select="8" as="xs:integer"/>
+    <xsl:param name="map-max-zoom" select="16" as="xs:integer"/>
+    <xsl:param name="backlinks-string" as="xs:string">
+<![CDATA[
+PREFIX schema: <http://schema.org/>
+
+DESCRIBE ?subject
+WHERE
+  { SELECT DISTINCT  ?subject
+    WHERE
+      {   { ?subject  ?p  ?this }
+        UNION
+          { GRAPH ?g
+              { ?subject  ?p  ?this }
+          }
+        FILTER (?p NOT IN (schema:image))
+        FILTER isURI(?subject)
+      }
+    LIMIT   10
+  }
+]]></xsl:param>
 
     <xsl:template match="*[schema:name[lang($ldt:lang)]/text()]" mode="ac:label" priority="1">
         <xsl:sequence select="schema:name[lang($ldt:lang)]/text()"/>
@@ -38,9 +58,9 @@ exclude-result-prefixes="#all">
         <xsl:sequence select="schema:image/@rdf:resource"/>
     </xsl:template>
 
-    <xsl:template match="/" mode="apl:LoadedHTMLDocument">
+    <xsl:template match="/" mode="ldh:LoadedHTMLDocument">
         <xsl:param name="href" as="xs:anyURI?"/>
-        <xsl:param name="uri" select="apl:absolute-path($href)" as="xs:anyURI?"/>
+        <xsl:param name="uri" select="ldh:absolute-path($href)" as="xs:anyURI?"/>
         <xsl:param name="fragment" as="xs:string?"/>
         <xsl:param name="container" as="element()"/>
         <xsl:param name="push-state" select="true()" as="xs:boolean"/>
@@ -72,8 +92,11 @@ exclude-result-prefixes="#all">
             <xsl:sequence select="ixsl:call($map, 'render', [ $wkt-literal ])[current-date() lt xs:date('2000-01-01')]"/>
             
             <!-- fit the map to the polygon -->
-            <xsl:variable name="fit-options" select="apl:new-object()"/>
-            <!-- <ixsl:set-property name="maxZoom" select="$map-zoom" object="$fit-options"/> -->
+            <xsl:variable name="fit-options" select="ldh:new-object()"/>
+            <xsl:if test="starts-with($wkt-literal, 'POINT')">
+                <!-- if the WKT literal is a POINT, set a max zoom level -->
+                <ixsl:set-property name="maxZoom" select="$map-max-zoom" object="$fit-options"/>
+            </xsl:if>
             <xsl:sequence select="ixsl:call(ixsl:call($map, 'getView', []), 'fit', [ ixsl:call(ixsl:call($map, 'getFeature', []), 'getGeometry', []), $fit-options ])[current-date() lt xs:date('2000-01-01')]"/>
         </xsl:if>
     </xsl:template>
@@ -113,7 +136,7 @@ exclude-result-prefixes="#all">
         
         <li>
             <xsl:variable name="class" as="xs:string?">
-                <xsl:apply-templates select="." mode="apl:logo"/>
+                <xsl:apply-templates select="." mode="ldh:logo"/>
             </xsl:variable>
             <xsl:apply-templates select="." mode="xhtml:Anchor">
                 <xsl:with-param name="id" select="()"/>

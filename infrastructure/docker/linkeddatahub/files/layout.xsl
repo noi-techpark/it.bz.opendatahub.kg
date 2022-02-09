@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE xsl:stylesheet [
-    <!ENTITY lapp   "https://w3id.org/atomgraph/linkeddatahub/apps/domain#">
-    <!ENTITY apl    "https://w3id.org/atomgraph/linkeddatahub/domain#">
-    <!ENTITY def    "https://w3id.org/atomgraph/linkeddatahub/default#">
+    <!ENTITY lapp   "https://w3id.org/atomgraph/linkeddatahub/apps#">
+    <!ENTITY ldh    "https://w3id.org/atomgraph/linkeddatahub#">
     <!ENTITY ac     "https://w3id.org/atomgraph/client#">
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs   "http://www.w3.org/2000/01/rdf-schema#">
@@ -20,7 +19,7 @@ xmlns:fn="http://www.w3.org/2005/xpath-functions"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
 xmlns:lapp="&lapp;"
-xmlns:apl="&apl;"
+xmlns:ldh="&ldh;"
 xmlns:ac="&ac;"
 xmlns:rdf="&rdf;"
 xmlns:rdfs="&rdfs;"
@@ -37,7 +36,7 @@ exclude-result-prefixes="#all">
 
     <xsl:import href="../../../../../com/atomgraph/linkeddatahub/xsl/bootstrap/2.3.2/layout.xsl"/>
 
-    <xsl:param name="apl:base" as="xs:anyURI" static="yes"/>
+    <xsl:param name="ldh:base" as="xs:anyURI" static="yes"/>
 
     <xsl:function name="functx:camel-case-to-words" as="xs:string">
         <xsl:param name="arg" as="xs:string?"/>
@@ -58,7 +57,6 @@ exclude-result-prefixes="#all">
         concat(upper-case(substring($arg,1,1)),
                  substring($arg,2))
         "/>
-
     </xsl:function>
 
     <xsl:template match="rdf:RDF" mode="xhtml:Style">
@@ -67,7 +65,7 @@ exclude-result-prefixes="#all">
             <xsl:with-param name="load-yasqe" select="false()"/>
         </xsl:apply-imports>
 
-        <link rel="icon" href="{resolve-uri('static/favicon.ico', $apl:base)}" type="image/x-icon"/>
+        <link rel="icon" href="{resolve-uri('static/favicon.ico', $ldh:base)}" type="image/x-icon"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="{resolve-uri('static/it/bz/opendatahub/kg/css/bootstrap-responsive.css', $ac:contextUri)}" type="text/css"/>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/css/ol.css" type="text/css"/>
@@ -84,7 +82,7 @@ exclude-result-prefixes="#all">
 
         <!-- OpenLayers and WKTMap -->
         <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/build/ol.js"></script>
-        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $apl:base)}" type="text/javascript"></script>
+        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $ldh:base)}" type="text/javascript"></script>
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:NavBar">
@@ -121,7 +119,7 @@ exclude-result-prefixes="#all">
 
     <!-- in the end-user app, retrieve the select-children SELECT query, wrap it into a DESCRIBE and render root container nav bar instead of the search bar -->
     <xsl:template match="rdf:RDF[$lapp:Application//*[ldt:base/@rdf:resource = $ldt:base]/rdf:type/@rdf:resource = '&lapp;EndUserApplication']" mode="bs2:SearchBar">
-        <xsl:variable name="query-uri" select="xs:anyURI('&def;SelectChildren')" as="xs:anyURI"/>
+        <xsl:variable name="query-uri" select="xs:anyURI('&ldh;SelectChildren')" as="xs:anyURI"/>
         <xsl:variable name="select-string" select="key('resources', $query-uri, document(ac:document-uri($query-uri)))/sp:text" as="xs:string"/>
         <xsl:variable name="regex-groups" select="analyze-string(normalize-space($select-string), '^(.*)(SELECT)(.*)$', 'i')" as="element()"/>
         <xsl:variable name="query-string" select="$regex-groups/fn:match[1]/fn:group[@nr = '1']/string() || ' DESCRIBE ?child { ' || $regex-groups/fn:match[1]/fn:group[@nr = '2']/string() || $regex-groups/fn:match[1]/fn:group[@nr = '3']/string() || ' }'" as="xs:string"/>
@@ -271,13 +269,23 @@ exclude-result-prefixes="#all">
         
         <xsl:variable name="ontology" select="resolve-uri('admin/model/ontologies/namespace/', $ldt:base)" as="xs:anyURI"/>
         <xsl:if test="doc-available(ac:document-uri($ontology))">
-            <xsl:apply-templates select="key('resources', $ontology || '#ContainedPlaces', document(ac:document-uri($ontology)))" mode="apl:ContentList"/>
+            <xsl:apply-templates select="key('resources', $ontology || '#ContainedPlaces', document(ac:document-uri($ontology)))" mode="ldh:ContentList"/>
         </xsl:if>
     </xsl:template>
 
     <xsl:template match="rdf:RDF" mode="bs2:ModeTabs"/>
 
-    <xsl:template match="*[*][@rdf:about]" mode="apl:ContentHeader"/>
+    <xsl:template match="*[*][@rdf:about or @rdf:nodeID]" mode="bs2:Left">
+        <xsl:param name="id" as="xs:string?"/>
+        <xsl:param name="class" select="'span2'" as="xs:string?"/> <!-- omit .left-nav -->
+
+        <xsl:next-match>
+            <xsl:with-param name="id" select="$id"/>
+            <xsl:with-param name="class" select="$class"/>
+        </xsl:next-match>
+    </xsl:template>
+
+    <xsl:template match="*[*][@rdf:about]" mode="ldh:ContentHeader"/>
 
     <!-- show type list for resources except for the 1st level documents -->
     <xsl:template match="*[@rdf:about or @rdf:nodeID][rdf:type/@rdf:resource][not(sioc:has_parent/@rdf:resource = $ldt:base)][not(sioc:has_container/@rdf:resource = $ldt:base)]" mode="bs2:TypeList">
