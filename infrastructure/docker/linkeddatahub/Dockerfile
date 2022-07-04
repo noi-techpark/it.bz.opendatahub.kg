@@ -24,10 +24,12 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
     apt-get update --allow-releaseinfo-change && \
     apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists/* && \
-    npm install saxon-js && \
-    npm install xslt3
+    mkdir /home/ldh && chown ldh:ldh /home/ldh
 
 USER ldh
+
+RUN npm install saxon-js && \
+    npm install xslt3
 
 COPY --chown=ldh:ldh config/dev.log4j.properties /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/log4j.properties
 COPY --chown=ldh:ldh files/prefix-mapping.ttl /usr/local/tomcat/webapps/ROOT/WEB-INF/classes/prefix-mapping.ttl
