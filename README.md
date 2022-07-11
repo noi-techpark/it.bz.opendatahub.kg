@@ -26,7 +26,9 @@ HTTP server's (which is the `nginx` service) port within the Docker network is 8
 # Configuration
 
 * Base URI is configured in the `.env` file
-* OpenDataHub SPARQL endpoint is configured as the `ENDPOINT` environment variable for the `processor` service
+* OpenDataHub SPARQL endpoint is configured as
+  * `ENDPOINT` build argument for the `linkeddatahub` service
+  * `ENDPOINT` environment variable for the `processor` service
 
 # Reset datasets
 
