@@ -81,7 +81,7 @@ exclude-result-prefixes="#all">
         </xsl:apply-imports>
 
         <!-- OpenLayers and WKTMap -->
-        <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.6.1/build/ol.js"></script>
+        <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/ol.js', $ac:contextUri)}"></script>
         <script src="{resolve-uri('static/it/bz/opendatahub/kg/js/WKTMap.js', $ldh:base)}" type="text/javascript"></script>
     </xsl:template>
 
