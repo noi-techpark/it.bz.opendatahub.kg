@@ -1,4 +1,10 @@
-  We will be using `https://kg.opendatahub.bz.it/` as the base URI below. Replace it if necessary.
+<!--
+SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+We will be using `https://kg.opendatahub.bz.it/` as the base URI below. Replace it if necessary.
 
 # Installation
 
