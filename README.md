@@ -4,13 +4,13 @@ SPDX-FileCopyrightText: NOI Techpark <digital@noi.bz.it>
 SPDX-License-Identifier: CC0-1.0
 -->
 
-We will be using `https://kg.opendatahub.bz.it/` as the base URI below. Replace it if necessary.
+We will be using `https://kg.opendatahub.com/` as the base URI below. Replace it if necessary.
 
 # Installation
 
 For testing purposes, you can add a host mapping if you are running on localhost:
 ```
-127.0.0.1 kg.opendatahub.bz.it
+127.0.0.1 kg.opendatahub.com
 ```
 to `/etc/hosts` (on Linux) or `C:\Windows\System32\Drivers\etc\hosts` (on Windows).
 
@@ -23,7 +23,7 @@ The default setup provides a plain HTTP service. In order to enable HTTPS, apply
      ```
      docker-compose up --build
      ```
-  3. Open https://kg.opendatahub.bz.it/
+  3. Open https://kg.opendatahub.com/
 
 _:warning: The very first page load can take a while (or even result in `504 Bad Gateway`) while RDF ontologies and XSLT stylesheets are being loaded into memory._
 
