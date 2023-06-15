@@ -101,7 +101,7 @@ exclude-result-prefixes="#all">
                         <xsl:apply-templates select="." mode="bs2:SearchBar"/>
 
                         <a class="brand span1" href="https://noi.bz.it" target="_blank">
-                            <img alt="NOI Techpark" src="https://opendatahub.bz.it/img/NOI_1_BK.svg"/>
+                            <img alt="NOI Techpark" src="https://opendatahub.com/img/NOI_1_BK.svg"/>
                         </a>
                     </div>
                 </div>
@@ -306,30 +306,30 @@ exclude-result-prefixes="#all">
             <div class="row-fluid">
                 <div class="offset2 span8">
                     <div class="span3">
-                        <a href="https://opendatahub.bz.it" target="_blank">
-                            <img alt="OpenDataHub" src="https://opendatahub.bz.it/img/logo-open-data-hub_white.png"/>
+                        <a href="https://opendatahub.com" target="_blank">
+                            <img alt="OpenDataHub" src="https://opendatahub.com/img/logo-open-data-hub_white.png"/>
                         </a>
                     </div>
                     <div class="span3">
                         <h2 class="nav-header">Data</h2>
                         <ul class="nav nav-list">
-                            <li><a href="https://opendatahub.bz.it/datasets" target="_blank">Datasets</a></li>
-                            <li><a href="https://webcomponents.opendatahub.bz.it/" target="_blank">Web components</a></li>
+                            <li><a href="https://opendatahub.com/datasets" target="_blank">Datasets</a></li>
+                            <li><a href="https://webcomponents.opendatahub.com/" target="_blank">Web components</a></li>
                         </ul>
                     </div>
                     <div class="span3">
                         <h2 class="nav-header">Community</h2>
                         <ul class="nav nav-list">
-                            <li><a href="https://opendatahub.bz.it/community" target="_blank">Community</a></li>
-                            <li><a href="https://opendatahub.bz.it/events" target="_blank">Events</a></li>
+                            <li><a href="https://opendatahub.com/community" target="_blank">Community</a></li>
+                            <li><a href="https://opendatahub.com/events" target="_blank">Events</a></li>
                         </ul>
                     </div>
                     <div class="span3">
                         <h2 class="nav-header">Services</h2>
                         <ul class="nav nav-list">
-                            <li><a href="https://opendatahub.bz.it/data-access/" target="_blank">Data Access</a></li>
-                            <li><a href="https://opendatahub.bz.it/data-sharing/" target="_blank">Data Sharing</a></li>
-                            <li><a href="https://opendatahub.bz.it/services#app-dev" target="_blank">Data Visualization</a></li>
+                            <li><a href="https://opendatahub.com/data-access/" target="_blank">Data Access</a></li>
+                            <li><a href="https://opendatahub.com/data-sharing/" target="_blank">Data Sharing</a></li>
+                            <li><a href="https://opendatahub.com/services#app-dev" target="_blank">Data Visualization</a></li>
                         </ul>
                     </div>
                 </div>

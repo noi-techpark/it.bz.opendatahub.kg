@@ -8,7 +8,7 @@
 
 if [ "$#" -ne 4 ] && [ "$#" -ne 5 ]; then
   echo "Usage:   $0" '$base $endpoint $cert_pem_file $cert_password [$request_base]' >&2
-  echo "Example: $0" 'https://kg.opendatahub.bz.it/ https://sparql.opendatahub.testingmachine.eu/sparql ./ssl/owner/cert.pem Password' >&2
+  echo "Example: $0" 'https://kg.opendatahub.com/ https://sparql.opendatahub.testingmachine.eu/sparql ./ssl/owner/cert.pem Password' >&2
   echo "Note: special characters such as $ need to be escaped in passwords!" >&2
   exit 1
 fi

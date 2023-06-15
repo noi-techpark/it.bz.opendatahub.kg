@@ -128,7 +128,7 @@ services:
       - CATALINA_OPTS=-XX:+UseContainerSupport -XX:MaxRAMPercentage=75 # heap will use up to 75% of container's RAM
       - ENDPOINT="https://sparql.opendatahub.testingmachine.eu/sparql"
       - GRAPH_STORE="https://sparql.opendatahub.testingmachine.eu/service" # not used but needs a value
-      - ONTOLOGY="https://kg.opendatahub.bz.it/ns/templates#"
+      - ONTOLOGY="https://kg.opendatahub.com/ns/templates#"
   processor-nginx:
     build:
       context: infrastructure/docker/processor-nginx

@@ -36,7 +36,7 @@
     lapp:public true ;
     lapp:readOnly true ;
     ac:stylesheet <static/it/bz/opendatahub/kg/xsl/layout.xsl> ;
-    foaf:logo <https://opendatahub.bz.it/img/IDM_OPENDATAHUB_2_BK.svg> .
+    foaf:logo <https://opendatahub.com/img/IDM_OPENDATAHUB_2_BK.svg> .
 
 # SERVICES
 
